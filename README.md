@@ -12,10 +12,17 @@ applications such as PayPal and Apple Pay.
 The following **priority** functionality is completed:
 
 - [ ] Users can register an account
+  - [ ] Email
+  - [ ] Name
+  - [ ] Password
 - [ ] Users can create event groups
+  - [ ] Name
+  - [ ] Description
+  - [ ] Members
 - [ ] Users can add friends to groups by adding their ID
-- [ ] Users can opt out of a group if no transactions
+- [ ] Users can leave a group if no transactions
 - [ ] Members of a group can log an expense consisting of:
+  - [ ] Date
   - [ ] Category
   - [ ] Business (inferred from location if possible)
   - [ ] Description
@@ -29,21 +36,20 @@ The following **priority** functionality is completed:
     - [ ] Line-Item
       - [ ] By shares
 - [ ] Users can settle up per event with other members
-- [ ] Users can see how is owed them or they owe within an event
-- [ ] Users can submit a payment via other Services (e.g. PayPal)
-- [ ] When a user pays through a service they can record or the app automatically records the confirmation number
+- [ ] Users can see how much is owed them or they owe within an event
 - [ ] Users can log a manual (cash) payment in addition to paying through other apps
 - [ ] Users see the most recently edited events at the top of their event list page
 - [ ] Users see the most recent transactions in their event transaction view
 - [ ] Users can claim portions of a logged transaction according to the above payment options
 - [ ] The event group's admin can end an event to prevent additional transactions from being added
 - [ ] When a user creates an event group they are assigned the group admin role
-- [ ] When an admin user leaves their group, the admin role is passed to another user randomly
-- [ ] An admin user can assign another user the admin role for a group
+- [ ] Users can submit a payment via other Services (e.g. PayPal)
+- [ ] When a user pays through a service they can record or the app automatically records the confirmation number
   
 
 The following **optional** features are implemented:
 
+- [ ] Users can set an image for an event
 - [ ] Users maintain a friends list
 - [ ] Users can sign in with OAuth
 - [ ] Users can message a group
@@ -61,6 +67,10 @@ The following **optional** features are implemented:
 - [ ] When a user pays through another app, a confirmation resolves the dollar amount between the parties
 - [ ] When a user assigns another user to a transaction share, the other user must confirm
 - [ ] Group beacons
+- [ ] Users can lock a transaction to prevent edits
+- [ ] Only the user that created a transaction can change the transaction
+- [ ] When an admin user leaves their group, the admin role is passed to another user randomly
+- [ ] An admin user can assign another user the admin role for a group
 
 The following **additional** features are implemented:
 
