@@ -24,6 +24,10 @@ The following **priority** functionality is completed:
   - [ ] Total paid
   - [ ] Contributing members
   - [ ] Division of payment
+    - [ ] Equal share
+    - [ ] Percentage
+    - [ ] Line-Item
+      - [ ] By shares
 - [ ] Users can settle up per event with other members
 - [ ] Users can see how is owed them or they owe within an event
 - [ ] Users can submit a payment via other Services (e.g. PayPal)
