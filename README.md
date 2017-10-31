@@ -20,7 +20,6 @@ The following **priority** functionality is completed:
   - [ ] Description
   - [ ] Members
 - [ ] Users can add friends to groups by adding their ID
-- [ ] Users can leave a group if no transactions
 - [ ] Members of a group can log an expense consisting of:
   - [ ] Date
   - [ ] Category
@@ -41,13 +40,14 @@ The following **priority** functionality is completed:
 - [ ] Users see the most recently edited events at the top of their event list page
 - [ ] Users see the most recent transactions in their event transaction view
 - [ ] Users can claim portions of a logged transaction according to the above payment options
-- [ ] The event group's admin can end an event to prevent additional transactions from being added
-- [ ] When a user creates an event group they are assigned the group admin role
 - [ ] Users can submit a payment via other Services (e.g. PayPal)
-- [ ] When a user pays through a service they can record or the app automatically records the confirmation number
   
 
 The following **optional** features are implemented:
+- [ ] When a user pays through a service they can record or the app automatically records the confirmation number
+- [ ] When a user creates an event group they are assigned the group admin role
+- [ ] The event group's admin can end an event to prevent additional transactions from being added
+- [ ] Users can leave a group if no transactions
 
 - [ ] Users can set an image for an event
 - [ ] Users maintain a friends list
