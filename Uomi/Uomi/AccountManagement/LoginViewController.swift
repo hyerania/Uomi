@@ -32,4 +32,7 @@ class LoginViewController: UIViewController {
     }
     */
 
+    @IBAction func hitLogin(_ sender: Any) {
+        performSegue(withIdentifier: "doLogin", sender: nil)
+    }
 }

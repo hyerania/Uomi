@@ -14,11 +14,14 @@
 		079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */; };
 		079CEF9B1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */; };
 		07AB53B11F993F3200BC23F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AB53B01F993F3200BC23F3 /* AppDelegate.swift */; };
-		07AB53B61F993F3200BC23F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53B41F993F3200BC23F3 /* Main.storyboard */; };
+		07AB53B61F993F3200BC23F3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53B41F993F3200BC23F3 /* Login.storyboard */; };
 		07AB53B81F993F3200BC23F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53B71F993F3200BC23F3 /* Assets.xcassets */; };
 		07AB53BB1F993F3200BC23F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53B91F993F3200BC23F3 /* LaunchScreen.storyboard */; };
 		07AB53C31F99421100BC23F3 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AB53C21F99421100BC23F3 /* libz.tbd */; };
 		07AB53C61F99430900BC23F3 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53C51F99430900BC23F3 /* tessdata */; };
+		07DE484F1FA91830008F1B96 /* Transactions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE484E1FA91830008F1B96 /* Transactions.storyboard */; };
+		07DE48511FA9184D008F1B96 /* Balances.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE48501FA9184D008F1B96 /* Balances.storyboard */; };
+		07DE48521FA91916008F1B96 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE484D1FA917CB008F1B96 /* Events.storyboard */; };
 		508758EE52944AB42A076599 /* Pods_Uomi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,12 +34,15 @@
 		079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTableViewController.swift; sourceTree = "<group>"; };
 		07AB53AD1F993F3200BC23F3 /* Uomi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Uomi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07AB53B01F993F3200BC23F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		07AB53B51F993F3200BC23F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		07AB53B51F993F3200BC23F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		07AB53B71F993F3200BC23F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		07AB53BA1F993F3200BC23F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		07AB53BC1F993F3200BC23F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07AB53C21F99421100BC23F3 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		07AB53C51F99430900BC23F3 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		07DE484D1FA917CB008F1B96 /* Events.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Events.storyboard; path = "/Users/eric/Dev/CSCE671-Project/Uomi/Uomi/Events.storyboard"; sourceTree = "<absolute>"; };
+		07DE484E1FA91830008F1B96 /* Transactions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transactions.storyboard; sourceTree = "<group>"; };
+		07DE48501FA9184D008F1B96 /* Balances.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Balances.storyboard; sourceTree = "<group>"; };
 		33388B2B44FD13FF818C68AA /* Pods-Uomi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.release.xcconfig"; sourceTree = "<group>"; };
 		C735C56250DC6E22CE8C9F8D /* Pods-Uomi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.debug.xcconfig"; sourceTree = "<group>"; };
 		F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Uomi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,7 +95,10 @@
 				079CEF8F1FA8F68000AC1FE4 /* AccountManagement */,
 				07AB53C51F99430900BC23F3 /* tessdata */,
 				07AB53B01F993F3200BC23F3 /* AppDelegate.swift */,
-				07AB53B41F993F3200BC23F3 /* Main.storyboard */,
+				07AB53B41F993F3200BC23F3 /* Login.storyboard */,
+				07DE484D1FA917CB008F1B96 /* Events.storyboard */,
+				07DE484E1FA91830008F1B96 /* Transactions.storyboard */,
+				07DE48501FA9184D008F1B96 /* Balances.storyboard */,
 				07AB53B71F993F3200BC23F3 /* Assets.xcassets */,
 				07AB53B91F993F3200BC23F3 /* LaunchScreen.storyboard */,
 				07AB53BC1F993F3200BC23F3 /* Info.plist */,
@@ -183,7 +192,10 @@
 				07AB53BB1F993F3200BC23F3 /* LaunchScreen.storyboard in Resources */,
 				07AB53C61F99430900BC23F3 /* tessdata in Resources */,
 				07AB53B81F993F3200BC23F3 /* Assets.xcassets in Resources */,
-				07AB53B61F993F3200BC23F3 /* Main.storyboard in Resources */,
+				07AB53B61F993F3200BC23F3 /* Login.storyboard in Resources */,
+				07DE48521FA91916008F1B96 /* Events.storyboard in Resources */,
+				07DE484F1FA91830008F1B96 /* Transactions.storyboard in Resources */,
+				07DE48511FA9184D008F1B96 /* Balances.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,12 +277,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		07AB53B41F993F3200BC23F3 /* Main.storyboard */ = {
+		07AB53B41F993F3200BC23F3 /* Login.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				07AB53B51F993F3200BC23F3 /* Base */,
 			);
-			name = Main.storyboard;
+			name = Login.storyboard;
 			sourceTree = "<group>";
 		};
 		07AB53B91F993F3200BC23F3 /* LaunchScreen.storyboard */ = {

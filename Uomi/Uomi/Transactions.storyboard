@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ERj-HG-wN9">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Event-->
+        <scene sceneID="Vlu-hJ-ECc">
+            <objects>
+                <tableViewController title="Event" id="ERj-HG-wN9" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="1c7-rk-kEL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="3Yh-DD-u6s">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qQd-7u-L81">
+                                    <rect key="frame" x="156.5" y="55" width="62" height="30"/>
+                                    <state key="normal" title="Balances"/>
+                                    <connections>
+                                        <segue destination="RBd-Sc-f4e" kind="show" id="Xli-00-PSY"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="qQd-7u-L81" secondAttribute="bottom" constant="12" id="OU2-d6-p3W"/>
+                                <constraint firstItem="qQd-7u-L81" firstAttribute="centerX" secondItem="3Yh-DD-u6s" secondAttribute="centerX" id="QSD-UW-g9B"/>
+                                <constraint firstItem="qQd-7u-L81" firstAttribute="centerX" secondItem="3Yh-DD-u6s" secondAttribute="centerX" id="VdJ-w4-o2s"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="74" id="qtn-iI-DMn">
+                                <rect key="frame" x="0.0" y="125" width="375" height="74"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qtn-iI-DMn" id="n38-nB-ekn">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="73.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="eaa-BO-YdA" kind="show" id="fyX-MO-OhN"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ERj-HG-wN9" id="ORy-Qu-d5w"/>
+                            <outlet property="delegate" destination="ERj-HG-wN9" id="gVP-yr-t8w"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Event" prompt="Transactions" id="18I-Jj-Ryz">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="wj6-V9-PM4"/>
+                            <barButtonItem image="menu" id="E4O-qH-OcI"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FDB-6P-K8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2880.8000000000002" y="31.934032983508249"/>
+        </scene>
+        <!--Transaction-->
+        <scene sceneID="Qck-O1-LKP">
+            <objects>
+                <viewController id="eaa-BO-YdA" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Obj-LT-J4k">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="DLq-Z0-wXs"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Transaction" id="oev-yd-c88">
+                        <barButtonItem key="rightBarButtonItem" title="Action" id="gmF-k4-0OW"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QFd-Ue-yFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3748" y="32"/>
+        </scene>
+        <!--Balances-->
+        <scene sceneID="Ib8-Io-by4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Balances" id="RBd-Sc-f4e" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PnQ-S1-ZjR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2880.8000000000002" y="778.56071964017997"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="menu" width="25" height="25"/>
+    </resources>
+</document>

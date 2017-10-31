@@ -92,5 +92,13 @@ class EventsTableViewController: UITableViewController {
     }
     */
 
-    @IBAction func unwindToEvents(segue: UIStoryboardSegue) { }
+    @IBAction func unwindToEventsFromCancel(segue: UIStoryboardSegue) { }
+    
+    @IBAction func unwindToEventsFromCreate(segue: UIStoryboardSegue) {
+        // TODO: Save new event
+        
+        // TODO: Add event row
+        
+        // TODO: Segue to the new event's transactions
+    }
 }
