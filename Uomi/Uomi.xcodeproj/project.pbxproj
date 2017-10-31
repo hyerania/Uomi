@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */; };
+		079CEF911FA8F6A300AC1FE4 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF901FA8F6A300AC1FE4 /* NewAccountViewController.swift */; };
+		079CEF931FA8F6B600AC1FE4 /* AccountEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF921FA8F6B600AC1FE4 /* AccountEditorViewController.swift */; };
+		079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF961FA8FBA500AC1FE4 /* EventsTableViewController.swift */; };
+		079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */; };
+		079CEF9B1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */; };
 		07AB53B11F993F3200BC23F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AB53B01F993F3200BC23F3 /* AppDelegate.swift */; };
-		07AB53B31F993F3200BC23F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AB53B21F993F3200BC23F3 /* ViewController.swift */; };
 		07AB53B61F993F3200BC23F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53B41F993F3200BC23F3 /* Main.storyboard */; };
 		07AB53B81F993F3200BC23F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53B71F993F3200BC23F3 /* Assets.xcassets */; };
 		07AB53BB1F993F3200BC23F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53B91F993F3200BC23F3 /* LaunchScreen.storyboard */; };
@@ -18,9 +23,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		079CEF901FA8F6A300AC1FE4 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
+		079CEF921FA8F6B600AC1FE4 /* AccountEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEditorViewController.swift; sourceTree = "<group>"; };
+		079CEF961FA8FBA500AC1FE4 /* EventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
+		079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditorViewController.swift; sourceTree = "<group>"; };
+		079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTableViewController.swift; sourceTree = "<group>"; };
 		07AB53AD1F993F3200BC23F3 /* Uomi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Uomi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07AB53B01F993F3200BC23F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		07AB53B21F993F3200BC23F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		07AB53B51F993F3200BC23F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		07AB53B71F993F3200BC23F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		07AB53BA1F993F3200BC23F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -45,6 +55,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		079CEF8F1FA8F68000AC1FE4 /* AccountManagement */ = {
+			isa = PBXGroup;
+			children = (
+				079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */,
+				079CEF901FA8F6A300AC1FE4 /* NewAccountViewController.swift */,
+				079CEF921FA8F6B600AC1FE4 /* AccountEditorViewController.swift */,
+			);
+			path = AccountManagement;
+			sourceTree = "<group>";
+		};
 		07AB53A41F993F3200BC23F3 = {
 			isa = PBXGroup;
 			children = (
@@ -66,13 +86,16 @@
 		07AB53AF1F993F3200BC23F3 /* Uomi */ = {
 			isa = PBXGroup;
 			children = (
+				079CEF8F1FA8F68000AC1FE4 /* AccountManagement */,
 				07AB53C51F99430900BC23F3 /* tessdata */,
 				07AB53B01F993F3200BC23F3 /* AppDelegate.swift */,
-				07AB53B21F993F3200BC23F3 /* ViewController.swift */,
 				07AB53B41F993F3200BC23F3 /* Main.storyboard */,
 				07AB53B71F993F3200BC23F3 /* Assets.xcassets */,
 				07AB53B91F993F3200BC23F3 /* LaunchScreen.storyboard */,
 				07AB53BC1F993F3200BC23F3 /* Info.plist */,
+				079CEF961FA8FBA500AC1FE4 /* EventsTableViewController.swift */,
+				079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */,
+				079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */,
 			);
 			path = Uomi;
 			sourceTree = "<group>";
@@ -229,8 +252,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07AB53B31F993F3200BC23F3 /* ViewController.swift in Sources */,
+				079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */,
+				079CEF931FA8F6B600AC1FE4 /* AccountEditorViewController.swift in Sources */,
 				07AB53B11F993F3200BC23F3 /* AppDelegate.swift in Sources */,
+				079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */,
+				079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */,
+				079CEF9B1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift in Sources */,
+				079CEF911FA8F6A300AC1FE4 /* NewAccountViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
