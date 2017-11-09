@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		073A57581FB51854004FBBFC /* LabeledTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073A57571FB51854004FBBFC /* LabeledTextView.xib */; };
+		073A575B1FB51A93004FBBFC /* LabeledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073A575A1FB51A93004FBBFC /* LabeledTextView.swift */; };
 		079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */; };
 		079CEF911FA8F6A300AC1FE4 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF901FA8F6A300AC1FE4 /* NewAccountViewController.swift */; };
 		079CEF931FA8F6B600AC1FE4 /* AccountEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF921FA8F6B600AC1FE4 /* AccountEditorViewController.swift */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		073A57571FB51854004FBBFC /* LabeledTextView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabeledTextView.xib; sourceTree = "<group>"; };
+		073A575A1FB51A93004FBBFC /* LabeledTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextView.swift; sourceTree = "<group>"; };
 		079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		079CEF901FA8F6A300AC1FE4 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		079CEF921FA8F6B600AC1FE4 /* AccountEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEditorViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +65,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		073A57591FB51A78004FBBFC /* Custom Controls */ = {
+			isa = PBXGroup;
+			children = (
+				073A57571FB51854004FBBFC /* LabeledTextView.xib */,
+				073A575A1FB51A93004FBBFC /* LabeledTextView.swift */,
+			);
+			path = "Custom Controls";
+			sourceTree = "<group>";
+		};
 		079CEF8F1FA8F68000AC1FE4 /* AccountManagement */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +105,7 @@
 		07AB53AF1F993F3200BC23F3 /* Uomi */ = {
 			isa = PBXGroup;
 			children = (
+				073A57591FB51A78004FBBFC /* Custom Controls */,
 				079CEF8F1FA8F68000AC1FE4 /* AccountManagement */,
 				07AB53C51F99430900BC23F3 /* tessdata */,
 				07AB53B01F993F3200BC23F3 /* AppDelegate.swift */,
@@ -194,6 +208,7 @@
 				07AB53B81F993F3200BC23F3 /* Assets.xcassets in Resources */,
 				07AB53B61F993F3200BC23F3 /* Login.storyboard in Resources */,
 				07DE48521FA91916008F1B96 /* Events.storyboard in Resources */,
+				073A57581FB51854004FBBFC /* LabeledTextView.xib in Resources */,
 				07DE484F1FA91830008F1B96 /* Transactions.storyboard in Resources */,
 				07DE48511FA9184D008F1B96 /* Balances.storyboard in Resources */,
 			);
@@ -265,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */,
+				073A575B1FB51A93004FBBFC /* LabeledTextView.swift in Sources */,
 				079CEF931FA8F6B600AC1FE4 /* AccountEditorViewController.swift in Sources */,
 				07AB53B11F993F3200BC23F3 /* AppDelegate.swift in Sources */,
 				079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */,
