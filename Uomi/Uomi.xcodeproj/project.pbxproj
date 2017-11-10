@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		073A57581FB51854004FBBFC /* LabeledTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073A57571FB51854004FBBFC /* LabeledTextView.xib */; };
-		073A575B1FB51A93004FBBFC /* LabeledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073A575A1FB51A93004FBBFC /* LabeledTextView.swift */; };
+		073A57581FB51854004FBBFC /* LabeledTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073A57571FB51854004FBBFC /* LabeledTextField.xib */; };
+		073A575B1FB51A93004FBBFC /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073A575A1FB51A93004FBBFC /* LabeledTextField.swift */; };
 		073A575D1FB540E3004FBBFC /* LabeledImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073A575C1FB540E3004FBBFC /* LabeledImagePicker.swift */; };
 		073A575F1FB5411D004FBBFC /* LabeledImagePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 073A575E1FB5411D004FBBFC /* LabeledImagePicker.xib */; };
 		079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */; };
@@ -30,8 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		073A57571FB51854004FBBFC /* LabeledTextView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabeledTextView.xib; sourceTree = "<group>"; };
-		073A575A1FB51A93004FBBFC /* LabeledTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextView.swift; sourceTree = "<group>"; };
+		073A57571FB51854004FBBFC /* LabeledTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabeledTextField.xib; sourceTree = "<group>"; };
+		073A575A1FB51A93004FBBFC /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		073A575C1FB540E3004FBBFC /* LabeledImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledImagePicker.swift; sourceTree = "<group>"; };
 		073A575E1FB5411D004FBBFC /* LabeledImagePicker.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabeledImagePicker.xib; sourceTree = "<group>"; };
 		079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -72,8 +72,8 @@
 		073A57591FB51A78004FBBFC /* Custom Controls */ = {
 			isa = PBXGroup;
 			children = (
-				073A57571FB51854004FBBFC /* LabeledTextView.xib */,
-				073A575A1FB51A93004FBBFC /* LabeledTextView.swift */,
+				073A57571FB51854004FBBFC /* LabeledTextField.xib */,
+				073A575A1FB51A93004FBBFC /* LabeledTextField.swift */,
 				073A575C1FB540E3004FBBFC /* LabeledImagePicker.swift */,
 				073A575E1FB5411D004FBBFC /* LabeledImagePicker.xib */,
 			);
@@ -215,7 +215,7 @@
 				07AB53B61F993F3200BC23F3 /* Login.storyboard in Resources */,
 				073A575F1FB5411D004FBBFC /* LabeledImagePicker.xib in Resources */,
 				07DE48521FA91916008F1B96 /* Events.storyboard in Resources */,
-				073A57581FB51854004FBBFC /* LabeledTextView.xib in Resources */,
+				073A57581FB51854004FBBFC /* LabeledTextField.xib in Resources */,
 				07DE484F1FA91830008F1B96 /* Transactions.storyboard in Resources */,
 				07DE48511FA9184D008F1B96 /* Balances.storyboard in Resources */,
 			);
@@ -287,7 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */,
-				073A575B1FB51A93004FBBFC /* LabeledTextView.swift in Sources */,
+				073A575B1FB51A93004FBBFC /* LabeledTextField.swift in Sources */,
 				079CEF931FA8F6B600AC1FE4 /* AccountEditorViewController.swift in Sources */,
 				07AB53B11F993F3200BC23F3 /* AppDelegate.swift in Sources */,
 				079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */,

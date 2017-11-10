@@ -5,18 +5,17 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LabeledTextView" customModule="Uomi" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LabeledTextField" customModule="Uomi" customModuleProvider="target">
             <connections>
                 <outlet property="textField" destination="5so-Sh-iPs" id="ave-nC-ckD"/>
                 <outlet property="titleLabel" destination="9DQ-k4-V1R" id="Tmi-05-ehX"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="47" height="53"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -38,18 +37,17 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="9DQ-k4-V1R" secondAttribute="trailing" id="DGH-Qy-7wN"/>
+                <constraint firstAttribute="trailing" secondItem="9DQ-k4-V1R" secondAttribute="trailing" id="DGH-Qy-7wN"/>
                 <constraint firstItem="5so-Sh-iPs" firstAttribute="top" secondItem="9DQ-k4-V1R" secondAttribute="bottom" constant="2" id="DrB-Hw-Dyv"/>
-                <constraint firstItem="5so-Sh-iPs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="P9f-BU-BIP"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5so-Sh-iPs" secondAttribute="trailing" id="WLX-rE-f0J"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="5so-Sh-iPs" secondAttribute="bottom" id="b9h-rV-1Xa"/>
-                <constraint firstItem="9DQ-k4-V1R" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="paw-TB-qRM"/>
-                <constraint firstItem="9DQ-k4-V1R" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="uMd-rW-KIu"/>
+                <constraint firstItem="5so-Sh-iPs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="P9f-BU-BIP"/>
+                <constraint firstAttribute="trailing" secondItem="5so-Sh-iPs" secondAttribute="trailing" id="WLX-rE-f0J"/>
+                <constraint firstAttribute="bottom" secondItem="5so-Sh-iPs" secondAttribute="bottom" id="b9h-rV-1Xa"/>
+                <constraint firstItem="9DQ-k4-V1R" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="paw-TB-qRM"/>
+                <constraint firstItem="9DQ-k4-V1R" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uMd-rW-KIu"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="-137.5" y="-227.5"/>
         </view>
     </objects>

@@ -88,22 +88,23 @@ import UIKit
     
     override var intrinsicContentSize: CGSize {
         get {
-            var minX = CGFloat.greatestFiniteMagnitude
-            var maxX = CGFloat.leastNormalMagnitude
-            var minY = CGFloat.greatestFiniteMagnitude
-            var maxY = CGFloat.leastNormalMagnitude
-            
-            for subview in subviews {
-                minX = min(minX, subview.center.x - (subview.bounds.width / 2))
-                maxX = max(maxX, subview.center.x + (subview.bounds.width / 2))
-                minY = min(minY, subview.center.y - (subview.bounds.height / 2))
-                maxY = max(maxY, subview.center.y + (subview.bounds.height / 2))
-            }
-            
-            if minX == CGFloat.greatestFiniteMagnitude { return super.intrinsicContentSize
-            }
-            
-            return CGSize(width: maxX - minX, height: maxY - minY)
+//            var minX = CGFloat.greatestFiniteMagnitude
+//            var maxX = CGFloat.leastNormalMagnitude
+//            var minY = CGFloat.greatestFiniteMagnitude
+//            var maxY = CGFloat.leastNormalMagnitude
+//
+//            for subview in subviews {
+//                minX = min(minX, subview.center.x - (subview.bounds.width / 2))
+//                maxX = max(maxX, subview.center.x + (subview.bounds.width / 2))
+//                minY = min(minY, subview.center.y - (subview.bounds.height / 2))
+//                maxY = max(maxY, subview.center.y + (subview.bounds.height / 2))
+//            }
+//
+//            if minX == CGFloat.greatestFiniteMagnitude { return super.intrinsicContentSize
+//            }
+//
+//            return CGSize(width: maxX - minX, height: maxY - minY)
+            return CGSize(width: 1, height: 1)
         }
     }
     

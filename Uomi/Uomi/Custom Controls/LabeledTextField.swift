@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable class LabeledTextView: UIView {
+@IBDesignable class LabeledTextField: UIView {
 
     var view: UIView!
     
@@ -77,7 +77,7 @@ import UIKit
     func loadViewFromNib() -> UIView {
 
         let bundle = Bundle(for: type(of: self))
-        let nib = UINib(nibName: "LabeledTextView", bundle: bundle)
+        let nib = UINib(nibName: "LabeledTextField", bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         
         return view
