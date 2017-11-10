@@ -12,6 +12,36 @@ import UIKit
 
     var view: UIView!
     
+    @IBOutlet fileprivate weak var titleLabel: UILabel!
+    @IBOutlet fileprivate weak var textField: UITextField!
+    
+    @IBInspectable var title: String? {
+        get {
+            return titleLabel.text
+        }
+        set (title) {
+            titleLabel.text = title
+        }
+    }
+    
+    @IBInspectable var placeholder: String? {
+        get {
+            return textField.placeholder
+        }
+        set (placeholder) {
+            textField.placeholder = placeholder
+        }
+    }
+    
+    @IBInspectable var text: String? {
+        get {
+            return textField.text
+        }
+        set (text) {
+            textField.text = text
+        }
+    }
+    
     override init(frame: CGRect) {
         // 1. setup any properties here
         
@@ -60,5 +90,33 @@ import UIKit
         // Drawing code
     }
     */
-
+    
+    
+    // MARK: - Intrinsic Size
+    
+    override var intrinsicContentSize: CGSize {
+        get {
+            var minX = CGFloat.greatestFiniteMagnitude
+            var maxX = CGFloat.leastNormalMagnitude
+            var minY = CGFloat.greatestFiniteMagnitude
+            var maxY = CGFloat.leastNormalMagnitude
+            
+            for subview in subviews {
+                minX = min(minX, subview.center.x - (subview.bounds.width / 2))
+                maxX = max(maxX, subview.center.x + (subview.bounds.width / 2))
+                minY = min(minY, subview.center.y - (subview.bounds.height / 2))
+                maxY = max(maxY, subview.center.y + (subview.bounds.height / 2))
+            }
+            
+            if minX == CGFloat.greatestFiniteMagnitude { return super.intrinsicContentSize
+            }
+            
+            return CGSize(width: maxX - minX, height: maxY - minY)
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        invalidateIntrinsicContentSize()
+    }
 }
