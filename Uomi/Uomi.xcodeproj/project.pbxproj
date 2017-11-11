@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		077B45CD1FB7A2C400792C30 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */; };
+		077B45D01FB7A48100792C30 /* PercentageSplitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */; };
+		077B45D31FB7A58F00792C30 /* LineItemSplitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */; };
+		077B45D51FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */; };
 		079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */; };
 		079CEF911FA8F6A300AC1FE4 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF901FA8F6A300AC1FE4 /* NewAccountViewController.swift */; };
 		079CEF931FA8F6B600AC1FE4 /* AccountEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079CEF921FA8F6B600AC1FE4 /* AccountEditorViewController.swift */; };
@@ -28,6 +31,9 @@
 
 /* Begin PBXFileReference section */
 		077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageSplitTableViewCell.swift; sourceTree = "<group>"; };
+		077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineItemSplitTableViewCell.swift; sourceTree = "<group>"; };
+		077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineItemTotalTableViewCell.swift; sourceTree = "<group>"; };
 		079CEF8D1FA8F67A00AC1FE4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		079CEF901FA8F6A300AC1FE4 /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		079CEF921FA8F6B600AC1FE4 /* AccountEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEditorViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +73,9 @@
 			isa = PBXGroup;
 			children = (
 				077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */,
+				077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */,
+				077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */,
+				077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -277,12 +286,15 @@
 			files = (
 				079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */,
 				079CEF931FA8F6B600AC1FE4 /* AccountEditorViewController.swift in Sources */,
+				077B45D31FB7A58F00792C30 /* LineItemSplitTableViewCell.swift in Sources */,
 				07AB53B11F993F3200BC23F3 /* AppDelegate.swift in Sources */,
 				079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */,
 				079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */,
 				079CEF9B1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift in Sources */,
 				079CEF911FA8F6A300AC1FE4 /* NewAccountViewController.swift in Sources */,
 				077B45CD1FB7A2C400792C30 /* TransactionViewController.swift in Sources */,
+				077B45D01FB7A48100792C30 /* PercentageSplitTableViewCell.swift in Sources */,
+				077B45D51FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

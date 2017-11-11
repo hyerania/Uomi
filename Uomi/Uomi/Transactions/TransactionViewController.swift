@@ -8,7 +8,11 @@
 
 import UIKit
 
-class TransactionViewController: UIViewController {
+let percentResueIdentifier = "percentageCell"
+let lineItemReuseIdentifier = "lineItemCell"
+let lineItemTotalReuseIdentifier = "lineItemTotalCell"
+
+class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var dateField: UITextField!
     @IBOutlet weak var categoryField: UITextField!
     @IBOutlet weak var businessField: UITextField!
@@ -22,16 +26,54 @@ class TransactionViewController: UIViewController {
     
     @IBOutlet weak var splitSeg: UISegmentedControl!
     
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        tableView.setEditing(true, animated: false)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    // MARK: - Data Source
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            return tableView.dequeueReusableCell(withIdentifier: percentResueIdentifier, for: indexPath)
+        case 1:
+            return tableView.dequeueReusableCell(withIdentifier: lineItemReuseIdentifier, for: indexPath)
+        case 2:
+            return tableView.dequeueReusableCell(withIdentifier: lineItemTotalReuseIdentifier, for: indexPath)
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        if indexPath.row == 2 {
+            return .insert
+        }
+        
+        return .delete
+    }
+    
+    
+    // MARK: - Table Delegate
     
 
     /*
