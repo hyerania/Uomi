@@ -6,6 +6,9 @@ target 'Uomi' do
   use_frameworks!
 
   # Pods for Uomi
+pod 'Firebase/Core'
+pod 'FirebaseAuth'
+pod 'FirebaseDatabase'
 #pod 'TesseractOCRiOS', '~> 4.0'
 #pod 'BraintreeDropIn'
 
