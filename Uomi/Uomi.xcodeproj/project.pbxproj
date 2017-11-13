@@ -47,6 +47,7 @@
 		07DE484E1FA91830008F1B96 /* Transactions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transactions.storyboard; sourceTree = "<group>"; };
 		07DE48501FA9184D008F1B96 /* Balances.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Balances.storyboard; sourceTree = "<group>"; };
 		33388B2B44FD13FF818C68AA /* Pods-Uomi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.release.xcconfig"; sourceTree = "<group>"; };
+		AA5EF9BC1FBA119B00D50DA6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C735C56250DC6E22CE8C9F8D /* Pods-Uomi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.debug.xcconfig"; sourceTree = "<group>"; };
 		EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAF533681FB50B4600E9F092 /* BalancesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesTableViewController.swift; sourceTree = "<group>"; };
@@ -108,7 +109,6 @@
 				07DE48501FA9184D008F1B96 /* Balances.storyboard */,
 				07AB53B71F993F3200BC23F3 /* Assets.xcassets */,
 				07AB53B91F993F3200BC23F3 /* LaunchScreen.storyboard */,
-				07AB53BC1F993F3200BC23F3 /* Info.plist */,
 				079CEF961FA8FBA500AC1FE4 /* EventsTableViewController.swift */,
 				079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */,
 				079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */,
