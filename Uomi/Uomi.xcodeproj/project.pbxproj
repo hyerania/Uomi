@@ -23,6 +23,9 @@
 		07DE48511FA9184D008F1B96 /* Balances.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE48501FA9184D008F1B96 /* Balances.storyboard */; };
 		07DE48521FA91916008F1B96 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE484D1FA917CB008F1B96 /* Events.storyboard */; };
 		508758EE52944AB42A076599 /* Pods_Uomi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */; };
+		EA45F08C1FB4E8A900BDCD5C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */; };
+		EAF533691FB50B4600E9F092 /* BalancesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF533681FB50B4600E9F092 /* BalancesTableViewController.swift */; };
+		EAF5336C1FB50BE300E9F092 /* SettleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF5336B1FB50BE300E9F092 /* SettleTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,11 +43,14 @@
 		07AB53BC1F993F3200BC23F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07AB53C21F99421100BC23F3 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		07AB53C51F99430900BC23F3 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
-		07DE484D1FA917CB008F1B96 /* Events.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Events.storyboard; path = "/Users/kevinjnguyen/Github/CSCE671-Project/Uomi/Uomi/Events.storyboard"; sourceTree = "<absolute>"; };
+		07DE484D1FA917CB008F1B96 /* Events.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		07DE484E1FA91830008F1B96 /* Transactions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transactions.storyboard; sourceTree = "<group>"; };
 		07DE48501FA9184D008F1B96 /* Balances.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Balances.storyboard; sourceTree = "<group>"; };
 		33388B2B44FD13FF818C68AA /* Pods-Uomi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.release.xcconfig"; sourceTree = "<group>"; };
 		C735C56250DC6E22CE8C9F8D /* Pods-Uomi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.debug.xcconfig"; sourceTree = "<group>"; };
+		EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EAF533681FB50B4600E9F092 /* BalancesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesTableViewController.swift; sourceTree = "<group>"; };
+		EAF5336B1FB50BE300E9F092 /* SettleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettleTableViewController.swift; sourceTree = "<group>"; };
 		F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Uomi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,6 +98,7 @@
 		07AB53AF1F993F3200BC23F3 /* Uomi */ = {
 			isa = PBXGroup;
 			children = (
+				EAF533671FB50B1300E9F092 /* BalanceManagement */,
 				079CEF8F1FA8F68000AC1FE4 /* AccountManagement */,
 				07AB53C51F99430900BC23F3 /* tessdata */,
 				07AB53B01F993F3200BC23F3 /* AppDelegate.swift */,
@@ -105,6 +112,7 @@
 				079CEF961FA8FBA500AC1FE4 /* EventsTableViewController.swift */,
 				079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */,
 				079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */,
+				EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */,
 			);
 			path = Uomi;
 			sourceTree = "<group>";
@@ -116,6 +124,15 @@
 				F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EAF533671FB50B1300E9F092 /* BalanceManagement */ = {
+			isa = PBXGroup;
+			children = (
+				EAF533681FB50B4600E9F092 /* BalancesTableViewController.swift */,
+				EAF5336B1FB50BE300E9F092 /* SettleTableViewController.swift */,
+			);
+			path = BalanceManagement;
 			sourceTree = "<group>";
 		};
 		EFAC17F7034A9E5CD4DBB7BB /* Pods */ = {
@@ -190,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07AB53BB1F993F3200BC23F3 /* LaunchScreen.storyboard in Resources */,
+				EA45F08C1FB4E8A900BDCD5C /* GoogleService-Info.plist in Resources */,
 				07AB53C61F99430900BC23F3 /* tessdata in Resources */,
 				07AB53B81F993F3200BC23F3 /* Assets.xcassets in Resources */,
 				07AB53B61F993F3200BC23F3 /* Login.storyboard in Resources */,
@@ -224,15 +242,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Uomi/Pods-Uomi-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Braintree/Braintree.framework",
-				"${BUILT_PRODUCTS_DIR}/BraintreeDropIn/BraintreeDropIn.framework",
-				"${BUILT_PRODUCTS_DIR}/TesseractOCRiOS/TesseractOCR.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Braintree.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BraintreeDropIn.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TesseractOCR.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -268,9 +288,11 @@
 				079CEF931FA8F6B600AC1FE4 /* AccountEditorViewController.swift in Sources */,
 				07AB53B11F993F3200BC23F3 /* AppDelegate.swift in Sources */,
 				079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */,
+				EAF533691FB50B4600E9F092 /* BalancesTableViewController.swift in Sources */,
 				079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */,
 				079CEF9B1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift in Sources */,
 				079CEF911FA8F6A300AC1FE4 /* NewAccountViewController.swift in Sources */,
+				EAF5336C1FB50BE300E9F092 /* SettleTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
