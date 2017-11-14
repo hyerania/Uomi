@@ -9,20 +9,6 @@
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
-//protocol AccountManager {
-//    func register(user: String, name: String, password: String) -> (User, Bool)
-//
-//    func login(email: String, password: String)
-//
-//    // clear cache
-//    func logout()
-//
-//    func userExists(email: String) -> Bool
-//
-//    func load(id: String) -> User
-//
-//    func users(forEvent: Event) -> [User]
-//}
 
 class AccountManager {
     
@@ -84,6 +70,32 @@ class AccountManager {
         })
     }
     
+    func userExists(email: String, completionHandler: @escaping(Bool) -> ()) {
+        ref.child("accounts").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            guard let accounts = snapshot.value as? NSDictionary else {
+                print("Unable to get accounts")
+                return
+            }
+            
+            for (_, userInfo) in accounts {
+                guard
+                    let userData = userInfo as? NSDictionary,
+                    let userEmail = userData["email"] as? String
+                else {
+                    print("Invalid data.")
+                    continue
+                }
+                
+                if userEmail == email {
+                    completionHandler(true)
+                    return
+                }
+            
+            }
+            completionHandler(false)
+        })
+    }
     func logout(completionHandler: @escaping(Bool) -> ()) {
         try! Auth.auth().signOut()
         completionHandler(true)
@@ -111,6 +123,7 @@ class AccountManager {
         }
         
     }
+    
     
     private init() {
         print("Account mananger constructor called...")
