@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseDatabase
+import FirebaseAuth
 //protocol AccountManager {
 //    func register(user: String, name: String, password: String) -> (User, Bool)
 //
@@ -24,7 +25,46 @@ import FirebaseDatabase
 //}
 
 class AccountManager {
+    
     var ref: DatabaseReference!
+    private var currentUser: User?
+    
+    func register(email: String, name: String, password: String, completionHanlder: @escaping(User?, Error?) -> ()) {
+        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+            
+            if let error = error {
+                completionHanlder(nil, error)
+            } else {
+                self.ref.child("accounts").child(user!.uid).setValue([
+                    "name" : name,
+                    "email" : email
+                    ])
+                let newUser = User(uid: user!.uid, email: email, name: name)
+                self.currentUser = newUser
+                completionHanlder(newUser, nil)
+            }
+        }
+    }
+    
+    func login(email: String, password: String, completionHanlder: @escaping(User?) -> ()) {
+            Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+    
+                if (error != nil) {
+                    completionHanlder(nil)
+                    return
+                }
+                
+                guard let user = user else {
+                    print("Error converting user")
+                    return
+                }
+                
+                self.load(id: user.uid) { user in
+                    self.currentUser = user
+                    completionHanlder(user)
+                }
+            }
+    }
     
     func load(id: String, completionHandler: @escaping(User?) -> ()) {
         ref.child("accounts").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -42,6 +82,34 @@ class AccountManager {
             completionHandler(user)
             
         })
+    }
+    
+    func logout(completionHandler: @escaping(Bool) -> ()) {
+        try! Auth.auth().signOut()
+        completionHandler(true)
+    }
+    
+    func getCurrentUser(completionHandler: @escaping(User?) -> ()) {
+        
+        if self.currentUser != nil {
+            completionHandler(self.currentUser)
+            return
+        }
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user {
+                print("Is logged in")
+                self.load(id: user.uid) { user in
+                    completionHandler(user)
+                    return
+                }
+            } else {
+                completionHandler(nil)
+                print("not logged in")
+                return
+            }
+        }
+        
     }
     
     private init() {

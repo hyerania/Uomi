@@ -55,10 +55,8 @@ class NewAccountViewController: UIViewController {
         } else if (self.passwordLabel.text! != self.confirmPasswordLabel.text!) {
             self.createAlert(title: "Unable to register", message: "Passwords do not match.")
         } else {
-            Auth.auth().createUser(withEmail: email, password: password) { (user: User?, error) in
-                
+            AccountManager.sharedInstance.register(email: email, name: name, password: password) { user, error in
                 if let error = error, let errCode = AuthErrorCode(rawValue: error._code) {
-                    
                     switch errCode {
                     case .emailAlreadyInUse:
                         self.createAlert(title: "Unable to register", message: "Email already in use.")
@@ -68,10 +66,6 @@ class NewAccountViewController: UIViewController {
                         print("Create User Error: \(error)")
                     }
                 } else {
-                    self.ref.child("accounts/" + user!.uid).setValue([
-                        "name": self.fullNameLabel.text!,
-                        "email": self.emailLabel.text!,
-                        ])
                     self.performSegue(withIdentifier: "goToEvents", sender: self)
                 }
             }

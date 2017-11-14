@@ -21,12 +21,9 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         self.loginButton.layer.cornerRadius = 8
         self.registerButton.layer.cornerRadius = 8
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user {
-                self.performSegue(withIdentifier: "doLogin", sender: nil)
-                print("logged in")
-            } else {
-                print("not logged in")
+        AccountManager.sharedInstance.getCurrentUser() { user in
+            if user != nil {
+                self.performSegue(withIdentifier: "doLogin", sender: self)
             }
         }
         // Do any additional setup after loading the view.
@@ -65,19 +62,18 @@ class LoginViewController: UIViewController {
         let email = self.usernameLabel.text!
         let password = self.passwordLabel.text!
         
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-            
-            if (user != nil) {
-                self.performSegue(withIdentifier: "doLogin", sender: nil)
-            }
-            
-            if (error != nil) {
+        AccountManager.sharedInstance.login(email: email, password: password) { user in
+            guard user != nil else {
                 let alert = UIAlertController(title: "Unable to login", message: "The login credentials provided are invalid. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+                return
             }
             
+            self.performSegue(withIdentifier: "doLogin", sender: nil)
+
         }
+
     }
     
 }
