@@ -26,6 +26,14 @@ class LoginViewController: UIViewController {
                 self.performSegue(withIdentifier: "doLogin", sender: self)
             }
         }
+//        EventManager.sharedInstance.createEvent(owner: "Test Owner", name: "Test Name", description: "Test Description", participants: ["Test", "Test1"]) { events in
+//
+//        }
+//        let event: [String: Any] = ["name": "Test Name", "description": "Test Description", "owner": "Test Owner", "participants": ["Test1", "Test2"]]
+//        EventManager.sharedInstance.createEvent2(event: event) { event in
+//
+//        }
+        AccountManager.sharedInstance.load(id: "WIPjNNDMJkOxAXb33xKCJBjXHKo1")
         // Do any additional setup after loading the view.
     }
 
