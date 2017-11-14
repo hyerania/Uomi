@@ -9,7 +9,7 @@
 import UIKit
 
 class PercentageSplitTableViewCell: UITableViewCell {
-    @IBOutlet weak var payerLabel: UIButton!
+    @IBOutlet weak var participantView: ParticipantView!
     @IBOutlet weak var percentField: UITextField!
     @IBOutlet weak var percentStepper: UIStepper!
     @IBOutlet weak var totalLabel: UILabel!

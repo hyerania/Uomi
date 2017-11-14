@@ -15,13 +15,12 @@ let lineItemTotalReuseIdentifier = "lineItemTotalCell"
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var dateField: UITextField!
     @IBOutlet weak var categoryField: UITextField!
-    @IBOutlet weak var businessField: UITextField!
     @IBOutlet weak var descriptionField: UITextField!
     
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var receiptView: UIImageView!
     
-    @IBOutlet weak var payerLabel: UILabel!
+    @IBOutlet weak var payerLabel: ParticipantView!
     @IBOutlet weak var totalField: UITextField!
     
     @IBOutlet weak var splitSeg: UISegmentedControl!

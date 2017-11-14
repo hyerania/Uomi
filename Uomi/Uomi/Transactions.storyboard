@@ -79,7 +79,7 @@
                                 <rect key="frame" x="20" y="0.0" width="335" height="667"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ms8-QB-48k">
-                                        <rect key="frame" x="0.0" y="20" width="335" height="546"/>
+                                        <rect key="frame" x="0.0" y="20" width="335" height="483.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="42Z-1b-Dbe">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="113"/>
@@ -167,25 +167,8 @@
                                                     <constraint firstItem="int-3A-KOV" firstAttribute="bottom" secondItem="vjS-ey-SKB" secondAttribute="bottom" id="oty-kH-3jq"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rSA-YW-xtD">
-                                                <rect key="frame" x="0.0" y="125" width="335" height="50.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ecv-ug-jHw">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bM7-yY-z31">
-                                                        <rect key="frame" x="0.0" y="20.5" width="335" height="30"/>
-                                                        <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
-                                                </subviews>
-                                            </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Hiq-ZC-OYz">
-                                                <rect key="frame" x="0.0" y="187.5" width="335" height="50.5"/>
+                                                <rect key="frame" x="0.0" y="125" width="335" height="50.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description (optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kX9-aq-J9w">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
@@ -202,7 +185,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="9Sn-Mi-yGE">
-                                                <rect key="frame" x="0.0" y="250" width="335" height="44"/>
+                                                <rect key="frame" x="0.0" y="187.5" width="335" height="44"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWe-VK-I8P">
                                                         <rect key="frame" x="0.0" y="12" width="75" height="20.5"/>
@@ -233,7 +216,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-Km-QRr">
-                                                <rect key="frame" x="0.0" y="306" width="335" height="28"/>
+                                                <rect key="frame" x="0.0" y="243.5" width="335" height="28"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Split Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYh-PC-cpM">
                                                         <rect key="frame" x="0.0" y="0.0" width="128" height="28"/>
@@ -251,7 +234,7 @@
                                                 </subviews>
                                             </stackView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="eJM-2e-Yst">
-                                                <rect key="frame" x="0.0" y="346" width="335" height="200"/>
+                                                <rect key="frame" x="0.0" y="283.5" width="335" height="200"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="f4a-pZ-spq"/>
@@ -264,8 +247,8 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CF2-JY-0g3" customClass="ParticipantView" customModule="Uomi" customModuleProvider="target">
-                                                                    <rect key="frame" x="12" y="9" width="35" height="35"/>
+                                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CF2-JY-0g3" customClass="ParticipantView" customModule="Uomi" customModuleProvider="target">
+                                                                    <rect key="frame" x="12" y="9" width="34" height="35"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="CF2-JY-0g3" secondAttribute="height" multiplier="1:1" id="638-pr-AkV"/>
@@ -306,6 +289,7 @@
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
+                                                            <outlet property="participantView" destination="CF2-JY-0g3" id="oSr-Ik-nXP"/>
                                                             <outlet property="percentField" destination="8JC-gT-NNh" id="THq-Mt-PVa"/>
                                                             <outlet property="percentStepper" destination="roc-mo-Uwt" id="fNO-LD-0mT"/>
                                                             <outlet property="totalLabel" destination="kjg-F1-wjN" id="vOo-vj-IzB"/>
@@ -356,6 +340,7 @@
                                                         </tableViewCellContentView>
                                                         <connections>
                                                             <outlet property="descriptionField" destination="9NM-Cc-3Wq" id="2cv-As-9xB"/>
+                                                            <outlet property="participantView" destination="oxu-vR-y9x" id="UpC-Le-DMU"/>
                                                             <outlet property="subtotalLabel" destination="NuZ-Lt-4mE" id="N3l-h0-2oB"/>
                                                         </connections>
                                                     </tableViewCell>
@@ -426,11 +411,11 @@
                         <barButtonItem key="rightBarButtonItem" title="Action" id="gmF-k4-0OW"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="businessField" destination="bM7-yY-z31" id="xFS-rG-QDy"/>
                         <outlet property="cameraButton" destination="xNs-yx-YAk" id="emy-Ro-3TS"/>
                         <outlet property="categoryField" destination="FdD-LS-Xom" id="yWV-BV-4zV"/>
                         <outlet property="dateField" destination="z47-9c-SMw" id="cbJ-re-qID"/>
                         <outlet property="descriptionField" destination="Pnd-Of-jgR" id="fYm-PW-b2f"/>
+                        <outlet property="payerLabel" destination="AOg-pi-NnP" id="Vav-pH-wzQ"/>
                         <outlet property="receiptView" destination="492-T6-hA1" id="fry-8U-Ypy"/>
                         <outlet property="splitSeg" destination="IK1-7U-2gB" id="Qzj-YD-9vn"/>
                         <outlet property="tableView" destination="eJM-2e-Yst" id="Hpr-mg-xGB"/>

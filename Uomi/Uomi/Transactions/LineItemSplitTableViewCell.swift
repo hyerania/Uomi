@@ -9,7 +9,7 @@
 import UIKit
 
 class LineItemSplitTableViewCell: UITableViewCell {
-    @IBOutlet weak var payerSelector: UIButton!
+    @IBOutlet weak var participantView: ParticipantView!
     @IBOutlet weak var descriptionField: UITextField!
     @IBOutlet weak var subtotalLabel: UILabel!
     
