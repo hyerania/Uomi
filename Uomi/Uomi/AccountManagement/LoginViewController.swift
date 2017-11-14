@@ -21,6 +21,14 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         self.loginButton.layer.cornerRadius = 8
         self.registerButton.layer.cornerRadius = 8
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user {
+                self.performSegue(withIdentifier: "doLogin", sender: nil)
+                print("logged in")
+            } else {
+                print("not logged in")
+            }
+        }
         // Do any additional setup after loading the view.
     }
 
