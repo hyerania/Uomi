@@ -95,7 +95,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		077B45CB1FB7A2A000792C30 /* Transactions */ = {
+		077B45CB1FB7A2A000792C30 /* TransactionManagement */ = {
 			isa = PBXGroup;
 			children = (
 				077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */,
@@ -106,7 +106,7 @@
 				078834AA1FBB831D0052D1CF /* Transaction.swift */,
 				078834AC1FBB89610052D1CF /* Contribution.swift */,
 			);
-			path = Transactions;
+			path = TransactionManagement;
 			sourceTree = "<group>";
 		};
 		078834B01FBB8EFD0052D1CF /* Event */ = {
@@ -153,7 +153,7 @@
 			children = (
 				078834B01FBB8EFD0052D1CF /* Event */,
 				07D15BC71FB92E4D00AC4D93 /* CustomControls */,
-				077B45CB1FB7A2A000792C30 /* Transactions */,
+				077B45CB1FB7A2A000792C30 /* TransactionManagement */,
 				EAF533671FB50B1300E9F092 /* BalanceManagement */,
 				079CEF8F1FA8F68000AC1FE4 /* AccountManagement */,
 				07AB53C51F99430900BC23F3 /* tessdata */,
