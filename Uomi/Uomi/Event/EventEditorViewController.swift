@@ -17,7 +17,7 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
     @IBOutlet weak var nameTextField: UITextField!
     
     private var participants = [String]()
-    var event: Event?
+    var eventId: String?
     
     private let activitiyViewController = ActivityViewController(message: "Creating...")
     private let updateViewController = ActivityViewController(message: "Updating...")
@@ -101,7 +101,7 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
                     if (user != nil) {
                         participantsIds.append(user!.getUid())
                         if (participantsIds.count == self.participants.count) {
-                            self.updateEvent(participantsId: participantsIds, owner: currentUser!.getUid(), key: self.event!.getUid())
+                            self.updateEvent(participantsId: participantsIds, owner: currentUser!.getUid(), key: self.eventId!)
                         }
                     }
                     
@@ -169,42 +169,52 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
     // MARK: - Helper Functions
     
     private func populateFields() {
-        guard let event = self.event else {
+        guard let eventId = self.eventId else {
             return
         }
         
-        self.nameTextField.text = event.getName()
-        self.descriptionTextView.text = event.getDescription()
-        
-        AccountManager.sharedInstance.getCurrentUser() { user in
-            guard let user = user else {
-                print("Error. User not logged in.")
+        EventManager.sharedInstance.loadEvent(id: eventId) { event in
+            
+            guard let event = event else {
+                print("Error getting event.")
                 return
             }
             
-            let uid = user.getUid()
+            self.nameTextField.text = event.getName()
+            self.descriptionTextView.text = event.getDescription()
             
-            for id in event.getContributors() {
-                
-                if (id == uid) {
-                    continue
+            AccountManager.sharedInstance.getCurrentUser() { user in
+                guard let user = user else {
+                    print("Error. User not logged in.")
+                    return
                 }
                 
-                AccountManager.sharedInstance.load(id: id) { otherUser in
-                    
-                    guard let validUser = otherUser else {
-                        return
-                    }
-                    
-                    self.participants.append(validUser.getEmail())
-                    
-                    if (self.participants.count == event.getContributors().count - 1) {
-                        self.rebuildParticipantsView()
-                    }
-                }
+                let uid = user.getUid()
                 
+                for id in event.getContributors() {
+                    
+                    if (id == uid) {
+                        continue
+                    }
+                    
+                    AccountManager.sharedInstance.load(id: id) { otherUser in
+                        
+                        guard let validUser = otherUser else {
+                            return
+                        }
+                        
+                        self.participants.append(validUser.getEmail())
+                        
+                        if (self.participants.count == event.getContributors().count - 1) {
+                            self.rebuildParticipantsView()
+                        }
+                    }
+                    
+                }
             }
         }
+        
+        
         
     }
     
@@ -216,8 +226,8 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
     
     private func removeParticipant(email: String) {
         participants = participants.filter(){ $0 != email}
-        if event != nil {
-            AccountManager.sharedInstance.remove(email: email, eventId: event!.getUid())
+        if eventId != nil {
+            AccountManager.sharedInstance.remove(email: email, eventId: eventId!)
         }
         AccountManager.sharedInstance.userExists(email: email) { user in
             if (user && !self.participants.contains(email)) {
