@@ -33,6 +33,7 @@
 		07DE48521FA91916008F1B96 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE484D1FA917CB008F1B96 /* Events.storyboard */; };
 		07DE8E271FB931F40099B4B1 /* ParticipantView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07DE8E261FB931F40099B4B1 /* ParticipantView.xib */; };
 		508758EE52944AB42A076599 /* Pods_Uomi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */; };
+		EA285FD51FBCB2580085A417 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA285FD41FBCB2580085A417 /* EventTableViewCell.swift */; };
 		EA45F08C1FB4E8A900BDCD5C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */; };
 		EAD689F71FBC527900E17EB6 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD689F61FBC527900E17EB6 /* ActivityViewController.swift */; };
 		EAF533691FB50B4600E9F092 /* BalancesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF533681FB50B4600E9F092 /* BalancesTableViewController.swift */; };
@@ -69,6 +70,7 @@
 		07DE8E261FB931F40099B4B1 /* ParticipantView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParticipantView.xib; sourceTree = "<group>"; };
 		33388B2B44FD13FF818C68AA /* Pods-Uomi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.release.xcconfig"; sourceTree = "<group>"; };
 		C735C56250DC6E22CE8C9F8D /* Pods-Uomi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.debug.xcconfig"; sourceTree = "<group>"; };
+		EA285FD41FBCB2580085A417 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAD689F61FBC527900E17EB6 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		EAF533681FB50B4600E9F092 /* BalancesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesTableViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 		077B45CB1FB7A2A000792C30 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */,
 				077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */,
 				077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */,
 				077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */,
@@ -105,9 +108,9 @@
 			children = (
 				079CEF961FA8FBA500AC1FE4 /* EventsTableViewController.swift */,
 				079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */,
-				079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */,
 				078834B11FBB8F070052D1CF /* EventManager.swift */,
 				078834B31FBB8F2C0052D1CF /* Event.swift */,
+				EA285FD41FBCB2580085A417 /* EventTableViewCell.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				078834AF1FBB8E390052D1CF /* AccountManager.swift in Sources */,
 				079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */,
 				EAF533691FB50B4600E9F092 /* BalancesTableViewController.swift in Sources */,
+				EA285FD51FBCB2580085A417 /* EventTableViewCell.swift in Sources */,
 				078834B41FBB8F2C0052D1CF /* Event.swift in Sources */,
 				079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */,
 				079CEF9B1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift in Sources */,

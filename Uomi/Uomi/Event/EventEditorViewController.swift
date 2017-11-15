@@ -29,7 +29,6 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
         plusButton.isEnabled = false
         participantsTextView.layer.borderWidth = 1
         participantsTextView.layer.borderColor = UIColor.black.cgColor
-
         participantsTextField.delegate = self
         participantsTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         
@@ -49,6 +48,7 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
     @IBAction func hitPlusButton(_ sender: UIButton) {
         self.addParticipant(email: self.participantsTextField.text!)
         self.rebuildParticipantsView()
+        
         self.plusButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         self.plusButton.isEnabled = false;
     }
@@ -192,7 +192,6 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
                 self.createAlert(title: "Error", message: "There was an issue creating your event. Please try again.")
             }
         }
-        print(participantsId)
         self.activitiyViewController.dismiss(animated: true)
         
     }

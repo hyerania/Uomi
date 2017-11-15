@@ -42,7 +42,7 @@ class EventManager {
         }
         ref.updateChildValues(childUpdates)
         
-        let newEvent = Event(owner: addEvent["owner"] as! String, name: addEvent["name"] as! String, description: addEvent["description"] as! String, contributors: event["participants"] as! [String], uid: key)
+        let newEvent = Event(owner: addEvent["owner"] as! String, name: addEvent["name"] as! String, description: addEvent["description"] as! String, contributors: event["participants"] as! [String], uid: key, status: "active")
         completionHandler(newEvent)
         
     }
@@ -58,11 +58,48 @@ class EventManager {
                 return
             }
             
+            var count = 0
             for (key, _) in events {
-                print(key)
+                guard let key = key as? String else {
+                    print("There was an issue getting event key")
+                    continue
+                }
+                self.loadEvent(id: key) { event in
+                    count = count + 1
+                    if (event != nil) {
+                        userEvents.append(event!)
+                    }
+                    if (count == events.count) {
+                        completionHandler(userEvents)
+                    }
+                }
             }
-            completionHandler(userEvents)
             
+        })
+    }
+    
+    func loadEvent(id: String, completionHanlder: @escaping(Event?) -> ()) {
+        ref.child("events").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard
+                let eventData = snapshot.value as? NSDictionary,
+                let description = eventData["description"] as? String,
+                let name = eventData["name"] as? String,
+                let owner = eventData["owner"] as? String,
+                let participants = eventData["participants"] as? NSDictionary,
+                let status = eventData["status"] as? String
+            else {
+                completionHanlder(nil)
+                return
+            }
+            
+            var participantsIds = [String]()
+            for (key, _) in participants {
+                if let key = key as? String {
+                    participantsIds.append(key)
+                }
+            }
+            let event = Event(owner: owner, name: name, description: description, contributors: participantsIds, uid: id, status: status)
+            completionHanlder(event)
         })
     }
     

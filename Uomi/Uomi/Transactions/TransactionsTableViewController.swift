@@ -10,9 +10,16 @@ import UIKit
 
 class TransactionsTableViewController: UITableViewController {
 
+    var event: Event?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        guard let event = event else {
+            return
+        }
+        
+        self.title = event.getName()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
