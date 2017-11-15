@@ -56,7 +56,7 @@ class BalanceTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewCtrl = segue.destination as? SettleTableViewController {
+        if let viewCtrl = segue.destination as? SettleViewController {
             viewCtrl.userCellData = self.arrayOfCellData[self.selectedRow]
         }
     }
