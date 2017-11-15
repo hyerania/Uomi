@@ -35,6 +35,7 @@
 		508758EE52944AB42A076599 /* Pods_Uomi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */; };
 		AA83D3E91FBCCA910081815E /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA83D3E81FBCCA910081815E /* EventTableViewCell.swift */; };
 		AA83D3EB1FBCCAA60081815E /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA83D3EA1FBCCAA60081815E /* ActivityViewController.swift */; };
+		AA83D3ED1FBCD15F0081815E /* SettleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA83D3EC1FBCD15F0081815E /* SettleTableViewController.swift */; };
 		AA8585771FBBA10B005B2221 /* BalancesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8585751FBBA10B005B2221 /* BalancesTableViewCell.swift */; };
 		AA8585781FBBA10B005B2221 /* BalancesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA8585761FBBA10B005B2221 /* BalancesTableViewCell.xib */; };
 		AA85857A1FBBA389005B2221 /* BalanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8585791FBBA389005B2221 /* BalanceTableViewController.swift */; };
@@ -74,6 +75,7 @@
 		33388B2B44FD13FF818C68AA /* Pods-Uomi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.release.xcconfig"; sourceTree = "<group>"; };
 		AA83D3E81FBCCA910081815E /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		AA83D3EA1FBCCAA60081815E /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
+		AA83D3EC1FBCD15F0081815E /* SettleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettleTableViewController.swift; sourceTree = "<group>"; };
 		AA8585751FBBA10B005B2221 /* BalancesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesTableViewCell.swift; sourceTree = "<group>"; };
 		AA8585761FBBA10B005B2221 /* BalancesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalancesTableViewCell.xib; sourceTree = "<group>"; };
 		AA8585791FBBA389005B2221 /* BalanceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTableViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				AA8585791FBBA389005B2221 /* BalanceTableViewController.swift */,
 				AA8585751FBBA10B005B2221 /* BalancesTableViewCell.swift */,
 				AA8585761FBBA10B005B2221 /* BalancesTableViewCell.xib */,
+				AA83D3EC1FBCD15F0081815E /* SettleTableViewController.swift */,
 				AA85857B1FBBA477005B2221 /* SettleTableViewCell.swift */,
 				AA85857C1FBBA477005B2221 /* SettleTableViewCell.xib */,
 			);
@@ -366,6 +369,7 @@
 				078834AF1FBB8E390052D1CF /* AccountManager.swift in Sources */,
 				079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */,
 				AA83D3E91FBCCA910081815E /* EventTableViewCell.swift in Sources */,
+				AA83D3ED1FBCD15F0081815E /* SettleTableViewController.swift in Sources */,
 				078834B41FBB8F2C0052D1CF /* Event.swift in Sources */,
 				079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */,
 				079CEF9B1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift in Sources */,
