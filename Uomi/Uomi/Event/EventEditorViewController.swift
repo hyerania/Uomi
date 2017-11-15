@@ -17,7 +17,11 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
     @IBOutlet weak var nameTextField: UITextField!
     
     private var participants = [String]()
+    var eventId: String?
+    
     private let activitiyViewController = ActivityViewController(message: "Creating...")
+    private let updateViewController = ActivityViewController(message: "Updating...")
+
     
     // MARK: - Controller Overrides
     override func viewDidLoad() {
@@ -36,7 +40,8 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
         let tap = UITapGestureRecognizer(target: self, action: #selector(participantsTap(_:)))
         tap.delegate = self
         participantsTextView.addGestureRecognizer(tap)
-
+        
+        self.populateFields()
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,6 +51,7 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
 
     // MARK: - Button Actions
     @IBAction func hitPlusButton(_ sender: UIButton) {
+        
         self.addParticipant(email: self.participantsTextField.text!)
         self.rebuildParticipantsView()
         
@@ -79,6 +85,31 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
         }
     }
     
+    @IBAction func doneButton(_ sender: UIBarButtonItem) {
+        let name = self.nameTextField.text!
+        if (name.count == 0) {
+            self.createAlert(title: "Unable to create event.", message: "Invalid name. Please fill in the name field.")
+            return
+        }
+        
+        self.present(updateViewController, animated: true, completion: nil)
+        var participantsIds = [String]()
+        AccountManager.sharedInstance.getCurrentUser() { currentUser in
+            self.participants.append(currentUser!.getEmail())
+            for email in self.participants {
+                AccountManager.sharedInstance.load(email: email) { user in
+                    if (user != nil) {
+                        participantsIds.append(user!.getUid())
+                        if (participantsIds.count == self.participants.count) {
+                            self.updateEvent(participantsId: participantsIds, owner: currentUser!.getUid(), key: self.eventId!)
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+    }
     
     
     // MARK: - Selector Actions
@@ -136,6 +167,57 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
     }
     
     // MARK: - Helper Functions
+    
+    private func populateFields() {
+        guard let eventId = self.eventId else {
+            return
+        }
+        
+        EventManager.sharedInstance.loadEvent(id: eventId) { event in
+            
+            guard let event = event else {
+                print("Error getting event.")
+                return
+            }
+            
+            self.nameTextField.text = event.getName()
+            self.descriptionTextView.text = event.getDescription()
+            
+            AccountManager.sharedInstance.getCurrentUser() { user in
+                guard let user = user else {
+                    print("Error. User not logged in.")
+                    return
+                }
+                
+                let uid = user.getUid()
+                
+                for id in event.getContributors() {
+                    
+                    if (id == uid) {
+                        continue
+                    }
+                    
+                    AccountManager.sharedInstance.load(id: id) { otherUser in
+                        
+                        guard let validUser = otherUser else {
+                            return
+                        }
+                        
+                        self.participants.append(validUser.getEmail())
+                        
+                        if (self.participants.count == event.getContributors().count - 1) {
+                            self.rebuildParticipantsView()
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
+        
+        
+    }
+    
     private func addParticipant(email: String) {
         if (!participants.contains(email)) {
             participants.append(email)
@@ -144,6 +226,9 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
     
     private func removeParticipant(email: String) {
         participants = participants.filter(){ $0 != email}
+        if eventId != nil {
+            AccountManager.sharedInstance.remove(email: email, eventId: eventId!)
+        }
         AccountManager.sharedInstance.userExists(email: email) { user in
             if (user && !self.participants.contains(email)) {
                 self.plusButton.backgroundColor = UIColor(red: 122/255, green: 202/255, blue: 78/255, alpha: 1)
@@ -181,8 +266,14 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
     
     private func createEvent(participantsId: [String], owner: String) {
         
-        let name = self.nameTextField.text
-        let description = self.descriptionTextView.text
+        guard
+            let name = self.nameTextField.text,
+            let description = self.self.descriptionTextView.text
+        else {
+            print("Invalid event creation.")
+            return
+        }
+        
         let event: [String: Any] = ["name": name, "description": description, "owner": owner, "participants": participantsId]
         EventManager.sharedInstance.createEvent(event: event) { event in
             if event != nil {
@@ -196,6 +287,29 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
         
     }
     
+    private func updateEvent(participantsId: [String], owner: String, key: String) {
+        guard
+            let name = self.nameTextField.text,
+            let description = self.self.descriptionTextView.text
+            else {
+                print("Invalid event creation.")
+                return
+        }
+        
+        let event: [String: Any] = ["name": name, "description": description, "owner": owner, "participants": participantsId]
+        EventManager.sharedInstance.updateEvent(event: event, key: key) { event in
+            if event != nil {
+                print("Successfully updated event")
+                if let navController = self.navigationController {
+                    navController.popViewController(animated: true)
+                }
+            } else {
+                self.createAlert(title: "Error", message: "There was an issue creating your event. Please try again.")
+            }
+        }
+        self.updateViewController.dismiss(animated: true)
+    }
+
     private func createAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))

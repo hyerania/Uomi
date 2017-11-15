@@ -10,21 +10,32 @@ import UIKit
 
 class TransactionsTableViewController: UITableViewController {
 
-    var event: Event?
+    var eventId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        guard let event = event else {
-            return
-        }
-        
-        self.title = event.getName()
+//        self.title = event.getName()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let eventId = eventId else {
+            return
+        }
+        
+        EventManager.sharedInstance.loadEvent(id: eventId) { event in
+            
+            guard let event = event else {
+                return
+            }
+            
+            self.title = event.getName()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,6 +55,19 @@ class TransactionsTableViewController: UITableViewController {
         return 0
     }
 
+    @IBAction func settingsButton(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "editEvent", sender: self)
+    }
+
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "goBackButton", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? EventEditorViewController {
+            vc.eventId = self.eventId
+        }
+    }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

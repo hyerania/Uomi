@@ -87,7 +87,7 @@ class EventsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let vc = segue.destination as? TransactionsTableViewController {
-            vc.event = self.eventsList[self.selectedRow]
+            vc.eventId = self.eventsList[self.selectedRow].getUid()
         }
     }
     
