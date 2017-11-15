@@ -99,6 +99,20 @@ class AccountManager {
         })
     }
     
+    func remove(email: String, eventId: String) {
+        
+        self.load(email: email) { user in
+            
+            guard let user = user else {
+                print("Error - Invalid user.")
+                return
+            }
+            
+            self.ref.child("accounts").child(user.getUid()).child("events").child(eventId).removeValue()
+            
+        }
+    }
+    
     func userExists(email: String, completionHandler: @escaping(Bool) -> ()) {
         ref.child("accounts").observeSingleEvent(of: .value, with: { (snapshot) in
             

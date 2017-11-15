@@ -44,6 +44,19 @@ class TransactionsTableViewController: UITableViewController {
         return 0
     }
 
+    @IBAction func settingsButton(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "editEvent", sender: self)
+    }
+
+    @IBAction func backButton(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "goBackButton", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? EventEditorViewController {
+            vc.event = self.event
+        }
+    }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

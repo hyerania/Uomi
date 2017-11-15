@@ -23,29 +23,14 @@ class EventManager {
     func createEvent(event: [String: Any], completionHandler: @escaping(Event?) -> ()) {
         
         let key = ref.child("events").childByAutoId().key
-        var addEvent = [String:Any]()
-        addEvent["name"] = event["name"]
-        addEvent["description"] = event["description"]
-        addEvent["owner"] = event["owner"]
-        addEvent["status"] = "active"
-        var postParticipants =  [String: Bool]()
-        for participant in event["participants"] as! [String] {
-            postParticipants[participant] = true
-        }
-
-        addEvent["participants" ] = postParticipants
-        
-        var childUpdates = ["/events/\(key)": addEvent]
-        for participant in event["participants"] as! [String] {
-            // This is wrong. Fix when you wake up.
-            childUpdates["/accounts/\(participant)/events/\(key)"] = ["value": true]
-        }
-        ref.updateChildValues(childUpdates)
-        
-        let newEvent = Event(owner: addEvent["owner"] as! String, name: addEvent["name"] as! String, description: addEvent["description"] as! String, contributors: event["participants"] as! [String], uid: key, status: "active")
-        completionHandler(newEvent)
+        self.createEvent(event: event, key: key, completionHandler: completionHandler)
         
     }
+    
+    func updateEvent(event: [String: Any], key: String, completionHandler: @escaping(Event?) -> ()) {
+        self.createEvent(event: event, key: key, completionHandler: completionHandler)
+    }
+    
     
     func loadEvents(userId: String, completionHandler: @escaping([Event]) -> ()) {
         
@@ -101,6 +86,30 @@ class EventManager {
             let event = Event(owner: owner, name: name, description: description, contributors: participantsIds, uid: id, status: status)
             completionHanlder(event)
         })
+    }
+    
+    private func createEvent(event: [String: Any], key: String, completionHandler: @escaping(Event?) -> ()) {
+        var addEvent = [String:Any]()
+        addEvent["name"] = event["name"]
+        addEvent["description"] = event["description"]
+        addEvent["owner"] = event["owner"]
+        addEvent["status"] = "active"
+        var postParticipants =  [String: Bool]()
+        for participant in event["participants"] as! [String] {
+            postParticipants[participant] = true
+        }
+        
+        addEvent["participants" ] = postParticipants
+        
+        var childUpdates = ["/events/\(key)": addEvent]
+        for participant in event["participants"] as! [String] {
+            // This is wrong. Fix when you wake up.
+            childUpdates["/accounts/\(participant)/events/\(key)"] = ["value": true]
+        }
+        ref.updateChildValues(childUpdates)
+        
+        let newEvent = Event(owner: addEvent["owner"] as! String, name: addEvent["name"] as! String, description: addEvent["description"] as! String, contributors: event["participants"] as! [String], uid: key, status: "active")
+        completionHandler(newEvent)
     }
     
     private init() {
