@@ -11,6 +11,9 @@ import FirebaseDatabase
 
 class BalanceManager{
     var ref: DatabaseReference!
+    
+    
+    
     private init() {
         print("Balance mananger constructor called...")
         ref = Database.database().reference()

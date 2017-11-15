@@ -9,7 +9,15 @@
 import UIKit
 
 class SettleViewController: UIViewController {
+    @IBOutlet weak var InitialsText: UILabel!
+    @IBOutlet weak var NameText: UILabel!
+    @IBOutlet weak var PaymentText: UILabel!
     var userCellData : cellData?
+    
+    @IBAction func btnPaySettle(_ sender: Any) {
+        self.createAlert(title: "Pay back time!.", message: "Please click an option.")
+        return
+    }
     
     
     override func viewDidLoad() {
@@ -18,8 +26,11 @@ class SettleViewController: UIViewController {
         guard let userCellData = userCellData else {
             return
         }
-        self.title = userCellData.nameText
-//        self.title = "Settle"
+        self.NameText.text = userCellData.nameText
+        self.InitialsText.text = userCellData.initialsText
+        self.PaymentText.text = "You owe \(userCellData.balanceText!)"
+        
+        self.title = "Settle"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -43,5 +54,12 @@ class SettleViewController: UIViewController {
 //        // #warning Incomplete implementation, return the number of rows
 //        return 0
 //    }
+    
+    // MARK: - Helper functions
+    private func createAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 
 }
