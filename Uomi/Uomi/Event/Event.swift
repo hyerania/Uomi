@@ -10,16 +10,22 @@ import Foundation
 
 class Event {
     
+    private var owner: String
     private var name: String
     private var description: String
     private var contributors: [String]
     private var uid: String
     
-    init(name: String, description: String, contributors: [String], uid: String) {
+    init(owner: String, name: String, description: String, contributors: [String], uid: String) {
+        self.owner = owner
         self.name = name
         self.description = description
         self.contributors = contributors
         self.uid = uid
+    }
+    
+    func getOwner() -> String {
+        return self.owner
     }
     
     func getName() -> String {

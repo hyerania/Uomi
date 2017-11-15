@@ -34,6 +34,7 @@
 		07DE8E271FB931F40099B4B1 /* ParticipantView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07DE8E261FB931F40099B4B1 /* ParticipantView.xib */; };
 		508758EE52944AB42A076599 /* Pods_Uomi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */; };
 		EA45F08C1FB4E8A900BDCD5C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */; };
+		EAD689F71FBC527900E17EB6 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD689F61FBC527900E17EB6 /* ActivityViewController.swift */; };
 		EAF533691FB50B4600E9F092 /* BalancesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF533681FB50B4600E9F092 /* BalancesTableViewController.swift */; };
 		EAF5336C1FB50BE300E9F092 /* SettleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF5336B1FB50BE300E9F092 /* SettleTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 		33388B2B44FD13FF818C68AA /* Pods-Uomi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.release.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.release.xcconfig"; sourceTree = "<group>"; };
 		C735C56250DC6E22CE8C9F8D /* Pods-Uomi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.debug.xcconfig"; sourceTree = "<group>"; };
 		EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EAD689F61FBC527900E17EB6 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		EAF533681FB50B4600E9F092 /* BalancesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesTableViewController.swift; sourceTree = "<group>"; };
 		EAF5336B1FB50BE300E9F092 /* SettleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettleTableViewController.swift; sourceTree = "<group>"; };
 		F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Uomi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +103,9 @@
 		078834B01FBB8EFD0052D1CF /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				079CEF961FA8FBA500AC1FE4 /* EventsTableViewController.swift */,
+				079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */,
+				079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */,
 				078834B11FBB8F070052D1CF /* EventManager.swift */,
 				078834B31FBB8F2C0052D1CF /* Event.swift */,
 			);
@@ -154,10 +159,8 @@
 				07AB53B71F993F3200BC23F3 /* Assets.xcassets */,
 				07AB53B91F993F3200BC23F3 /* LaunchScreen.storyboard */,
 				07AB53BC1F993F3200BC23F3 /* Info.plist */,
-				079CEF961FA8FBA500AC1FE4 /* EventsTableViewController.swift */,
-				079CEF981FA8FC4800AC1FE4 /* EventEditorViewController.swift */,
-				079CEF9A1FA8FE5B00AC1FE4 /* TransactionsTableViewController.swift */,
 				EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */,
+				EAD689F61FBC527900E17EB6 /* ActivityViewController.swift */,
 			);
 			path = Uomi;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				077B45CD1FB7A2C400792C30 /* TransactionViewController.swift in Sources */,
 				078834B61FBB8F3C0052D1CF /* User.swift in Sources */,
 				077B45D01FB7A48100792C30 /* PercentageSplitTableViewCell.swift in Sources */,
+				EAD689F71FBC527900E17EB6 /* ActivityViewController.swift in Sources */,
 				077B45D51FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift in Sources */,
 				EAF5336C1FB50BE300E9F092 /* SettleTableViewController.swift in Sources */,
 			);

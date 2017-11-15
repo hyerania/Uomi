@@ -70,6 +70,35 @@ class AccountManager {
         })
     }
     
+    func load(email: String, completionHandler: @escaping(User?) -> ()) {
+        ref.child("accounts").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            guard let accounts = snapshot.value as? NSDictionary else {
+                print("Unable to get accounts")
+                return
+            }
+            
+            for (key, userInfo) in accounts {
+                guard
+                    let userData = userInfo as? NSDictionary,
+                    let userEmail = userData["email"] as? String,
+                    let name = userData["name"] as? String
+                    else {
+                        print("Invalid data.")
+                        continue
+                }
+                
+                if userEmail == email {
+                    let user = User(uid: key as! String, email: userEmail, name: name)
+                    completionHandler(user)
+                    return
+                }
+                
+            }
+            completionHandler(nil)
+        })
+    }
+    
     func userExists(email: String, completionHandler: @escaping(Bool) -> ()) {
         ref.child("accounts").observeSingleEvent(of: .value, with: { (snapshot) in
             

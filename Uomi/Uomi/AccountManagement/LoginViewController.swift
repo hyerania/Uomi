@@ -33,7 +33,6 @@ class LoginViewController: UIViewController {
 //        EventManager.sharedInstance.createEvent2(event: event) { event in
 //
 //        }
-        AccountManager.sharedInstance.load(id: "WIPjNNDMJkOxAXb33xKCJBjXHKo1")
         // Do any additional setup after loading the view.
     }
 
