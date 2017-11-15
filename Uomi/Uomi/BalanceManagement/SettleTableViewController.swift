@@ -9,13 +9,21 @@
 import UIKit
 
 class SettleTableViewController: UITableViewController {
-
+    var userCellData : cellData?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        guard let userCellData = userCellData else {
+            print("FUCK!")
+            return
+        }
+        print(userCellData.nameText)
+        self.title = userCellData.nameText;
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }

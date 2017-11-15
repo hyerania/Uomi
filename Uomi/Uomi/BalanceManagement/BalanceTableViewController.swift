@@ -9,18 +9,21 @@
 import UIKit
 
 struct cellData{
-    let cell : Int!
+    let uid : String!
     let initialsText : String!
     let nameText : String!
     let balanceText : String!
+    
 }
 
 class BalanceTableViewController: UITableViewController {
     var arrayOfCellData = [cellData]()
+    var selectedRow = 0
+    
     override func viewDidLoad(){
-        arrayOfCellData = [cellData(cell : 1, initialsText : "KJ", nameText: "Kevin J Nguyen", balanceText : "$" + "3.30"),
-                           cellData(cell : 1, initialsText : "YH", nameText: "Yerania Hernandez", balanceText : "$" + "5.50"),
-                           cellData(cell : 1, initialsText : "EG", nameText: "Eric Gonzalez", balanceText : "$" + "2.30")
+        arrayOfCellData = [cellData(uid : "123", initialsText : "KJ", nameText: "Kevin J Nguyen", balanceText : "$" + "3.30"),
+                           cellData(uid : "123", initialsText : "YH", nameText: "Yerania Hernandez", balanceText : "$" + "5.50"),
+                           cellData(uid : "123", initialsText : "EG", nameText: "Eric Gonzalez", balanceText : "$" + "2.30")
                            ]
     }
     
@@ -34,9 +37,8 @@ class BalanceTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
         let cell = Bundle.main.loadNibNamed("BalancesTableViewCell", owner: self, options: nil)?.first as! BalancesTableViewCell
+        
         cell.mainInitials.text = arrayOfCellData[indexPath.row].initialsText
         cell.mainName.text = arrayOfCellData[indexPath.row].nameText
         cell.mainBalance.text = arrayOfCellData[indexPath.row].balanceText
@@ -47,5 +49,17 @@ class BalanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50;
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectedRow = indexPath.row;
+        self.performSegue(withIdentifier: "toSettle", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let viewCtrl = segue.destination as? SettleTableViewController {
+            viewCtrl.userCellData = self.arrayOfCellData[self.selectedRow]
+        }
+    }
+    
 
 }

@@ -36,6 +36,7 @@
 		AA83D3E91FBCCA910081815E /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA83D3E81FBCCA910081815E /* EventTableViewCell.swift */; };
 		AA83D3EB1FBCCAA60081815E /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA83D3EA1FBCCAA60081815E /* ActivityViewController.swift */; };
 		AA83D3ED1FBCD15F0081815E /* SettleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA83D3EC1FBCD15F0081815E /* SettleTableViewController.swift */; };
+		AA83D3EF1FBCDEA10081815E /* BalanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA83D3EE1FBCDEA10081815E /* BalanceManager.swift */; };
 		AA8585771FBBA10B005B2221 /* BalancesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8585751FBBA10B005B2221 /* BalancesTableViewCell.swift */; };
 		AA8585781FBBA10B005B2221 /* BalancesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA8585761FBBA10B005B2221 /* BalancesTableViewCell.xib */; };
 		AA85857A1FBBA389005B2221 /* BalanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8585791FBBA389005B2221 /* BalanceTableViewController.swift */; };
@@ -76,6 +77,7 @@
 		AA83D3E81FBCCA910081815E /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		AA83D3EA1FBCCAA60081815E /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		AA83D3EC1FBCD15F0081815E /* SettleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettleTableViewController.swift; sourceTree = "<group>"; };
+		AA83D3EE1FBCDEA10081815E /* BalanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceManager.swift; sourceTree = "<group>"; };
 		AA8585751FBBA10B005B2221 /* BalancesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesTableViewCell.swift; sourceTree = "<group>"; };
 		AA8585761FBBA10B005B2221 /* BalancesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalancesTableViewCell.xib; sourceTree = "<group>"; };
 		AA8585791FBBA389005B2221 /* BalanceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTableViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				AA83D3EC1FBCD15F0081815E /* SettleTableViewController.swift */,
 				AA85857B1FBBA477005B2221 /* SettleTableViewCell.swift */,
 				AA85857C1FBBA477005B2221 /* SettleTableViewCell.xib */,
+				AA83D3EE1FBCDEA10081815E /* BalanceManager.swift */,
 			);
 			path = BalanceManagement;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA83D3EF1FBCDEA10081815E /* BalanceManager.swift in Sources */,
 				079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */,
 				AA85857D1FBBA477005B2221 /* SettleTableViewCell.swift in Sources */,
 				0706246B1FB9301800AE2137 /* ParticipantView.swift in Sources */,

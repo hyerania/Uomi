@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="580" y="169.56521739130437"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Settle Table View Controller-->
         <scene sceneID="Jcd-vA-yN9">
             <objects>
-                <tableViewController id="ndP-9N-5t5" sceneMemberID="viewController">
+                <tableViewController id="ndP-9N-5t5" customClass="SettleTableViewController" customModule="Uomi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="PTC-Kz-zdh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
