@@ -8,6 +8,8 @@
 
 import UIKit
 
+fileprivate let newEventSegue = "newEvent"
+
 class EventsTableViewController: UITableViewController {
 
     private var eventsList = [Event]()
@@ -101,7 +103,10 @@ class EventsTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let vc = segue.destination as? TransactionsTableViewController {
+        if segue.identifier == newEventSegue {
+            // TODO Predefine owner and initial participant
+        }
+        else if let vc = segue.destination as? TransactionsTableViewController {
             vc.eventId = self.eventsList[self.selectedRow].getUid()
         }
     }
