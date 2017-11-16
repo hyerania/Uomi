@@ -8,9 +8,12 @@
 
 import UIKit
 
+fileprivate let unwindSegue = "goBackButton"
+
 class TransactionsTableViewController: UITableViewController {
 
     var eventId: String?
+    private var transactions: [Transaction] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +34,21 @@ class TransactionsTableViewController: UITableViewController {
         EventManager.sharedInstance.loadEvent(id: eventId) { event in
             
             guard let event = event else {
+                // If the event is no more, return to the events list
+                self.performSegue(withIdentifier: unwindSegue, sender: self)
                 return
             }
+            
+            TransactionManager.sharedInstance.loadTransactions(eventId: event.getUid(), completion: { (transactions) in
+                guard let transactions = transactions else {
+                    self.performSegue(withIdentifier: unwindSegue, sender: self)
+                    return
+                }
+                
+                self.transactions.removeAll()
+                self.transactions.append(contentsOf: transactions)
+                self.tableView.reloadData()
+            })
             
             self.title = event.getName()
         }
@@ -47,7 +63,7 @@ class TransactionsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
