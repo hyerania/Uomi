@@ -51,6 +51,10 @@ class TransactionManager {
         }
     }
     
+    func deleteTransaction(transaction: Transaction, inEvent event: Event, failure: ((Error) -> ())? ) {
+        ref.child("\(eventsChild)/\(event.uid)/\(transactionsChild)/\(transaction.uid)").removeValue()
+    }
+    
     private func transform(transaction: Transaction) -> [String:Any] {
         var transactPayload: [String:Any] = [:]
         // TODO Add current user to participants
@@ -58,9 +62,7 @@ class TransactionManager {
         
         transactPayload["total"] = transaction.total
         transactPayload["contributions"] = transform(contributions: transaction.contributions)
-        if let description = transaction.description {
-            transactPayload["description"] = description
-        }
+        transactPayload["description"] = transaction.description
         transactPayload["payer"] = transaction.payer
         transactPayload["splitMode"] = transaction.splitMode.rawValue
         transactPayload["date"] = transaction.date.timeIntervalSince1970
