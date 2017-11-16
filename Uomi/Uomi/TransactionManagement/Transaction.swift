@@ -15,15 +15,23 @@ enum SplitMode: String {
 
 class Transaction {
     
-    var payer: String // FIXME should use account object
+    let uid: String
+    var payer: String? // FIXME should use account object
     var total: Float = 0.0
     var date: Date = Date()
     var description: String?
     var splitMode: SplitMode = .percent
     var contributions: [Contribution] = []
     
-    init() {
-        payer = AccountManager.currentUser().uid
+    init(uid: String) {
+       self.uid = uid
+        AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
+            self.payer = user!.getUid()
+        })
+    }
+    
+    func getUid() -> String {
+        return uid
     }
     
 }

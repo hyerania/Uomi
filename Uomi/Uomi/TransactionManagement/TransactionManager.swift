@@ -33,7 +33,7 @@ class TransactionManager {
         ref = Database.database().reference()
     }
     
-    func createTransaction(event: Event, completion: ((DatabaseReference?, Error?) -> ())? ) throws {
+    func createTransaction(event: Event, completion: @escaping ((DatabaseReference?, Error?) -> ()) ) {
         
         // Validate transaction
         var updates: [String:Any] = [:]
@@ -41,18 +41,20 @@ class TransactionManager {
         let key = ref.childByAutoId().key
         
         // Add link to event reference
-        updates["/\(eventsChild)/\(event.uid)/\(transactionsChild)/\(key)"] = true
-        updates["\(transactionsChild)/\(key)"] = transform(transaction: Transaction())
+        updates["/\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(key)"] = true
+        updates["\(transactionsChild)/\(key)"] = transform(transaction: Transaction(uid: key))
         
         ref.updateChildValues(updates) { (error, scope) in
-            if let completion = completion {
-                completion(scope.child("\(transactionsChild)\(key)"), error)
-            }
+            completion(scope.child("\(transactionsChild)\(key)"), error)
         }
     }
     
+    func editTransaction(transactionId: String, completion: @escaping ((DatabaseReference) -> ()) ) {
+        completion(ref.child(transactionId))
+    }
+    
     func deleteTransaction(transaction: Transaction, inEvent event: Event, failure: ((Error) -> ())? ) {
-        ref.child("\(eventsChild)/\(event.uid)/\(transactionsChild)/\(transaction.uid)").removeValue()
+        ref.child("\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(transaction.getUid())").removeValue()
     }
     
     private func transform(transaction: Transaction) -> [String:Any] {
@@ -71,6 +73,23 @@ class TransactionManager {
     }
     
     private func transform(contributions: [Contribution]) -> [[String:Any]] {
-        // TODO map contributions to dictionaries
+        // Map contributions to dictionaries
+        return contributions.map { (contrib) -> [String : Any] in
+            return transform(contribution: contrib)
+        }
+    }
+    
+    private func transform(contribution: Contribution) -> [String:Any] {
+        var contribPayload: [String:Any] = [:]
+        
+        contribPayload["contributor"] = contribution.member?.getUid()
+        if let contrib = contribution as? PercentContribution {
+            contribPayload["percent"] = contrib.percent
+        }
+        else if let contrib = contribution as? LineItemContribution {
+            contribPayload["description"] = contrib.description
+        }
+        
+        return contribPayload
     }
 }
