@@ -7,16 +7,6 @@
 //
 
 import Foundation
-import Firebase
-
-enum TransactionKeys : String {
-    case payer
-    case total
-    case date
-    case description
-    case splitMode
-    case contributions
-}
 
 enum SplitMode: String {
     case percent
@@ -25,28 +15,23 @@ enum SplitMode: String {
 
 class Transaction {
     
-    let ref: DatabaseReference
+    let uid: String
+    var payer: String? // FIXME should use account object
+    var total: Float = 0.0
+    var date: Date = Date()
+    var description: String?
+    var splitMode: SplitMode = .percent
+    var contributions: [Contribution] = []
     
-    var uid: String { get { return ref.key } }
-    var payer: String?  { didSet { ref.updateChildValues([TransactionKeys.payer : payer!]) } }
-    var total: Float? { didSet { ref.updateChildValues([TransactionKeys.total : total]) } }
-    var date: Date? { didSet { ref.updateChildValues([TransactionKeys.date : date]) } }
-    var description: String? { didSet { ref.updateChildValues([TransactionKeys.description : description!]) } }
-    var splitMode: SplitMode = .percent { didSet { ref.updateChildValues([TransactionKeys.splitMode : splitMode]) } }
-    private var contributions: DatabaseReference!
-    
-    init(ref: DatabaseReference) {
-        self.ref = ref
-        
-        ref.observe(.value) { (snapshot) in
-            
-        }
-        
-        self.contributions = ref.child(TransactionKeys.contributions.rawValue)
+    init(uid: String) {
+       self.uid = uid
+        AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
+            self.payer = user!.getUid()
+        })
     }
     
     func getUid() -> String {
-        return ref.key
+        return uid
     }
     
 }

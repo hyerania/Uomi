@@ -33,7 +33,7 @@ class TransactionManager {
         ref = Database.database().reference()
     }
     
-    func createTransaction(event: Event, completion: @escaping ((Transaction?, Error?) -> ()) ) {
+    func createTransaction(event: Event, completion: @escaping ((DatabaseReference?, Error?) -> ()) ) {
         
         // Validate transaction
         var updates: [String:Any] = [:]
@@ -44,12 +44,10 @@ class TransactionManager {
         updates["/\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(key)"] = true
         
         // FIXME Create the transaction as a map, store that instead and return the ref. Disregard the actual types for now..
-        let transaction = Transaction(ref: ref.child(key))
-        
-        updates["\(transactionsChild)/\(key)"] = transform(transaction: transaction)
+        updates["\(transactionsChild)/\(key)"] = transform(transaction: Transaction(uid: key))
         
         ref.updateChildValues(updates) { (error, scope) in
-//            completion(scope.child("\(transactionsChild)\(key)"), error)
+            completion(scope.child("\(transactionsChild)\(key)"), error)
         }
     }
     
@@ -67,6 +65,7 @@ class TransactionManager {
         //        transactPayload["participants/\(AccountManager.currentAccount)"]
         
         transactPayload["total"] = transaction.total
+        transactPayload["contributions"] = transform(contributions: transaction.contributions)
         transactPayload["description"] = transaction.description
         transactPayload["payer"] = transaction.payer
         transactPayload["splitMode"] = transaction.splitMode.rawValue
