@@ -33,27 +33,20 @@ class TransactionManager {
         ref = Database.database().reference()
     }
     
-    func createTransaction(event: Event, transaction: Transaction, completion: ((Bool, Error?) -> ())? ) throws {
+    func createTransaction(event: Event, completion: ((DatabaseReference?, Error?) -> ())? ) throws {
         
         // Validate transaction
-        guard transaction.category != nil else {
-            throw UomiErrors.invalidArgument(reason: "Category is required")
-        }
-        guard transaction.payer != nil else {
-            throw UomiErrors.invalidArgument(reason: "Payer is required")
-        }
-        
         var updates: [String:Any] = [:]
         
         let key = ref.childByAutoId().key
         
         // Add link to event reference
         updates["/\(eventsChild)/\(event.uid)/\(transactionsChild)/\(key)"] = true
-        updates["\(transactionsChild)/\(key)"] = transform(transaction: transaction)
+        updates["\(transactionsChild)/\(key)"] = transform(transaction: Transaction())
         
         ref.updateChildValues(updates) { (error, scope) in
             if let completion = completion {
-                completion(error == nil, error)
+                completion(scope.child("\(transactionsChild)\(key)"), error)
             }
         }
     }
@@ -64,19 +57,18 @@ class TransactionManager {
         //        transactPayload["participants/\(AccountManager.currentAccount)"]
         
         transactPayload["total"] = transaction.total
-        transactPayload["category"] = transaction.category!
         transactPayload["contributions"] = transform(contributions: transaction.contributions)
-        transactPayload["description"] = transaction.description
-        transactPayload["payer"] = transaction.payer!.uid
+        if let description = transaction.description {
+            transactPayload["description"] = description
+        }
+        transactPayload["payer"] = transaction.payer
         transactPayload["splitMode"] = transaction.splitMode.rawValue
         transactPayload["date"] = transaction.date.timeIntervalSince1970
-        // TODO Set a default name?
-        // TODO Add linkage to contributions
-     
+        
         return transactPayload
     }
     
     private func transform(contributions: [Contribution]) -> [[String:Any]] {
-    
+        // TODO map contributions to dictionaries
     }
 }

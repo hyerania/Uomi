@@ -8,11 +8,6 @@
 
 import Foundation
 
-enum TransactionCategory {
-    case dining
-    case gas
-}
-
 enum SplitMode: String {
     case percent
     case lineItem
@@ -20,16 +15,15 @@ enum SplitMode: String {
 
 class Transaction {
     
-    var payer: User? // FIXME should use account object
+    var payer: String // FIXME should use account object
     var total: Float = 0.0
     var date: Date = Date()
-    var category: TransactionCategory?
     var description: String?
     var splitMode: SplitMode = .percent
     var contributions: [Contribution] = []
     
     init() {
-        
+        payer = AccountManager.currentUser().uid
     }
     
 }
