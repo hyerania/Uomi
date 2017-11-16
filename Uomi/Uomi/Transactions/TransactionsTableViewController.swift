@@ -67,6 +67,9 @@ class TransactionsTableViewController: UITableViewController {
         if let vc = segue.destination as? EventEditorViewController {
             vc.eventId = self.eventId
         }
+        else if let vc = segue.destination as? BalanceTableViewController {
+            vc.eventId = self.eventId
+        }
     }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

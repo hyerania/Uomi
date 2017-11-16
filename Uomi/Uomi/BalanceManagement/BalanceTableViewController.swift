@@ -19,6 +19,7 @@ struct cellData{
 class BalanceTableViewController: UITableViewController {
     var arrayOfCellData = [cellData]()
     var selectedRow = 0
+    var eventId : String?
     
     override func viewDidLoad(){
         arrayOfCellData = [cellData(uid : "123", initialsText : "KJ", nameText: "Kevin J Nguyen", balanceText : "$" + "3.30"),
