@@ -8,6 +8,15 @@
 
 import Foundation
 
+enum TransactionKeys : String {
+    case payer
+    case total
+    case date
+    case description
+    case splitMode
+    case contributions
+}
+
 enum SplitMode: String {
     case percent
     case lineItem
@@ -25,9 +34,6 @@ class Transaction {
     
     init(uid: String) {
        self.uid = uid
-        AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
-            self.payer = user!.getUid()
-        })
     }
     
     func getUid() -> String {
