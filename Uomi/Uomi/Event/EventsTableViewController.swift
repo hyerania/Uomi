@@ -8,6 +8,8 @@
 
 import UIKit
 
+fileprivate let newEventSegue = "newEvent"
+
 class EventsTableViewController: UITableViewController {
 
     private var eventsList = [Event]()
@@ -16,6 +18,11 @@ class EventsTableViewController: UITableViewController {
     // MARK: - View Controller Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
+        refreshControl = UIRefreshControl()
+        refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl?.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshControl!) // not required when using UITableViewController
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -23,11 +30,17 @@ class EventsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    @objc public func refresh(refreshControl: UIRefreshControl) {
+        print("refresh")
+        self.reloadTableViewData(refreshControl: refreshControl)
+        // Code to refresh table view
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.reloadTableViewData()
+        self.reloadTableViewData(refreshControl: nil)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -67,7 +80,7 @@ class EventsTableViewController: UITableViewController {
     }
 
     // MARK: - Helper Functions
-    private func reloadTableViewData() {
+    private func reloadTableViewData(refreshControl: UIRefreshControl?) {
         AccountManager.sharedInstance.getCurrentUser() { user in
             guard let user = user else {
                 print("There is something wrong. User is supposed to be logged in.")
@@ -80,13 +93,20 @@ class EventsTableViewController: UITableViewController {
                 
                 self.eventsList = events
                 self.tableView.reloadData()
+                
+                if let refreshControl = refreshControl {
+                    refreshControl.endRefreshing()
+                }
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let vc = segue.destination as? TransactionsTableViewController {
+        if segue.identifier == newEventSegue {
+            // TODO Predefine owner and initial participant
+        }
+        else if let vc = segue.destination as? TransactionsTableViewController {
             vc.eventId = self.eventsList[self.selectedRow].getUid()
         }
     }

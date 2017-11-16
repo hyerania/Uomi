@@ -16,7 +16,7 @@ class AccountManager {
     private var currentUser: User?
     
     func register(email: String, name: String, password: String, completionHanlder: @escaping(User?, Error?) -> ()) {
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+        Auth.auth().createUser(withEmail: email.lowercased(), password: password) { (user, error) in
             
             if let error = error {
                 completionHanlder(nil, error)
@@ -33,7 +33,7 @@ class AccountManager {
     }
     
     func login(email: String, password: String, completionHanlder: @escaping(User?) -> ()) {
-            Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            Auth.auth().signIn(withEmail: email.lowercased(), password: password) { (user, error) in
     
                 if (error != nil) {
                     completionHanlder(nil)
@@ -88,7 +88,7 @@ class AccountManager {
                         continue
                 }
                 
-                if userEmail == email {
+                if userEmail == email.lowercased() {
                     let user = User(uid: key as! String, email: userEmail, name: name)
                     completionHandler(user)
                     return
@@ -101,7 +101,7 @@ class AccountManager {
     
     func remove(email: String, eventId: String) {
         
-        self.load(email: email) { user in
+        self.load(email: email.lowercased()) { user in
             
             guard let user = user else {
                 print("Error - Invalid user.")
@@ -130,7 +130,7 @@ class AccountManager {
                     continue
                 }
                 
-                if userEmail == email {
+                if userEmail == email.lowercased() {
                     completionHandler(true)
                     return
                 }
@@ -139,6 +139,7 @@ class AccountManager {
             completionHandler(false)
         })
     }
+
     func logout(completionHandler: @escaping(Bool) -> ()) {
         try! Auth.auth().signOut()
         completionHandler(true)

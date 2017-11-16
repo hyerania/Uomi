@@ -14,7 +14,6 @@ let lineItemTotalReuseIdentifier = "lineItemTotalCell"
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var dateField: UITextField!
-    @IBOutlet weak var categoryField: UITextField!
     @IBOutlet weak var descriptionField: UITextField!
     
     @IBOutlet weak var cameraButton: UIButton!
