@@ -42,6 +42,8 @@ class TransactionManager {
         
         // Add link to event reference
         updates["/\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(key)"] = true
+        
+        // FIXME Create the transaction as a map, store that instead and return the ref. Disregard the actual types for now..
         updates["\(transactionsChild)/\(key)"] = transform(transaction: Transaction(uid: key))
         
         ref.updateChildValues(updates) { (error, scope) in
