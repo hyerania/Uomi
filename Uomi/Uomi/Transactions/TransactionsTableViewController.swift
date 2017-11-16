@@ -67,8 +67,12 @@ class TransactionsTableViewController: UITableViewController {
         if let vc = segue.destination as? EventEditorViewController {
             vc.eventId = self.eventId
         }
-        else if let vc = segue.destination as? BalanceTableViewController {
-            vc.eventId = self.eventId
+            
+        else if let nc = segue.destination as? UINavigationController {
+            
+            if let rootVc = nc.topViewController as? BalanceTableViewController {
+                rootVc.eventId = self.eventId
+            }
         }
     }
     /*

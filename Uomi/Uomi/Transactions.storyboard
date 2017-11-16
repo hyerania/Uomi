@@ -342,7 +342,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AOg-pi-NnP" customClass="ParticipantView" customModule="Uomi" customModuleProvider="target">
-                                                        <rect key="frame" x="55" y="0.0" width="193" height="44"/>
+                                                        <rect key="frame" x="55" y="0.0" width="193.5" height="44"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="44" id="9z6-yr-dBq"/>
@@ -350,13 +350,13 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Total" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLi-N5-DhQ">
-                                                        <rect key="frame" x="260" y="12" width="37.5" height="20.5"/>
+                                                        <rect key="frame" x="260.5" y="12" width="37.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ORl-aZ-iQc">
-                                                        <rect key="frame" x="309.5" y="7" width="25.5" height="30"/>
+                                                        <rect key="frame" x="310" y="7" width="25" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>

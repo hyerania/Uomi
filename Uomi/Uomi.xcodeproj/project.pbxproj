@@ -204,11 +204,11 @@
 				AA8585791FBBA389005B2221 /* BalanceTableViewController.swift */,
 				AA8585751FBBA10B005B2221 /* BalancesTableViewCell.swift */,
 				AA8585761FBBA10B005B2221 /* BalancesTableViewCell.xib */,
+				AA83D3EE1FBCDEA10081815E /* BalanceManager.swift */,
+				AA83D3F01FBDDC700081815E /* Balance.swift */,
 				AA83D3EC1FBCD15F0081815E /* SettleViewController.swift */,
 				AA85857B1FBBA477005B2221 /* SettleTableViewCell.swift */,
 				AA85857C1FBBA477005B2221 /* SettleTableViewCell.xib */,
-				AA83D3EE1FBCDEA10081815E /* BalanceManager.swift */,
-				AA83D3F01FBDDC700081815E /* Balance.swift */,
 			);
 			path = BalanceManagement;
 			sourceTree = "<group>";

@@ -12,7 +12,8 @@ class SettleViewController: UIViewController {
     @IBOutlet weak var InitialsText: UILabel!
     @IBOutlet weak var NameText: UILabel!
     @IBOutlet weak var PaymentText: UILabel!
-    var userCellData : cellData?
+//    var userCellData : cellData?
+    var userCellData : Balance?
     
     @IBAction func btnPaySettle(_ sender: Any) {
         self.createAlert(title: "Pay back time!.", message: "Please click an option.")
@@ -26,10 +27,13 @@ class SettleViewController: UIViewController {
         guard let userCellData = userCellData else {
             return
         }
-        self.NameText.text = userCellData.nameText
-        self.InitialsText.text = userCellData.initialsText
-        self.PaymentText.text = "You owe \(userCellData.balanceText!)"
+//        self.NameText.text = userCellData.nameText
+//        self.InitialsText.text = userCellData.initialsText
+//        self.PaymentText.text = "You owe \(userCellData.balanceText!)"
         
+        self.NameText.text = userCellData.getName()
+        self.InitialsText.text = userCellData.getInitials()
+        self.PaymentText.text = "You owe \(userCellData.getBalance())"
         self.title = "Settle"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
