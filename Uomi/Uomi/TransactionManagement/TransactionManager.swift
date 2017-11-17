@@ -21,40 +21,46 @@ class TransactionManager {
         ref = Database.database().reference()
     }
     
-    func createTransaction(event: Event, completion: @escaping ((Transaction?, Error?) -> ()) ) {
+    func createTransaction(eventId: String, completion: @escaping ((Transaction?, Error?) -> ()) ) {
         
         // Validate transaction
         var updates: [String:Any] = [:]
         
-        let key = ref.childByAutoId().key
+        let transactionsPath = "\(transactionsChild)/\(eventId)"
+        let key = ref.child(transactionsPath).childByAutoId().key
         
         // Add link to event reference
-        updates["/\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(key)"] = true
+        let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
+        updates[eventTransactionsPath] = true
         
+        // Prepare initial version of transaction
         let transaction: Transaction = Transaction(uid: key)
-        updates["\(transactionsChild)/\(key)"] = transform(transaction: transaction)
+        updates["\(transactionsPath)/\(key)"] = transform(transaction: transaction)
         
         ref.updateChildValues(updates) { (error, scope) in
             completion(error == nil ? transaction : nil, error)
         }
     }
     
+    
+    //MARK: Fetching transactions
+    
     func loadTransactions(eventId: String, completion: @escaping (([Transaction]?) -> ()) ) {
-        ref.child("\(eventsChild)/\(eventId)/\(transactionsChild)").observeSingleEvent(of: .value) { (snapshot) in
-            if let snapshot = snapshot.value as? [String: Bool] {
-                
-                // FIXME Instead, return a lightweight object of transaction identifiers to be rendered. The full objects can be queried for using loadTransaction(id:completion:)
-                var transactions: [Transaction] = [Transaction](repeating: nil, count: snapshot.count)
-                
-                snapshot.forEach({ (transId, _) in
-                    self.ref.child("\(transactionsChild)/\(transId)").observeSingleEvent(of: .value, with: { (transSnapshot) in
-                        let transaction = self.parseTransaction(id: transId, data: transSnapshot.value as! [String:Any])
-                        
-                    })
+        ref.child("\(transactionsChild)\(eventId)/").observeSingleEvent(of: .value) { (snapshot) in
+            if let snapshot = snapshot.value as? [String: [String: Any]] {
+//                var transactions: [Transaction] = []
+                let transactions = snapshot.map({ (key, data) -> Transaction in
+                    return self.parseTransaction(id: key, data: data)
                 })
+//                for (key, transactionData) in snapshot {
+//                    let transaction =
+//                    transactions.append(transaction)
+//                }
+                
+                completion(transactions)
             }
             else {
-                completion(nil)
+                completion([])
             }
         }
     }
@@ -70,6 +76,9 @@ class TransactionManager {
             }
         }
     }
+    
+    
+    // MARK: Storage
     
     func saveTransaction(transaction: Transaction, success: @escaping ((Bool) -> ()) ) {
         
@@ -127,7 +136,9 @@ class TransactionManager {
         let transaction = Transaction(uid: id)
         transaction.payer = data[TransactionKeys.payer.rawValue] as? String
         transaction.total = data[TransactionKeys.total.rawValue] as! Float
-        transaction.date = data[TransactionKeys.date.rawValue] as! Date
+        if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
+            transaction.date = Date(timeIntervalSince1970: time)
+        }
         transaction.description = data[TransactionKeys.description.rawValue] as? String
         transaction.splitMode = SplitMode(rawValue: data[TransactionKeys.splitMode.rawValue] as! String)!
         transaction.contributions = parseContributions(withData: data[TransactionKeys.contributions.rawValue] as? [String:Any])

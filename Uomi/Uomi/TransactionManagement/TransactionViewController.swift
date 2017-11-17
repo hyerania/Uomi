@@ -13,6 +13,15 @@ let lineItemReuseIdentifier = "lineItemCell"
 let lineItemTotalReuseIdentifier = "lineItemTotalCell"
 
 class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    let dateFormatter = getDateFormatter()
+    
+    var transaction: Transaction! {
+        didSet {
+            updateUI()
+        }
+    }
+    
     @IBOutlet weak var dateField: UITextField!
     @IBOutlet weak var descriptionField: UITextField!
     
@@ -29,6 +38,8 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        updateUI()
+        
         // Do any additional setup after loading the view.
         tableView.setEditing(true, animated: false)
     }
@@ -38,6 +49,12 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
+    fileprivate func updateUI() {
+        // TODO Update all the UI elements
+        guard let dateField = dateField else { return }
+        
+        dateField.text = dateFormatter.string(from: transaction.date)
+    }
     
     // MARK: - Data Source
     
@@ -84,4 +101,12 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     }
     */
 
+    
+    // MARK: Support
+    
+    fileprivate static func getDateFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }
 }
