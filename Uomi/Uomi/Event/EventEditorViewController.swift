@@ -42,6 +42,7 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
         participantsTextView.addGestureRecognizer(tap)
         
         self.populateFields()
+        self.rebuildParticipantsView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -120,7 +121,7 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
             if (user) {
                 AccountManager.sharedInstance.getCurrentUser() { currentUser in
                     if (currentUser != nil) {
-                        if (currentUser?.getEmail() != textField.text! && !self.participants.contains(textField.text!)) {
+                        if (currentUser?.getEmail() != textField.text! && !self.lowerContains(value: textField.text!)) {
                             self.plusButton.backgroundColor = UIColor(red: 122/255, green: 202/255, blue: 78/255, alpha: 1)
                             self.plusButton.isEnabled = true
                             
@@ -132,13 +133,24 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
                     
                     
                 }
+            } else {
+                self.plusButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+                self.plusButton.isEnabled = false;
             }
             
 
         }
         
     }
-    
+    private func lowerContains(value: String) -> Bool {
+        
+        for email in self.participants {
+            if email.lowercased() == value.lowercased() {
+                return true
+            }
+        }
+        return false
+    }
     @objc func participantsTap(_ sender: UITapGestureRecognizer) {
         
         let myTextView = sender.view as! UITextView
@@ -245,22 +257,37 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
         
         let text = NSMutableAttributedString()
         
-        for participant in participants {
-            let cancelAtrStr = NSMutableAttributedString(string: "Remove")
-            let cancelRange = NSRange(location: 0, length: 6)
-            let cancelCustAtr: [NSAttributedStringKey : Any] = [ NSAttributedStringKey(rawValue: "Email"): participant, NSAttributedStringKey.foregroundColor: UIColor.blue, NSAttributedStringKey.font: UIFont(name: "Helvetica Neue", size: 16.0)!]
-            let sizeAtr: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont(name: "Helvetica Neue", size: 16.0)!]
-            cancelAtrStr.addAttributes(cancelCustAtr, range: cancelRange)
-            let emailMutableStr = NSMutableAttributedString(string: participant + " (")
-            emailMutableStr.addAttributes(sizeAtr, range: NSRange(location: 0, length: emailMutableStr.length))
-            text.append(emailMutableStr)
-            text.append(cancelAtrStr)
+        AccountManager.sharedInstance.getCurrentUser() { user in
             
-            let endMutableStr = NSMutableAttributedString(string: ")\n")
-            endMutableStr.addAttributes(sizeAtr, range: NSRange(location: 0, length: endMutableStr.length))
-            text.append(endMutableStr)
+            guard let user = user else {
+                return
+            }
+            
+            
+            let sizeAtr: [NSAttributedStringKey: Any] = [ NSAttributedStringKey.font: UIFont(name: "Helvetica Neue", size: 16.0)!]
+            let ownerMutableStr = NSMutableAttributedString(string: "\(user.getEmail()) (owner)\n")
+            ownerMutableStr.addAttributes(sizeAtr, range: NSRange(location: 0, length: ownerMutableStr.length))
+            text.append(ownerMutableStr)
+            
+            for participant in self.participants {
+                let cancelAtrStr = NSMutableAttributedString(string: "Remove")
+                let cancelRange = NSRange(location: 0, length: 6)
+                let cancelCustAtr: [NSAttributedStringKey : Any] = [ NSAttributedStringKey(rawValue: "Email"): participant, NSAttributedStringKey.foregroundColor: UIColor.blue, NSAttributedStringKey.font: UIFont(name: "Helvetica Neue", size: 16.0)!]
+                cancelAtrStr.addAttributes(cancelCustAtr, range: cancelRange)
+                let emailMutableStr = NSMutableAttributedString(string: participant + " (")
+                emailMutableStr.addAttributes(sizeAtr, range: NSRange(location: 0, length: emailMutableStr.length))
+                text.append(emailMutableStr)
+                text.append(cancelAtrStr)
+                
+                let endMutableStr = NSMutableAttributedString(string: ")\n")
+                endMutableStr.addAttributes(sizeAtr, range: NSRange(location: 0, length: endMutableStr.length))
+                text.append(endMutableStr)
+            }
+            self.participantsTextView.attributedText = text
+
         }
-        self.participantsTextView.attributedText = text
+        
+        
 
     }
     

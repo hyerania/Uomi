@@ -17,14 +17,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--EventViewController-->
-        <scene sceneID="Edi-Zu-142">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Events" referencedIdentifier="EventViewController" id="o4X-5b-b31" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nxx-87-uAe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3626" y="-725"/>
-        </scene>
         <!--Event Editor View Controller-->
         <scene sceneID="YiU-JX-HS4">
             <objects>
@@ -49,7 +41,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next" textContentType="name"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NuY-7M-KrO">
                                 <rect key="frame" x="16" y="122" width="343" height="34"/>
@@ -212,7 +204,8 @@
                             </barButtonItem>
                             <barButtonItem image="settings-dark" id="E4O-qH-OcI">
                                 <connections>
-                                    <segue destination="o4X-5b-b31" kind="show" id="ioP-bY-LXh"/>
+                                    <action selector="settingsButton:" destination="ERj-HG-wN9" id="wZT-E2-Hdq"/>
+                                    <segue destination="nBZ-dt-Pth" kind="show" id="6GQ-4N-egs"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>

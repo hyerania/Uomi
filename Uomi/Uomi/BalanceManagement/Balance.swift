@@ -8,6 +8,40 @@
 
 import Foundation
 
-class Balance{
+class Balance {
+    private var initials: String
+    private var name: String
+    private var uid: String
+    private var eventuid: String
+    private var totalBalance: String
+    private var balance: String
+    
+    init(initials: String, name: String, uid: String, eventuid: String, totalBalance: String, balance: String){
+        self.initials = initials
+        self.name = name
+        self.uid = uid
+        self.eventuid = eventuid
+        self.totalBalance = totalBalance
+        self.balance = balance
+    }
+    
+    func getInitials() -> String{
+        return self.initials
+    }
+    func getName() -> String {
+        return self.name
+    }
+    func getUid() -> String {
+        return self.uid
+    }
+    func getEventuid() -> String {
+        return self.eventuid
+    }
+    func getTotalBalance() -> String {
+        return self.totalBalance
+    }
+    func getBalance() -> String {
+        return self.balance
+    }
     
 }
