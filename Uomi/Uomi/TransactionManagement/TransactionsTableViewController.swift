@@ -10,6 +10,7 @@ import UIKit
 
 fileprivate let unwindSegue = "goBackButton"
 fileprivate let editTransactionSegue = "editTransaction"
+fileprivate let transactionCellReuseIdentifier = "transactionCell"
 
 class TransactionsTableViewController: UITableViewController {
 
@@ -74,19 +75,20 @@ class TransactionsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return transactions.count
     }
     
-    
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! TransactionTableViewCell
 
-        // Configure the cell...
+        cell.transaction = transactions[indexPath.row]
 
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {     
+        editingTransaction = transactions[indexPath.row]
+    }
     
     
     // MARK: Table View Delegate
@@ -128,5 +130,8 @@ class TransactionsTableViewController: UITableViewController {
             vc.transaction = editingTransaction
         }
     }
+    
+    
+    @IBAction func unwindToTransactions(segue: UIStoryboardSegue) { }
     
 }

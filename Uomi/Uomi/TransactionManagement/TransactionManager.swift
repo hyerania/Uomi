@@ -46,16 +46,11 @@ class TransactionManager {
     //MARK: Fetching transactions
     
     func loadTransactions(eventId: String, completion: @escaping (([Transaction]?) -> ()) ) {
-        ref.child("\(transactionsChild)\(eventId)/").observeSingleEvent(of: .value) { (snapshot) in
+        ref.child("\(transactionsChild)/\(eventId)/").observeSingleEvent(of: .value) { (snapshot) in
             if let snapshot = snapshot.value as? [String: [String: Any]] {
-//                var transactions: [Transaction] = []
                 let transactions = snapshot.map({ (key, data) -> Transaction in
                     return self.parseTransaction(id: key, data: data)
                 })
-//                for (key, transactionData) in snapshot {
-//                    let transaction =
-//                    transactions.append(transaction)
-//                }
                 
                 completion(transactions)
             }
@@ -103,7 +98,7 @@ class TransactionManager {
         
         transactPayload["total"] = transaction.total
         transactPayload["contributions"] = transform(contributions: transaction.contributions)
-        transactPayload["description"] = transaction.description
+        transactPayload["description"] = transaction.transDescription
         transactPayload["payer"] = transaction.payer
         transactPayload["splitMode"] = transaction.splitMode.rawValue
         transactPayload["date"] = transaction.date.timeIntervalSince1970
@@ -139,7 +134,7 @@ class TransactionManager {
         if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
             transaction.date = Date(timeIntervalSince1970: time)
         }
-        transaction.description = data[TransactionKeys.description.rawValue] as? String
+        transaction.transDescription = data[TransactionKeys.description.rawValue] as? String
         transaction.splitMode = SplitMode(rawValue: data[TransactionKeys.splitMode.rawValue] as! String)!
         transaction.contributions = parseContributions(withData: data[TransactionKeys.contributions.rawValue] as? [String:Any])
         

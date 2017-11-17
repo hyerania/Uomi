@@ -28,7 +28,7 @@ class Transaction {
     var payer: String? // FIXME should use account object
     var total: Float = 0.0
     var date: Date = Date()
-    var description: String?
+    var transDescription: String?
     var splitMode: SplitMode = .percent
     var contributions: [Contribution] = []
     

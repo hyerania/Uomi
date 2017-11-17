@@ -51,7 +51,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     fileprivate func updateUI() {
         // TODO Update all the UI elements
-        guard let dateField = dateField else { return }
+        guard let dateField = dateField, transaction != nil else { return }
         
         dateField.text = dateFormatter.string(from: transaction.date)
     }
