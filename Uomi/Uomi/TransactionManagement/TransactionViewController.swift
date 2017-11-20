@@ -49,6 +49,12 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         // Do any additional setup after loading the view.
         tableView.setEditing(true, animated: false)
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissEditing)))
+    }
+    
+    @objc func dismissEditing() {
+        view.endEditing(true)
     }
 
     override func didReceiveMemoryWarning() {
