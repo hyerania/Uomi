@@ -161,7 +161,7 @@
                                     <rect key="frame" x="156.5" y="55" width="62" height="30"/>
                                     <state key="normal" title="Balances"/>
                                     <connections>
-                                        <segue destination="RBd-Sc-f4e" kind="show" id="Xli-00-PSY"/>
+                                        <segue destination="RBd-Sc-f4e" kind="show" identifier="viewBalances" id="Xli-00-PSY"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -237,7 +237,6 @@
                                     <outlet property="participantView" destination="yIt-GQ-dUL" id="y6n-76-9Lp"/>
                                     <outlet property="summaryLabel" destination="okq-38-ygp" id="bhF-wD-oYZ"/>
                                     <outlet property="totalView" destination="1D0-FX-8Pc" id="3TE-bf-CvM"/>
-                                    <segue destination="QE7-Xs-bJx" kind="presentation" identifier="editTransaction" id="fyX-MO-OhN"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -266,6 +265,9 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <segue destination="QE7-Xs-bJx" kind="presentation" identifier="editTransaction" id="xOE-TU-5NL"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FDB-6P-K8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="TX0-HT-OHE" userLabel="Exit" sceneMemberID="exit"/>
@@ -306,6 +308,9 @@
                                                                         <nil key="textColor"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <textInputTraits key="textInputTraits"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="eaa-BO-YdA" id="EJE-nv-IrJ"/>
+                                                                        </connections>
                                                                     </textField>
                                                                 </subviews>
                                                             </stackView>
@@ -342,6 +347,9 @@
                                                                         <nil key="textColor"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <textInputTraits key="textInputTraits"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="eaa-BO-YdA" id="9s0-xI-Sc4"/>
+                                                                        </connections>
                                                                     </textField>
                                                                 </subviews>
                                                             </stackView>
@@ -411,6 +419,9 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="eaa-BO-YdA" id="UYi-1x-BAa"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                             </stackView>

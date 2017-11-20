@@ -12,6 +12,8 @@ fileprivate let unwindSegue = "goBackButton"
 fileprivate let editTransactionSegue = "editTransaction"
 fileprivate let transactionCellReuseIdentifier = "transactionCell"
 
+let viewBalancesSegue = "viewBalances"
+
 class TransactionsTableViewController: UITableViewController {
 
     var eventId: String?
@@ -86,8 +88,9 @@ class TransactionsTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         editingTransaction = transactions[indexPath.row]
+        performSegue(withIdentifier: editTransactionSegue, sender: nil)
     }
     
     
@@ -121,13 +124,12 @@ class TransactionsTableViewController: UITableViewController {
             vc.eventId = self.eventId
         }
         else if let nc = segue.destination as? UINavigationController {
-            
-            if let rootVc = nc.topViewController as? BalanceTableViewController {
+            if segue.identifier == viewBalancesSegue, let rootVc = nc.topViewController as? BalanceTableViewController {
                 rootVc.eventId = self.eventId
             }
-        }
-        else if let vc = segue.destination as? TransactionViewController {
-            vc.transaction = editingTransaction
+            else if let vc = nc.viewControllers.first as? TransactionViewController {
+                vc.transaction = editingTransaction
+            }
         }
     }
     

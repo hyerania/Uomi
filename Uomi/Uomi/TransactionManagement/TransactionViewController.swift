@@ -12,7 +12,9 @@ let percentResueIdentifier = "percentageCell"
 let lineItemReuseIdentifier = "lineItemCell"
 let lineItemTotalReuseIdentifier = "lineItemTotalCell"
 
-class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+let calendarIcon = "calendar"
+
+class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     let dateFormatter = getDateFormatter()
     
@@ -38,6 +40,11 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let imageView: UIImageView = UIImageView(image: UIImage(named: "calendar"))
+        imageView.bounds.size = CGSize(width: 20, height: 20)
+        
+        dateField.rightView = imageView
+        dateField.rightViewMode = .always
         updateUI()
         
         // Do any additional setup after loading the view.
@@ -100,7 +107,29 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    // MARK: Text Delegate
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+        if textField === dateField {
+        let datePicker = UIDatePicker()
+        datePicker.setDate(transaction.date, animated: false)
+            datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+        datePicker.datePickerMode = .date
+        dateField.inputView = datePicker
+        }
+        
+        return true
+    }
 
+    @objc func dateChanged(sender: Any) {
+        let datePicker = dateField.inputView as! UIDatePicker
+        let date = datePicker.date
+        self.dateField.text = dateFormatter.string(from: date)
+        transaction.date = date
+    }
     
     // MARK: Support
     
