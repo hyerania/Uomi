@@ -10,4 +10,5 @@ import Foundation
 
 enum UomiErrors : Error {
     case invalidArgument(reason: String)
+    case retrievalError
 }

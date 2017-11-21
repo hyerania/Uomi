@@ -165,4 +165,6 @@ class EventsTableViewController: UITableViewController {
         
         // TODO: Segue to the new event's transactions
     }
+    
+    @IBAction func unwindToEvents(segue: UIStoryboardSegue) { }
 }

@@ -8,9 +8,18 @@
 
 import UIKit
 
+fileprivate let unwindSegue = "goBackButton"
+fileprivate let editTransactionSegue = "editTransaction"
+fileprivate let transactionCellReuseIdentifier = "transactionCell"
+
+let viewBalancesSegue = "viewBalances"
+
 class TransactionsTableViewController: UITableViewController {
 
     var eventId: String?
+    var editingTransaction: Transaction!
+    
+    private var transactions: [Transaction] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,62 +37,64 @@ class TransactionsTableViewController: UITableViewController {
             return
         }
         
-        EventManager.sharedInstance.loadEvent(id: eventId) { event in
-            
-            guard let event = event else {
+        EventManager.sharedInstance.loadEvent(id: eventId) { (event) in
+            self.title = event?.getName()
+        }
+        TransactionManager.sharedInstance.loadTransactions(eventId: eventId, completion: { (transactions) in
+            guard let transactions = transactions else {
+                self.performSegue(withIdentifier: unwindSegue, sender: self)
                 return
             }
             
-            self.title = event.getName()
-        }
+            self.transactions.removeAll()
+            self.transactions.append(contentsOf: transactions)
+            self.tableView.reloadData()
+        })
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func hitAdd(_ sender: Any) {
+        TransactionManager.sharedInstance.createTransaction(eventId: eventId!) { (transaction, error) in
+            self.editingTransaction = transaction
+            
+            if let transaction = transaction {
+                self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
+            }
+        }
+    }
+    
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
-    @IBAction func settingsButton(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "editEvent", sender: self)
-    }
-
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "goBackButton", sender: self)
+        return transactions.count
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? EventEditorViewController {
-            vc.eventId = self.eventId
-        }
-            
-        else if let nc = segue.destination as? UINavigationController {
-            
-            if let rootVc = nc.topViewController as? BalanceTableViewController {
-                rootVc.eventId = self.eventId
-            }
-        }
-    }
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! TransactionTableViewCell
 
-        // Configure the cell...
+        cell.transaction = transactions[indexPath.row]
 
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        editingTransaction = transactions[indexPath.row]
+        performSegue(withIdentifier: editTransactionSegue, sender: nil)
+    }
+    
+    
+    // MARK: Table View Delegate
 
     /*
     // Override to support conditional editing of the table view.
@@ -104,30 +115,25 @@ class TransactionsTableViewController: UITableViewController {
         }    
     }
     */
+    
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let vc = segue.destination as? EventEditorViewController {
+            vc.eventId = self.eventId
+        }
+        else if let nc = segue.destination as? UINavigationController {
+            if segue.identifier == viewBalancesSegue, let rootVc = nc.topViewController as? BalanceTableViewController {
+                rootVc.eventId = self.eventId
+            }
+            else if let vc = nc.viewControllers.first as? TransactionViewController {
+                vc.transaction = editingTransaction
+            }
+        }
     }
-    */
-
+    
+    
+    @IBAction func unwindToTransactions(segue: UIStoryboardSegue) { }
+    
 }

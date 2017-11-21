@@ -15,47 +15,81 @@ let transactionsChild = "transactions"
 class TransactionManager {
     private var ref: DatabaseReference!
     
-    private static var sharedTransactionManager: TransactionManager = {
-        let transactionManager = TransactionManager()
-        
-        // Configuration
-        // ...
-        
-        return transactionManager
-    }()
-    
-    class func shared() -> TransactionManager {
-        return sharedTransactionManager
-    }
-    
+    static let sharedInstance = TransactionManager()    
     
     init() {
         ref = Database.database().reference()
     }
     
-    func createTransaction(event: Event, completion: @escaping ((DatabaseReference?, Error?) -> ()) ) {
+    func createTransaction(eventId: String, completion: @escaping ((Transaction?, Error?) -> ()) ) {
         
         // Validate transaction
         var updates: [String:Any] = [:]
         
-        let key = ref.childByAutoId().key
+        let transactionsPath = "\(transactionsChild)/\(eventId)"
+        let key = ref.child(transactionsPath).childByAutoId().key
         
         // Add link to event reference
-        updates["/\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(key)"] = true
-        updates["\(transactionsChild)/\(key)"] = transform(transaction: Transaction(uid: key))
+        let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
+        updates[eventTransactionsPath] = true
+        
+        // Prepare initial version of transaction
+        let transaction: Transaction = Transaction(uid: key)
+        updates["\(transactionsPath)/\(key)"] = transform(transaction: transaction)
         
         ref.updateChildValues(updates) { (error, scope) in
-            completion(scope.child("\(transactionsChild)\(key)"), error)
+            completion(error == nil ? transaction : nil, error)
         }
     }
     
-    func editTransaction(transactionId: String, completion: @escaping ((DatabaseReference) -> ()) ) {
-        completion(ref.child(transactionId))
+    
+    //MARK: Fetching transactions
+    
+    func loadTransactions(eventId: String, completion: @escaping (([Transaction]?) -> ()) ) {
+        ref.child("\(transactionsChild)/\(eventId)/").observeSingleEvent(of: .value) { (snapshot) in
+            if let snapshot = snapshot.value as? [String: [String: Any]] {
+                let transactions = snapshot.map({ (key, data) -> Transaction in
+                    return self.parseTransaction(id: key, data: data)
+                })
+                
+                completion(transactions)
+            }
+            else {
+                completion([])
+            }
+        }
+    }
+    
+    func loadTransaction(id transactionId: String, completion: @escaping ((Transaction?, Error?) -> ())) {
+        self.ref.child(transactionId).observeSingleEvent(of: .value) { (snapshot) in
+            if let transData = snapshot.value as? [String:Any] {
+                let transaction = self.parseTransaction(id: transactionId, data: transData)
+                completion(transaction, nil)
+            }
+            else {
+                completion(nil, UomiErrors.retrievalError)
+            }
+        }
+    }
+    
+    
+    // MARK: Storage
+    
+    func saveTransaction(transaction: Transaction, success: @escaping ((Bool) -> ()) ) {
+        
+        let payload = transform(transaction: transaction)
+        
+        self.ref.child(transactionsChild).updateChildValues([transaction.uid : payload]) { (error, transRef) in
+            success(error == nil)
+        }
     }
     
     func deleteTransaction(transaction: Transaction, inEvent event: Event, failure: ((Error) -> ())? ) {
         ref.child("\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(transaction.getUid())").removeValue()
     }
+    
+    
+    //MARK: - Transforms
     
     private func transform(transaction: Transaction) -> [String:Any] {
         var transactPayload: [String:Any] = [:]
@@ -64,7 +98,7 @@ class TransactionManager {
         
         transactPayload["total"] = transaction.total
         transactPayload["contributions"] = transform(contributions: transaction.contributions)
-        transactPayload["description"] = transaction.description
+        transactPayload["description"] = transaction.transDescription
         transactPayload["payer"] = transaction.payer
         transactPayload["splitMode"] = transaction.splitMode.rawValue
         transactPayload["date"] = transaction.date.timeIntervalSince1970
@@ -92,4 +126,23 @@ class TransactionManager {
         
         return contribPayload
     }
+    
+    private func parseTransaction(id: String, data: [String:Any]) -> Transaction {
+        let transaction = Transaction(uid: id)
+        transaction.payer = data[TransactionKeys.payer.rawValue] as? String
+        transaction.total = data[TransactionKeys.total.rawValue] as! Float
+        if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
+            transaction.date = Date(timeIntervalSince1970: time)
+        }
+        transaction.transDescription = data[TransactionKeys.description.rawValue] as? String
+        transaction.splitMode = SplitMode(rawValue: data[TransactionKeys.splitMode.rawValue] as! String)!
+        transaction.contributions = parseContributions(withData: data[TransactionKeys.contributions.rawValue] as? [String:Any])
+        
+        return transaction
+    }
+    
+    private func parseContributions(withData: [String:Any]?) -> [Contribution] {
+        return []
+    }
+    
 }
