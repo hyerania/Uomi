@@ -118,4 +118,27 @@ class EventManager {
     }
     
     static let sharedInstance = EventManager()
+    
+    
+    // MARK: Totals
+    
+    func fetchTotalPaid(event eventId: String, by accountId: String, completion: ((Float?) -> ())) {
+        
+    }
+    
+    func fetchTotalPaidByAll(event eventId: String, completion: ((Float?) -> ())) {
+        
+    }
+    
+    
+    // MARK: Owings
+    
+    func fetchAmountOwed(by accountId: String, event eventId: String, completion: ((Float?) -> ())) {
+        
+    }
+    
+    func fetchAmountOwed(to accountId: String, event eventId: String, completion: ((Float?) -> ())) {
+        
+    }
+    
 }
