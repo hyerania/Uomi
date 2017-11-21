@@ -45,6 +45,19 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         
         dateField.rightView = imageView
         dateField.rightViewMode = .always
+        
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "$"
+        label.textColor = UIColor.gray
+        label.textAlignment = .right
+        
+        totalField.leftView = label
+        label.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        label.heightAnchor.constraint(equalToConstant: totalField.bounds.height).isActive = true
+        totalField.leftViewMode = .always
+        
         updateUI()
         
         // Do any additional setup after loading the view.
@@ -67,7 +80,33 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         guard let dateField = dateField, transaction != nil else { return }
         
         dateField.text = dateFormatter.string(from: transaction.date)
+        
+        totalField.text = "\(transaction.total)"
+        descriptionField.text = transaction.transDescription
+        splitSeg.selectedSegmentIndex = transaction.splitMode == .percent ? 0 : 1
+        
+        // Extract contribution data
+        tableView.reloadData()
     }
+    
+    
+    // MARK: Image Selection
+    
+    @IBAction func hitCamera(_ sender: Any) {
+        // TODO Display image picker with camera
+        if  UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.sourceType = .camera
+            
+            imagePicker.mediaTypes = [UIImagePickerControllerMediaType]
+        }
+        else {
+            // TODO Display warning saying image picker not available, change in settings
+        }
+        
+        // TODO Get image from camera
+    }
+    
     
     // MARK: - Data Source
     
@@ -136,6 +175,33 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
         self.dateField.text = dateFormatter.string(from: date)
         transaction.date = date
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        if textField === totalField {
+            // Only change value when value is set
+            if let totalTxt = totalField.text, !totalTxt.isEmpty, let newTotal = Float(totalTxt) {
+                transaction.total = newTotal
+            }
+        }
+        else if textField === descriptionField {
+            transaction.transDescription = textField.text
+        }
+    }
+    
+    
+    // MARK: Split Mode
+    
+    @IBAction func setSplitMode(_ sender: Any) {
+        transaction.splitMode = splitSeg.selectedSegmentIndex == 0 ? .percent : .lineItem
+        
+        // TODO Update applicable contributions
+        // Perhaps maintain two sets of contributions, one per type, and purge usused one leaving.
+        // Otherwise, convert one to the other... somehow
+        // HEY THIS COULD BE SOMETHING WORTH LOOKING INTO. Does changing split mode happen mainly by accident? Desire to convert from one to the other? Or start fresh? How would user navigate auto population?
+        // Probably just infer what they should be as best as possible
+        
+    }
+    
     
     // MARK: Support
     
