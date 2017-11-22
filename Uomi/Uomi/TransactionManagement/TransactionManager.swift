@@ -12,6 +12,22 @@ import Firebase
 let eventsChild = "events"
 let transactionsChild = "transactions"
 
+enum TransactionKeys : String {
+    case payer
+    case total
+    case date
+    case description
+    case splitMode
+    case contributions
+}
+
+protocol Transaction {
+    var total: Float { get set }
+    var payer: String { get set }
+    var date: Date { get set }
+    var uid: String? { get }
+}
+
 class TransactionManager {
     private var ref: DatabaseReference!
     
@@ -19,27 +35,6 @@ class TransactionManager {
     
     init() {
         ref = Database.database().reference()
-    }
-    
-    func createTransaction(eventId: String, completion: @escaping ((Transaction?, Error?) -> ()) ) {
-        
-        // Validate transaction
-        var updates: [String:Any] = [:]
-        
-        let transactionsPath = "\(transactionsChild)/\(eventId)"
-        let key = ref.child(transactionsPath).childByAutoId().key
-        
-        // Add link to event reference
-        let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
-        updates[eventTransactionsPath] = true
-        
-        // Prepare initial version of transaction
-        let transaction: Transaction = Transaction(uid: key)
-        updates["\(transactionsPath)/\(key)"] = transform(transaction: transaction)
-        
-        ref.updateChildValues(updates) { (error, scope) in
-            completion(error == nil ? transaction : nil, error)
-        }
     }
     
     
@@ -75,17 +70,43 @@ class TransactionManager {
     
     // MARK: Storage
     
-    func saveTransaction(transaction: Transaction, success: @escaping ((Bool) -> ()) ) {
+    func saveTransaction(event eventId: String, transaction: Transaction, success: @escaping ((Bool) -> ()) ) {
         
         let payload = transform(transaction: transaction)
         
-        self.ref.child(transactionsChild).updateChildValues([transaction.uid : payload]) { (error, transRef) in
-            success(error == nil)
+        if let uid = transaction.uid {
+            self.ref.child(transactionsChild).updateChildValues([uid : payload]) { (error, transRef) in
+                success(error == nil)
+            }
+        }
+        else {
+            // Save new transaction
+            
+            // Validate transaction
+            var updates: [String:Any] = [:]
+            
+            let transactionsPath = "\(transactionsChild)/\(eventId)"
+            let key = ref.child(transactionsPath).childByAutoId().key
+            
+            // Add link to event reference
+            let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
+            updates[eventTransactionsPath] = true
+            
+            // Prepare initial version of transaction
+            updates["\(transactionsPath)/\(key)"] = transform(transaction: transaction)
+            
+            ref.updateChildValues(updates) { (error, scope) in
+                success(error == nil)
+            }
         }
     }
     
     func deleteTransaction(transaction: Transaction, inEvent event: Event, failure: ((Error) -> ())? ) {
-        ref.child("\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(transaction.getUid())").removeValue()
+        
+        // Only need to contact Firebase in event that uid is set; otherwise is temporary location
+        if let uid = transaction.uid {
+            ref.child("\(eventsChild)/\(event.getUid())/\(transactionsChild)/\(uid)").removeValue()
+        }
     }
     
     
@@ -97,11 +118,14 @@ class TransactionManager {
         //        transactPayload["participants/\(AccountManager.currentAccount)"]
         
         transactPayload["total"] = transaction.total
-        transactPayload["contributions"] = transform(contributions: transaction.contributions)
-        transactPayload["description"] = transaction.transDescription
         transactPayload["payer"] = transaction.payer
-        transactPayload["splitMode"] = transaction.splitMode.rawValue
         transactPayload["date"] = transaction.date.timeIntervalSince1970
+        
+        if let transaction = transaction as? EventTransaction {
+            transactPayload["contributions"] = transform(contributions: transaction.contributions)
+            transactPayload["description"] = transaction.transDescription
+            transactPayload["splitMode"] = transaction.splitMode.rawValue
+        }
         
         return transactPayload
     }
@@ -128,15 +152,25 @@ class TransactionManager {
     }
     
     private func parseTransaction(id: String, data: [String:Any]) -> Transaction {
-        let transaction = Transaction(uid: id)
-        transaction.payer = data[TransactionKeys.payer.rawValue] as? String
-        transaction.total = data[TransactionKeys.total.rawValue] as! Float
-        if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
-            transaction.date = Date(timeIntervalSince1970: time)
+        var transaction: Transaction
+        
+        if let contributions = data[TransactionKeys.splitMode.rawValue] as? String {
+            let eventTransaction = EventTransaction(uid: id)
+            eventTransaction.payer = data[TransactionKeys.payer.rawValue] as! String
+            eventTransaction.total = data[TransactionKeys.total.rawValue] as! Float
+            if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
+                eventTransaction.date = Date(timeIntervalSince1970: time)
+            }
+            eventTransaction.transDescription = data[TransactionKeys.description.rawValue] as? String
+            eventTransaction.splitMode = SplitMode(rawValue: data[TransactionKeys.splitMode.rawValue] as! String)!
+            eventTransaction.contributions = parseContributions(withData: data[TransactionKeys.contributions.rawValue] as? [String:Any])
+            
+            transaction = eventTransaction
         }
-        transaction.transDescription = data[TransactionKeys.description.rawValue] as? String
-        transaction.splitMode = SplitMode(rawValue: data[TransactionKeys.splitMode.rawValue] as! String)!
-        transaction.contributions = parseContributions(withData: data[TransactionKeys.contributions.rawValue] as? [String:Any])
+        else {
+            // FIXME Create settlement transaction
+            transaction = EventTransaction()
+        }
         
         return transaction
     }

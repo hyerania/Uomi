@@ -18,7 +18,7 @@ class TransactionViewController: UIViewController, UITableViewDelegate, UITableV
     
     let dateFormatter = getDateFormatter()
     
-    var transaction: Transaction! {
+    var transaction: EventTransaction! {
         didSet {
             updateUI()
         }

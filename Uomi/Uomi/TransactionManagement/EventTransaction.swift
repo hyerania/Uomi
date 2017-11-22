@@ -8,36 +8,24 @@
 
 import Foundation
 
-enum TransactionKeys : String {
-    case payer
-    case total
-    case date
-    case description
-    case splitMode
-    case contributions
-}
 
 enum SplitMode: String {
     case percent
     case lineItem
 }
 
-class Transaction {
+class EventTransaction : Transaction {
     
-    let uid: String
-    var payer: String? // FIXME should use account object
+    let uid: String?
+    var payer: String = "" // FIXME should use account object
     var total: Float = 0.0
     var date: Date = Date()
     var transDescription: String?
     var splitMode: SplitMode = .percent
     var contributions: [Contribution] = []
     
-    init(uid: String) {
-       self.uid = uid
-    }
-    
-    func getUid() -> String {
-        return uid
+    init(uid: String? = nil) {
+        self.uid = uid
     }
     
 }

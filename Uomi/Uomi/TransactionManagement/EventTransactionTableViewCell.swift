@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionTableViewCell: UITableViewCell {
+class EventTransactionTableViewCell: UITableViewCell {
     
     static let dateFormatter = getDateFormatter()
     static let dollarFormatter = getDollarFormatter()
@@ -34,7 +34,7 @@ class TransactionTableViewCell: UITableViewCell {
     @IBOutlet weak var totalView: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     
-    var transaction: Transaction! {
+    var transaction: EventTransaction! {
         didSet {
             updateUI()
         }
@@ -42,8 +42,8 @@ class TransactionTableViewCell: UITableViewCell {
     
     func updateUI() {
         descriptionLabel.text = transaction.transDescription
-        dateLabel.text = TransactionTableViewCell.dateFormatter.string(for: transaction.date)
-        totalView.text = TransactionTableViewCell.dollarFormatter.string(for: transaction.total)
+        dateLabel.text = EventTransactionTableViewCell.dateFormatter.string(for: transaction.date)
+        totalView.text = EventTransactionTableViewCell.dollarFormatter.string(for: transaction.total)
         // TODO add summary text
     }
     

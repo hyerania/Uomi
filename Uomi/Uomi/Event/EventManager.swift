@@ -122,10 +122,17 @@ class EventManager {
     
     // MARK: Totals
     
-    func fetchTotalPaid(event eventId: String, by accountId: String, completion: ((Float?) -> ())) {
-        
+    /**
+     @param eventId The event to query within
+     @param user The user for who to calculate total spent during the event
+     */
+    func fetchTotalPaid(event eventId: String, user: String, completion: ((Float?) -> ())) {
+    
     }
     
+    /**
+     @param eventId The event to query in
+     */
     func fetchTotalPaidByAll(event eventId: String, completion: ((Float?) -> ())) {
         
     }
@@ -133,6 +140,9 @@ class EventManager {
     
     // MARK: Owings
     
+    /**
+     @param accountId the account to
+    */
     func fetchAmountOwed(by accountId: String, event eventId: String, completion: ((Float?) -> ())) {
         
     }

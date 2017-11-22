@@ -58,13 +58,11 @@ class TransactionsTableViewController: UITableViewController {
     }
     
     @IBAction func hitAdd(_ sender: Any) {
-        TransactionManager.sharedInstance.createTransaction(eventId: eventId!) { (transaction, error) in
-            self.editingTransaction = transaction
-            
-            if let transaction = transaction {
-                self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
-            }
-        }
+        let transaction = EventTransaction()
+        
+        self.editingTransaction = transaction
+        
+        self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
     }
     
 
@@ -81,10 +79,30 @@ class TransactionsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! TransactionTableViewCell
+        
+        var cell: UITableViewCell
+        
+        if let transaction = transactions[indexPath.row] as? EventTransaction {
+        
+            let eventCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! EventTransactionTableViewCell
 
-        cell.transaction = transactions[indexPath.row]
-
+            eventCell.transaction = transaction
+            
+            cell = eventCell
+        }
+        else if let transaction = transactions[indexPath.row] as? SettlementTransaction {
+            // FIXME Add cell for settlement transaction
+            let settleCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! EventTransactionTableViewCell
+                
+            settleCell.transaction = transaction as! EventTransaction
+            
+            cell = settleCell
+        }
+        else {
+            print("Problem parsing transaction type, could not generate proper cell type")
+            cell = UITableViewCell()
+        }
+        
         return cell
     }
     
@@ -128,7 +146,7 @@ class TransactionsTableViewController: UITableViewController {
                 rootVc.eventId = self.eventId
             }
             else if let vc = nc.viewControllers.first as? TransactionViewController {
-                vc.transaction = editingTransaction
+                vc.transaction = editingTransaction as! EventTransaction
             }
         }
     }
