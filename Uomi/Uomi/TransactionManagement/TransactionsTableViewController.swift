@@ -58,7 +58,7 @@ class TransactionsTableViewController: UITableViewController {
     }
     
     @IBAction func hitAdd(_ sender: Any) {
-        let transaction = EventTransaction()
+        let transaction = ExpenseTransaction()
         
         self.editingTransaction = transaction
         
@@ -82,7 +82,7 @@ class TransactionsTableViewController: UITableViewController {
         
         var cell: UITableViewCell
         
-        if let transaction = transactions[indexPath.row] as? EventTransaction {
+        if let transaction = transactions[indexPath.row] as? ExpenseTransaction {
         
             let eventCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! EventTransactionTableViewCell
 
@@ -94,7 +94,7 @@ class TransactionsTableViewController: UITableViewController {
             // FIXME Add cell for settlement transaction
             let settleCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! EventTransactionTableViewCell
                 
-            settleCell.transaction = transaction as! EventTransaction
+            settleCell.transaction = transaction as! ExpenseTransaction
             
             cell = settleCell
         }
@@ -145,8 +145,8 @@ class TransactionsTableViewController: UITableViewController {
             if segue.identifier == viewBalancesSegue, let rootVc = nc.topViewController as? BalanceTableViewController {
                 rootVc.eventId = self.eventId
             }
-            else if let vc = nc.viewControllers.first as? TransactionViewController {
-                vc.transaction = editingTransaction as! EventTransaction
+            else if let vc = nc.viewControllers.first as? ExpenseTransactionViewController {
+                vc.transaction = editingTransaction as! ExpenseTransaction
             }
         }
     }

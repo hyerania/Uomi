@@ -17,9 +17,9 @@ protocol Contribution {
 class PercentContribution : Contribution {
     var member: User?
     var percent: Float = 0
-    var transaction: EventTransaction
+    var transaction: ExpenseTransaction
     
-    init(transaction: EventTransaction) {
+    init(transaction: ExpenseTransaction) {
         self.transaction = transaction
     }
     

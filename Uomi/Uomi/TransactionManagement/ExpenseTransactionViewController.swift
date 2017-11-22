@@ -1,5 +1,5 @@
 //
-//  TransactionViewController.swift
+//  EventTransactionViewController.swift
 //  Uomi
 //
 //  Created by Eric Gonzalez on 11/11/17.
@@ -14,11 +14,11 @@ let lineItemTotalReuseIdentifier = "lineItemTotalCell"
 
 let calendarIcon = "calendar"
 
-class TransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     let dateFormatter = getDateFormatter()
     
-    var transaction: EventTransaction! {
+    var transaction: ExpenseTransaction! {
         didSet {
             updateUI()
         }

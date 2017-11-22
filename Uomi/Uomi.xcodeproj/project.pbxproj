@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0706246B1FB9301800AE2137 /* ParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706246A1FB9301800AE2137 /* ParticipantView.swift */; };
-		077B45CD1FB7A2C400792C30 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */; };
+		077B45CD1FB7A2C400792C30 /* ExpenseTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45CC1FB7A2C400792C30 /* ExpenseTransactionViewController.swift */; };
 		077B45D01FB7A48100792C30 /* PercentageSplitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */; };
 		077B45D31FB7A58F00792C30 /* LineItemSplitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */; };
 		077B45D51FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */; };
 		078834A91FBB82D40052D1CF /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834A81FBB82D40052D1CF /* TransactionManager.swift */; };
-		078834AB1FBB831D0052D1CF /* EventTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834AA1FBB831D0052D1CF /* EventTransaction.swift */; };
+		078834AB1FBB831D0052D1CF /* ExpenseTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834AA1FBB831D0052D1CF /* ExpenseTransaction.swift */; };
 		078834AD1FBB89610052D1CF /* Contribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834AC1FBB89610052D1CF /* Contribution.swift */; };
 		078834AF1FBB8E390052D1CF /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834AE1FBB8E390052D1CF /* AccountManager.swift */; };
 		078834B21FBB8F070052D1CF /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834B11FBB8F070052D1CF /* EventManager.swift */; };
@@ -54,12 +54,12 @@
 
 /* Begin PBXFileReference section */
 		0706246A1FB9301800AE2137 /* ParticipantView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantView.swift; sourceTree = "<group>"; };
-		077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		077B45CC1FB7A2C400792C30 /* ExpenseTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransactionViewController.swift; sourceTree = "<group>"; };
 		077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageSplitTableViewCell.swift; sourceTree = "<group>"; };
 		077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineItemSplitTableViewCell.swift; sourceTree = "<group>"; };
 		077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineItemTotalTableViewCell.swift; sourceTree = "<group>"; };
 		078834A81FBB82D40052D1CF /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
-		078834AA1FBB831D0052D1CF /* EventTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTransaction.swift; sourceTree = "<group>"; };
+		078834AA1FBB831D0052D1CF /* ExpenseTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransaction.swift; sourceTree = "<group>"; };
 		078834AC1FBB89610052D1CF /* Contribution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contribution.swift; sourceTree = "<group>"; };
 		078834AE1FBB8E390052D1CF /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		078834B11FBB8F070052D1CF /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
@@ -119,12 +119,12 @@
 			isa = PBXGroup;
 			children = (
 				079009211FBDEC1800B6E83A /* TransactionsTableViewController.swift */,
-				077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */,
+				077B45CC1FB7A2C400792C30 /* ExpenseTransactionViewController.swift */,
 				077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */,
 				077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */,
 				077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */,
 				078834A81FBB82D40052D1CF /* TransactionManager.swift */,
-				078834AA1FBB831D0052D1CF /* EventTransaction.swift */,
+				078834AA1FBB831D0052D1CF /* ExpenseTransaction.swift */,
 				078834AC1FBB89610052D1CF /* Contribution.swift */,
 				07DC65591FBE8F4C00638BA3 /* EventTransactionTableViewCell.swift */,
 				07CD92511FC51BA80008B93D /* SettlementTransaction.swift */,
@@ -383,7 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				078834AB1FBB831D0052D1CF /* EventTransaction.swift in Sources */,
+				078834AB1FBB831D0052D1CF /* ExpenseTransaction.swift in Sources */,
 				AA83D3EF1FBCDEA10081815E /* BalanceManager.swift in Sources */,
 				079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */,
 				AA85857D1FBBA477005B2221 /* SettleTableViewCell.swift in Sources */,
@@ -404,7 +404,7 @@
 				079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */,
 				078834B21FBB8F070052D1CF /* EventManager.swift in Sources */,
 				079CEF911FA8F6A300AC1FE4 /* NewAccountViewController.swift in Sources */,
-				077B45CD1FB7A2C400792C30 /* TransactionViewController.swift in Sources */,
+				077B45CD1FB7A2C400792C30 /* ExpenseTransactionViewController.swift in Sources */,
 				078834B61FBB8F3C0052D1CF /* User.swift in Sources */,
 				AA85857A1FBBA389005B2221 /* BalanceTableViewController.swift in Sources */,
 				077B45D01FB7A48100792C30 /* PercentageSplitTableViewCell.swift in Sources */,

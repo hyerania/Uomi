@@ -14,7 +14,7 @@ enum SplitMode: String {
     case lineItem
 }
 
-class EventTransaction : Transaction {
+class ExpenseTransaction : Transaction {
     
     let uid: String?
     var payer: String = "" // FIXME should use account object

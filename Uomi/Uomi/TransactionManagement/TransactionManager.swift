@@ -92,8 +92,10 @@ class TransactionManager {
             let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
             updates[eventTransactionsPath] = true
             
-            // Prepare initial version of transaction
+            // Update main transaction payload
             updates["\(transactionsPath)/\(key)"] = transform(transaction: transaction)
+            
+            // Update owings for the transaction
             
             ref.updateChildValues(updates) { (error, scope) in
                 success(error == nil)
@@ -121,7 +123,7 @@ class TransactionManager {
         transactPayload["payer"] = transaction.payer
         transactPayload["date"] = transaction.date.timeIntervalSince1970
         
-        if let transaction = transaction as? EventTransaction {
+        if let transaction = transaction as? ExpenseTransaction {
             transactPayload["contributions"] = transform(contributions: transaction.contributions)
             transactPayload["description"] = transaction.transDescription
             transactPayload["splitMode"] = transaction.splitMode.rawValue
@@ -155,7 +157,7 @@ class TransactionManager {
         var transaction: Transaction
         
         if let contributions = data[TransactionKeys.splitMode.rawValue] as? String {
-            let eventTransaction = EventTransaction(uid: id)
+            let eventTransaction = ExpenseTransaction(uid: id)
             eventTransaction.payer = data[TransactionKeys.payer.rawValue] as! String
             eventTransaction.total = data[TransactionKeys.total.rawValue] as! Float
             if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
@@ -169,7 +171,7 @@ class TransactionManager {
         }
         else {
             // FIXME Create settlement transaction
-            transaction = EventTransaction()
+            transaction = ExpenseTransaction()
         }
         
         return transaction

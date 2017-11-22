@@ -34,7 +34,7 @@ class EventTransactionTableViewCell: UITableViewCell {
     @IBOutlet weak var totalView: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     
-    var transaction: EventTransaction! {
+    var transaction: ExpenseTransaction! {
         didSet {
             updateUI()
         }
