@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EventTransactionTableViewCell: UITableViewCell {
+class ExpenseTransactionTableViewCell: UITableViewCell {
     
     static let dateFormatter = getDateFormatter()
     static let dollarFormatter = getDollarFormatter()
@@ -42,8 +42,16 @@ class EventTransactionTableViewCell: UITableViewCell {
     
     func updateUI() {
         descriptionLabel.text = transaction.transDescription
-        dateLabel.text = EventTransactionTableViewCell.dateFormatter.string(for: transaction.date)
-        totalView.text = EventTransactionTableViewCell.dollarFormatter.string(for: transaction.total)
+        dateLabel.text = ExpenseTransactionTableViewCell.dateFormatter.string(for: transaction.date)
+        
+        if transaction.total == round(transaction.total) {
+            ExpenseTransactionTableViewCell.dollarFormatter.maximumFractionDigits = 0
+        }
+        else {
+            ExpenseTransactionTableViewCell.dollarFormatter.maximumFractionDigits = 2
+        }
+        
+        totalView.text = ExpenseTransactionTableViewCell.dollarFormatter.string(for: transaction.total)
         // TODO add summary text
     }
     
