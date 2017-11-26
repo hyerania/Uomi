@@ -11,6 +11,27 @@ import UIKit
 @IBDesignable class ParticipantView: UIView {
     
     var view: UIView!
+    private var member: User? {
+        didSet {
+            if let member = member {
+                participantButton.titleLabel?.text = initials(for: member)
+            }
+            else {
+                participantButton.titleLabel?.text = nil
+            }
+        }
+    }
+    var memberId: String? { didSet {
+        if let memberId = memberId {
+            AccountManager.sharedInstance.load(id: memberId) { (user) in
+                self.member = user
+            }
+        }
+        else {
+            self.member = nil
+        }
+        }
+    }
 
     @IBOutlet fileprivate weak var participantButton: UIButton!
     
@@ -42,6 +63,7 @@ import UIKit
         view.frame = bounds
         
         participantButton.layer.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1.0, alpha: 1.0).cgColor
+        participantButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         // Make the view stretch with containing view
         view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
@@ -61,7 +83,21 @@ import UIKit
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        participantButton.layer.cornerRadius = participantButton.bounds.width / 2
+        participantButton.layer.cornerRadius = participantButton.bounds.width / 8
     }
 
+    fileprivate func initials(for user: User) -> String {
+        let components = user.getName().split(separator: Character.init(" "))
+
+        // Is there a better way to internationalize names? Sure. Should it try to figure out the necessary degree of uniqueness to display? Of course. Have fun!
+        var initials: String
+        if components.count > 1, let firstInitial = components.first?.prefix(1), let lastInitial = components.last?.prefix(1) {
+            initials = "\(firstInitial)\(lastInitial)"
+        }
+        else {
+            initials = String(components.first!.prefix(1))
+        }
+        
+        return initials
+    }
 }

@@ -22,10 +22,11 @@ class PercentageSplitTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var contribution: PercentContribution! {
         didSet {
-            percentField.text = "\(contribution.percent)"
-            updateSubtotal()
+            participantView.memberId = contribution.member
             
+            percentField.text = "\(contribution.percent)"
             percentStepper.value = Double(contribution.percent)
+            updateSubtotal()
         }
     }
     
