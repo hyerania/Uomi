@@ -174,7 +174,9 @@ class TransactionManager {
             }
             eventTransaction.transDescription = data[TransactionKeys.description.rawValue] as? String
             eventTransaction.splitMode = SplitMode(rawValue: data[TransactionKeys.splitMode.rawValue] as! String)!
-            eventTransaction.contributions = parseContributions(withData: data[TransactionKeys.contributions.rawValue] as? [String:Any])
+            
+            // FIXME Uncomment when transactions have been cleaned out
+//            parseContributions(for: eventTransaction, withData: data[TransactionKeys.contributions.rawValue] as! [[String:Any]])
             
             transaction = eventTransaction
         }
@@ -186,8 +188,21 @@ class TransactionManager {
         return transaction
     }
     
-    private func parseContributions(withData: [String:Any]?) -> [Contribution] {
-        return []
+    private func parseContributions(for transaction: ExpenseTransaction, withData data: [[String:Any]]){
+        if transaction.splitMode == .percent {
+            for contribData in data {
+                let contribution = PercentContribution(transaction: transaction)
+                contribution.member = contribData[ContributionKeys.member.rawValue] as? String
+                contribution.percent = contribData[ContributionKeys.percent.rawValue] as! Int
+                
+                transaction.percentContributions.append(contribution)
+            }
+        }
+        else {
+            for contribData in data {
+                // TODO Instantiate a line-item contribution
+            }
+        }
     }
     
 }

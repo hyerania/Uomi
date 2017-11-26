@@ -70,7 +70,7 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
                         contrib.member = userId
                         contrib.percent = percentage
                         
-                        transaction.contributions.append(contrib)
+                        transaction.percentContributions.append(contrib)
                     }
                     
                     self.editingTransaction = transaction

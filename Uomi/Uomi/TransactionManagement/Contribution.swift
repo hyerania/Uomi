@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum ContributionKeys: String {
+    case member
+    case percent
+    case description
+}
+
 protocol Contribution {
     var member: String? { get set }
     
@@ -15,6 +21,10 @@ protocol Contribution {
 }
 
 class PercentContribution : Contribution {
+    static func ==(lhs: PercentContribution, rhs: PercentContribution) -> Bool {
+        return lhs.member == rhs.member
+    }
+    
     var member: String?
     var percent: Int = 0
     var transaction: ExpenseTransaction
@@ -26,6 +36,8 @@ class PercentContribution : Contribution {
     func getContributionAmount() -> Int {
         return transaction.total * percent
     }
+    
+    
 }
 
 class LineItemContribution : Contribution {

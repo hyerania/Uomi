@@ -22,19 +22,16 @@ class ExpenseTransaction : Transaction {
     var date: Date = Date()
     var transDescription: String?
     var splitMode: SplitMode = .percent
-    var contributions: [Contribution] = []
-    var percentContributions: [Contribution] {
+    var percentContributions: [PercentContribution] = []
+    var lineItemContributions: [LineItemContribution] = []
+    var contributions: [Contribution] {
         get {
-            return contributions.filter({ (contrib) -> Bool in
-                return contrib is PercentContribution
-            })
-        }
-    }
-    var lineItemContributions: [Contribution] {
-        get {
-            return contributions.filter({ (contrib) -> Bool in
-                return contrib is LineItemContribution
-            })
+            if splitMode == .percent {
+                return percentContributions
+            }
+            else {
+                return lineItemContributions
+            }
         }
     }
     

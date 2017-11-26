@@ -21,7 +21,7 @@ protocol ExpenseTransactionDelegate {
     func shouldSave(expenseController controller: ExpenseTransactionViewController,  transaction: Transaction)
 }
 
-class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     let dateFormatter = getDateFormatter()
     
@@ -71,7 +71,9 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         // Do any additional setup after loading the view.
         tableView.setEditing(true, animated: false)
         
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.delegate = self
+        view.addGestureRecognizer(tapGesture)
     }
     
     @objc func dismissKeyboard() {
@@ -162,6 +164,22 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - Table Delegate
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let row = indexPath.row
+        
+        if indexPath.section == 0 {
+            if transaction.splitMode == .percent {
+                transaction.percentContributions.remove(at: row)
+            }
+            else {
+                transaction.lineItemContributions.remove(at: row)
+            }
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        else {
+            // Create new line-item entry
+        }
+    }
 
     /*
     // MARK: - Navigation
@@ -240,6 +258,17 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         // HEY THIS COULD BE SOMETHING WORTH LOOKING INTO. Does changing split mode happen mainly by accident? Desire to convert from one to the other? Or start fresh? How would user navigate auto population?
         // Probably just infer what they should be as best as possible
         
+    }
+    
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let view = touch.view, String(describing: type(of: view)) == "UITableViewCellEditControl" {
+            print("do not receive touch")
+            return false
+        }
+
+        print("do receive touch")
+        return true
     }
     
     
