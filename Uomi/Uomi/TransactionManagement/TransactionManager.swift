@@ -22,7 +22,7 @@ enum TransactionKeys : String {
 }
 
 protocol Transaction {
-    var total: Float { get set }
+    var total: Int { get set }
     var payer: String { get set }
     var date: Date { get set }
     var uid: String? { get }
@@ -168,7 +168,7 @@ class TransactionManager {
         if let contributions = data[TransactionKeys.splitMode.rawValue] as? String {
             let eventTransaction = ExpenseTransaction(uid: id)
             eventTransaction.payer = data[TransactionKeys.payer.rawValue] as! String
-            eventTransaction.total = data[TransactionKeys.total.rawValue] as! Float
+            eventTransaction.total = data[TransactionKeys.total.rawValue] as! Int
             if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
                 eventTransaction.date = Date(timeIntervalSince1970: time)
             }

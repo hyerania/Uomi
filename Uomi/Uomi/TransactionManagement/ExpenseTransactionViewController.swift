@@ -90,7 +90,7 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         
         dateField.text = dateFormatter.string(from: transaction.date)
         
-        totalField.text = "\(transaction.total)"
+        totalField.text = "\(Float(transaction.total) / 100)"
         descriptionField.text = transaction.transDescription
         splitSeg.selectedSegmentIndex = transaction.splitMode == .percent ? 0 : 1
         
@@ -189,8 +189,8 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         if textField === totalField {
             // Only change value when value is set
             if let totalTxt = totalField.text, !totalTxt.isEmpty, var newTotal = Float(totalTxt) {
-                newTotal = round(newTotal * 100) / 100
-                transaction.total = newTotal
+                newTotal = newTotal * 100
+                transaction.total = Int(newTotal)
             }
         }
         else if textField === descriptionField {

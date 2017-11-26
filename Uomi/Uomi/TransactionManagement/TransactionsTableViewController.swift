@@ -59,10 +59,20 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     
     @IBAction func hitAdd(_ sender: Any) {
         let transaction = ExpenseTransaction()
-        
-        self.editingTransaction = transaction
-        
-        self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
+        AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
+            if let user = user {
+                transaction.payer = user.getUid()
+                
+                self.editingTransaction = transaction
+                
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
+                }
+            }
+            else {
+                // They shouldn't be here! They aren't logged in!
+            }
+        })
     }
     
 
@@ -141,8 +151,6 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     }
     
     func shouldSave(expenseController controller: ExpenseTransactionViewController, transaction: Transaction) {
-        
-        
         TransactionManager.sharedInstance.saveTransaction(event: eventId, transaction: transaction) { (success) in
             if success {
                 self.dismiss(animated: true, completion: nil)
