@@ -14,9 +14,18 @@ let lineItemTotalReuseIdentifier = "lineItemTotalCell"
 
 let calendarIcon = "calendar"
 
+
+protocol ExpenseTransactionDelegate {
+    func shouldCancel(expenseController controller: ExpenseTransactionViewController)
+    
+    func shouldSave(expenseController controller: ExpenseTransactionViewController,  transaction: Transaction)
+}
+
 class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     let dateFormatter = getDateFormatter()
+    
+    var delegate: ExpenseTransactionDelegate?
     
     var transaction: ExpenseTransaction! {
         didSet {
@@ -63,10 +72,10 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         // Do any additional setup after loading the view.
         tableView.setEditing(true, animated: false)
         
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissEditing)))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
     
-    @objc func dismissEditing() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
 
@@ -81,7 +90,7 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         
         dateField.text = dateFormatter.string(from: transaction.date)
         
-        totalField.text = "\(transaction.total)"
+        totalField.text = "\(Float(transaction.total) / 100)"
         descriptionField.text = transaction.transDescription
         splitSeg.selectedSegmentIndex = transaction.splitMode == .percent ? 0 : 1
         
@@ -179,8 +188,9 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if textField === totalField {
             // Only change value when value is set
-            if let totalTxt = totalField.text, !totalTxt.isEmpty, let newTotal = Float(totalTxt) {
-                transaction.total = newTotal
+            if let totalTxt = totalField.text, !totalTxt.isEmpty, var newTotal = Float(totalTxt) {
+                newTotal = newTotal * 100
+                transaction.total = Int(newTotal)
             }
         }
         else if textField === descriptionField {
@@ -209,5 +219,17 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         return formatter
+    }
+    
+    
+    // MARK: Delegate actions
+    
+    @IBAction func hitCancel(_ sender: Any) {
+        delegate?.shouldCancel(expenseController: self)
+    }
+    
+    @IBAction func hitSave(_ sender: Any) {
+        dismissKeyboard()
+        delegate?.shouldSave(expenseController: self, transaction: transaction)
     }
 }

@@ -22,7 +22,7 @@ enum TransactionKeys : String {
 }
 
 protocol Transaction {
-    var total: Float { get set }
+    var total: Int { get set }
     var payer: String { get set }
     var date: Date { get set }
     var uid: String? { get }
@@ -73,19 +73,28 @@ class TransactionManager {
     func saveTransaction(event eventId: String, transaction: Transaction, success: @escaping ((Bool) -> ()) ) {
         
         let payload = transform(transaction: transaction)
-        
+        let transactionsPath = "\(transactionsChild)/\(eventId)"
+
         if let uid = transaction.uid {
-            self.ref.child(transactionsChild).updateChildValues([uid : payload]) { (error, transRef) in
+            var updates: [String:Any] = [:]
+            
+            // Update existing transaction
+            updates["\(transactionsPath)/\(uid)"] = payload
+            
+            // TODO Update owings for the transaction
+            
+            
+            ref.updateChildValues(updates) { (error, scope) in
                 success(error == nil)
             }
         }
         else {
             // Save new transaction
             
-            // Validate transaction
+            // TODO Validate transaction
+            
             var updates: [String:Any] = [:]
             
-            let transactionsPath = "\(transactionsChild)/\(eventId)"
             let key = ref.child(transactionsPath).childByAutoId().key
             
             // Add link to event reference
@@ -93,7 +102,7 @@ class TransactionManager {
             updates[eventTransactionsPath] = true
             
             // Update main transaction payload
-            updates["\(transactionsPath)/\(key)"] = transform(transaction: transaction)
+            updates["\(transactionsPath)/\(key)"] = payload
             
             // Update owings for the transaction
             
@@ -159,7 +168,7 @@ class TransactionManager {
         if let contributions = data[TransactionKeys.splitMode.rawValue] as? String {
             let eventTransaction = ExpenseTransaction(uid: id)
             eventTransaction.payer = data[TransactionKeys.payer.rawValue] as! String
-            eventTransaction.total = data[TransactionKeys.total.rawValue] as! Float
+            eventTransaction.total = data[TransactionKeys.total.rawValue] as! Int
             if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
                 eventTransaction.date = Date(timeIntervalSince1970: time)
             }

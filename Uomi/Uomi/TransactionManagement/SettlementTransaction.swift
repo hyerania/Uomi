@@ -12,7 +12,7 @@ class SettlementTransaction : Transaction {
 
     let uid: String?
     var payer: String = "" // FIXME should use account object
-    var total: Float = 0.0
+    var total: Int = 0
     var date: Date = Date()
     var recipient: String = ""
     

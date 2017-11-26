@@ -8,23 +8,8 @@
 
 import UIKit
 
-class EventTransactionTableViewCell: UITableViewCell {
-    
-    static let dateFormatter = getDateFormatter()
-    static let dollarFormatter = getDollarFormatter()
 
-    static func getDateFormatter() -> DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM d"
-        return dateFormatter
-    }
-    
-    static func getDollarFormatter() -> NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        return formatter
-    }
-
+class ExpenseTransactionTableViewCell: UITableViewCell {
     
 //    static let formatters = Formatters()
 
@@ -42,8 +27,12 @@ class EventTransactionTableViewCell: UITableViewCell {
     
     func updateUI() {
         descriptionLabel.text = transaction.transDescription
-        dateLabel.text = EventTransactionTableViewCell.dateFormatter.string(for: transaction.date)
-        totalView.text = EventTransactionTableViewCell.dollarFormatter.string(for: transaction.total)
+        dateLabel.text = UomiFormatters.dateFormatter.string(for: transaction.date)
+        
+        let displayAmount = Float(transaction.total) / 100.0
+        
+        totalView.text = displayAmount == round(displayAmount) ? UomiFormatters.wholeDollarFormatter.string(for: displayAmount) : UomiFormatters.dollarFormatter.string(for: displayAmount)
+        
         // TODO add summary text
     }
     

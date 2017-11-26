@@ -14,9 +14,9 @@ fileprivate let transactionCellReuseIdentifier = "transactionCell"
 
 let viewBalancesSegue = "viewBalances"
 
-class TransactionsTableViewController: UITableViewController {
+class TransactionsTableViewController: UITableViewController, ExpenseTransactionDelegate {
 
-    var eventId: String?
+    var eventId: String!
     var editingTransaction: Transaction!
     
     private var transactions: [Transaction] = []
@@ -59,10 +59,20 @@ class TransactionsTableViewController: UITableViewController {
     
     @IBAction func hitAdd(_ sender: Any) {
         let transaction = ExpenseTransaction()
-        
-        self.editingTransaction = transaction
-        
-        self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
+        AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
+            if let user = user {
+                transaction.payer = user.getUid()
+                
+                self.editingTransaction = transaction
+                
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
+                }
+            }
+            else {
+                // They shouldn't be here! They aren't logged in!
+            }
+        })
     }
     
 
@@ -84,7 +94,7 @@ class TransactionsTableViewController: UITableViewController {
         
         if let transaction = transactions[indexPath.row] as? ExpenseTransaction {
         
-            let eventCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! EventTransactionTableViewCell
+            let eventCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! ExpenseTransactionTableViewCell
 
             eventCell.transaction = transaction
             
@@ -92,7 +102,7 @@ class TransactionsTableViewController: UITableViewController {
         }
         else if let transaction = transactions[indexPath.row] as? SettlementTransaction {
             // FIXME Add cell for settlement transaction
-            let settleCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! EventTransactionTableViewCell
+            let settleCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! ExpenseTransactionTableViewCell
                 
             settleCell.transaction = transaction as! ExpenseTransaction
             
@@ -106,34 +116,15 @@ class TransactionsTableViewController: UITableViewController {
         return cell
     }
     
+    
+    // MARK: Table View Delegate
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         editingTransaction = transactions[indexPath.row]
         performSegue(withIdentifier: editTransactionSegue, sender: nil)
     }
-    
-    
-    // MARK: Table View Delegate
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-    
+   
 
     // MARK: - Navigation
 
@@ -147,11 +138,27 @@ class TransactionsTableViewController: UITableViewController {
             }
             else if let vc = nc.viewControllers.first as? ExpenseTransactionViewController {
                 vc.transaction = editingTransaction as! ExpenseTransaction
+                vc.delegate = self
             }
         }
     }
     
     
-    @IBAction func unwindToTransactions(segue: UIStoryboardSegue) { }
+    // MARK: - Expense Delegate
+    
+    func shouldCancel(expenseController controller: ExpenseTransactionViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func shouldSave(expenseController controller: ExpenseTransactionViewController, transaction: Transaction) {
+        TransactionManager.sharedInstance.saveTransaction(event: eventId, transaction: transaction) { (success) in
+            if success {
+                self.dismiss(animated: true, completion: nil)
+            }
+            else {
+                // TODO Alert user of failure
+            }
+        }
+    }
     
 }
