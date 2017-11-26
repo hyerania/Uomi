@@ -67,6 +67,8 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         label.heightAnchor.constraint(equalToConstant: totalField.bounds.height).isActive = true
         totalField.leftViewMode = .always
         
+        totalField.addTarget(self, action: #selector(updateTotal), for: .editingChanged)
+        
         updateUI()
         
         // Do any additional setup after loading the view.
@@ -195,18 +197,25 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         transaction.date = date
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        if textField === totalField {
-            // Only change value when value is set
-            if let totalTxt = totalField.text, !totalTxt.isEmpty, var newTotal = Float(totalTxt) {
-                newTotal = newTotal * 100
-                transaction.total = Int(newTotal)
-            }
-        }
-        else if textField === descriptionField {
-            transaction.transDescription = textField.text
+    @objc func updateTotal() {
+        // Only change value when value is set
+        if let totalTxt = totalField.text, !totalTxt.isEmpty, var newTotal = Float(totalTxt) {
+            newTotal = newTotal * 100
+            transaction.total = Int(newTotal)
         }
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField === descriptionField {
+            transaction.transDescription = textField.text
+        }
+        
+        return true
+    }
+    
+//    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+//
+//    }
     
     
     // MARK: Split Mode
