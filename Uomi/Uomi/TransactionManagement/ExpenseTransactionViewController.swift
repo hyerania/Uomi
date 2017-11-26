@@ -201,13 +201,23 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         if let totalTxt = totalField.text, !totalTxt.isEmpty, var newTotal = Float(totalTxt) {
             newTotal = newTotal * 100
             transaction.total = Int(newTotal)
-            
-            if transaction.splitMode == .percent {
-                // Update contribution labels
-                
-                tableView.reloadData()
-            }
         }
+        else {
+            transaction.total = 0
+        }
+        
+        if transaction.splitMode == .percent {
+            // Update contribution labels
+            
+            tableView.reloadData()
+        }
+    }
+    
+    
+    // MARK: - Text Field Delegate
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.selectAll(nil)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

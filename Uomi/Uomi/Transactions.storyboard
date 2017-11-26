@@ -482,18 +482,19 @@
                                                                 </textField>
                                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="roc-mo-Uwt">
                                                                     <rect key="frame" x="131" y="11.5" width="94" height="29"/>
+                                                                    <connections>
+                                                                        <action selector="hitStepper:" destination="bl5-YS-kPF" eventType="valueChanged" id="pye-oT-jH8"/>
+                                                                    </connections>
                                                                 </stepper>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kjg-F1-wjN">
-                                                                    <rect key="frame" x="277" y="15.5" width="58" height="20.5"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="58" id="q0S-pE-UZq"/>
-                                                                    </constraints>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kjg-F1-wjN">
+                                                                    <rect key="frame" x="237" y="15.5" width="98" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
                                                             <constraints>
+                                                                <constraint firstItem="kjg-F1-wjN" firstAttribute="leading" secondItem="roc-mo-Uwt" secondAttribute="trailing" constant="12" id="4ZY-g0-3AC"/>
                                                                 <constraint firstAttribute="trailing" secondItem="kjg-F1-wjN" secondAttribute="trailing" id="9uV-di-ioo"/>
                                                                 <constraint firstItem="8JC-gT-NNh" firstAttribute="centerY" secondItem="F4l-gc-x7t" secondAttribute="centerY" id="GrY-8W-FCR"/>
                                                                 <constraint firstItem="roc-mo-Uwt" firstAttribute="leading" secondItem="8JC-gT-NNh" secondAttribute="trailing" constant="12" id="JQz-Ds-1BW"/>
