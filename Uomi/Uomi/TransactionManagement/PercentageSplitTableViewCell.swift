@@ -14,9 +14,25 @@ class PercentageSplitTableViewCell: UITableViewCell {
     @IBOutlet weak var percentStepper: UIStepper!
     @IBOutlet weak var totalLabel: UILabel!
     
+    var contribution: PercentContribution! {
+        didSet {
+            percentField.text = "\(contribution.percent)"
+            let subtotal = Float(contribution.transaction.total * contribution.percent) / 10000
+            
+            totalLabel.text = UomiFormatters.dollarFormatter.string(for: subtotal)
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 21))
+        label.text = "%"
+        label.textColor = UIColor.gray
+        
+        percentField.rightView = label
+        percentField.rightViewMode = .always
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

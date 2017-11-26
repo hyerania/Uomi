@@ -56,15 +56,12 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         dateField.rightViewMode = .always
         
         
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 30))
         label.text = "$"
         label.textColor = UIColor.gray
         label.textAlignment = .right
         
         totalField.leftView = label
-        label.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        label.heightAnchor.constraint(equalToConstant: totalField.bounds.height).isActive = true
         totalField.leftViewMode = .always
         
         totalField.addTarget(self, action: #selector(updateTotal), for: .editingChanged)
@@ -137,6 +134,8 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if transaction.splitMode == .percent {
             let cell = tableView.dequeueReusableCell(withIdentifier: percentResueIdentifier, for: indexPath) as! PercentageSplitTableViewCell
+            cell.contribution = transaction.percentContributions[indexPath.row] as! PercentContribution
+            
             return cell
         }
         else {
@@ -202,6 +201,12 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         if let totalTxt = totalField.text, !totalTxt.isEmpty, var newTotal = Float(totalTxt) {
             newTotal = newTotal * 100
             transaction.total = Int(newTotal)
+            
+            if transaction.splitMode == .percent {
+                // Update contribution labels
+                
+                tableView.reloadData()
+            }
         }
     }
     
@@ -212,10 +217,6 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         
         return true
     }
-    
-//    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-//
-//    }
     
     
     // MARK: Split Mode
