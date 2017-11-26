@@ -120,28 +120,38 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Data Source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return transaction.splitMode == .percent ? 1 : 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            return tableView.dequeueReusableCell(withIdentifier: percentResueIdentifier, for: indexPath)
-        case 1:
-            return tableView.dequeueReusableCell(withIdentifier: lineItemReuseIdentifier, for: indexPath)
-        case 2:
-            return tableView.dequeueReusableCell(withIdentifier: lineItemTotalReuseIdentifier, for: indexPath)
-        default:
-            return UITableViewCell()
+        if transaction.splitMode == .percent {
+            return transaction.percentContributions.count
+        }
+        else {
+            return section == 0 ? transaction.lineItemContributions.count : 1
         }
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if transaction.splitMode == .percent {
+            let cell = tableView.dequeueReusableCell(withIdentifier: percentResueIdentifier, for: indexPath) as! PercentageSplitTableViewCell
+            return cell
+        }
+        else {
+            if indexPath.section == 0 {
+                let cell: LineItemSplitTableViewCell = tableView.dequeueReusableCell(withIdentifier: lineItemReuseIdentifier, for: indexPath) as! LineItemSplitTableViewCell
+                return cell
+            }
+            else {
+                let cell: LineItemTotalTableViewCell = tableView.dequeueReusableCell(withIdentifier: lineItemTotalReuseIdentifier, for: indexPath) as! LineItemTotalTableViewCell
+                return cell
+            }
+        }
+    }
+    
+    // FIXME This can be more elegant and enable new percentage contributions when some are removed
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        if indexPath.row == 2 {
+        if transaction.splitMode == .lineItem && indexPath.row == transaction.lineItemContributions.count - 1 {
             return .insert
         }
         

@@ -63,10 +63,21 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
             if let user = user {
                 transaction.payer = user.getUid()
                 
-                self.editingTransaction = transaction
-                
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
+                AccountManager.sharedInstance.getUserIds(event: self.eventId) { (userIds) in
+                    let percentage = 100 / userIds.count
+                    for userId in userIds {
+                        let contrib = PercentContribution(transaction: transaction)
+                        contrib.member = userId
+                        contrib.percent = percentage
+                        
+                        transaction.contributions.append(contrib)
+                    }
+                    
+                    self.editingTransaction = transaction
+                    
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
+                    }
                 }
             }
             else {

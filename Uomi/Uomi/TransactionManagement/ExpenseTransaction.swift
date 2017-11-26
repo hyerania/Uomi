@@ -23,6 +23,20 @@ class ExpenseTransaction : Transaction {
     var transDescription: String?
     var splitMode: SplitMode = .percent
     var contributions: [Contribution] = []
+    var percentContributions: [Contribution] {
+        get {
+            return contributions.filter({ (contrib) -> Bool in
+                return contrib is PercentContribution
+            })
+        }
+    }
+    var lineItemContributions: [Contribution] {
+        get {
+            return contributions.filter({ (contrib) -> Bool in
+                return contrib is LineItemContribution
+            })
+        }
+    }
     
     init(uid: String? = nil) {
         self.uid = uid

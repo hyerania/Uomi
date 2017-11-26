@@ -151,7 +151,7 @@ class TransactionManager {
     private func transform(contribution: Contribution) -> [String:Any] {
         var contribPayload: [String:Any] = [:]
         
-        contribPayload["contributor"] = contribution.member?.getUid()
+        contribPayload["contributor"] = contribution.member!
         if let contrib = contribution as? PercentContribution {
             contribPayload["percent"] = contrib.percent
         }

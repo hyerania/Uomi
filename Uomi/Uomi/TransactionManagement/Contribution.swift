@@ -9,13 +9,13 @@
 import Foundation
 
 protocol Contribution {
-    var member: User? { get set }
+    var member: String? { get set }
     
     func getContributionAmount() -> Int
 }
 
 class PercentContribution : Contribution {
-    var member: User?
+    var member: String?
     var percent: Int = 0
     var transaction: ExpenseTransaction
     
@@ -29,7 +29,7 @@ class PercentContribution : Contribution {
 }
 
 class LineItemContribution : Contribution {
-    var member: User?
+    var member: String?
     var units: Float = 1.0
     var cost: Int = 0
     var description: String? {
