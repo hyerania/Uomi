@@ -55,6 +55,8 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         dateField.rightView = imageView
         dateField.rightViewMode = .always
         
+        payerLabel.delegate = self
+        payerLabel.viewController = self
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 30))
         label.text = "$"
@@ -91,6 +93,7 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         
         dateField.text = dateFormatter.string(from: transaction.date)
         
+        payerLabel.memberId = transaction.payer
         totalField.text = "\(Float(transaction.total) / 100)"
         descriptionField.text = transaction.transDescription
         splitSeg.selectedSegmentIndex = transaction.splitMode == .percent ? 0 : 1
@@ -263,11 +266,9 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if let view = touch.view, String(describing: type(of: view)) == "UITableViewCellEditControl" {
-            print("do not receive touch")
             return false
         }
 
-        print("do receive touch")
         return true
     }
     
@@ -291,4 +292,12 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         dismissKeyboard()
         delegate?.shouldSave(expenseController: self, transaction: transaction)
     }
+}
+
+extension ExpenseTransactionViewController: ParticipantViewDelegate {
+    func participantSelected(participant: User) {
+        transaction.payer = participant.getUid()
+    }
+    
+    
 }

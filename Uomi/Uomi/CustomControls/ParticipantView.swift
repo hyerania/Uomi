@@ -7,17 +7,29 @@
 //
 
 import UIKit
+import McPicker
+
+protocol ParticipantViewDelegate {
+    func participantSelected(participant: User)
+}
 
 @IBDesignable class ParticipantView: UIView {
+    
+    var viewController: UIViewController? {
+        didSet {
+            participantButton.isEnabled = true
+        }
+    }
+    var delegate: ParticipantViewDelegate?
     
     var view: UIView!
     private var member: User? {
         didSet {
             if let member = member {
-                participantButton.titleLabel?.text = initials(for: member)
+                participantButton.setTitle(initials(for: member), for: .normal)
             }
             else {
-                participantButton.titleLabel?.text = nil
+                participantButton.setTitle(nil, for: .normal)
             }
         }
     }
@@ -32,6 +44,7 @@ import UIKit
         }
         }
     }
+    private var participants: [User]?
 
     @IBOutlet fileprivate weak var participantButton: UIButton!
     
@@ -64,6 +77,8 @@ import UIKit
         
         participantButton.layer.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1.0, alpha: 1.0).cgColor
         participantButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        participantButton.addTarget(self, action: #selector(selectMember), for: .touchUpInside)
+        participantButton.isEnabled = false
         
         // Make the view stretch with containing view
         view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
@@ -99,5 +114,40 @@ import UIKit
         }
         
         return initials
+    }
+    
+    
+    // MARK: Member selection
+    
+    fileprivate func displayPicker() {
+        // TODO Display user selector
+        if let viewController = viewController, let participants = participants {
+            let data: [[String]] = [participants.map({ (user) -> String in
+                user.getName()
+            })]
+            McPicker.showAsPopover(data: data, fromViewController: viewController, sourceView: participantButton) { (selections: [Int : String]) -> Void in
+                if let name = selections[0], let index = participants.index(where: { (user) -> Bool in
+                    user.getName() == name
+                }) {
+                    let user: User = participants[index]
+                    self.memberId = user.getUid()
+                    self.delegate?.participantSelected(participant: user)
+                }
+            }
+        }
+    }
+    
+    @objc func selectMember() {
+        if participants == nil {
+            if let activeEvent = EventManager.sharedInstance.getActiveEvent() {
+                AccountManager.sharedInstance.getUsers(event: activeEvent) { (users) in
+                    self.participants = users
+                    self.displayPicker()
+                }
+            }
+        }
+        else {
+            displayPicker()
+        }
     }
 }
