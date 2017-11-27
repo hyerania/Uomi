@@ -39,6 +39,8 @@ class EventsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadTableViewData(refreshControl: nil)
+        
+        EventManager.sharedInstance.setActiveEvent(eventId: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -107,7 +109,9 @@ class EventsTableViewController: UITableViewController {
             // TODO Predefine owner and initial participant
         }
         else if let vc = segue.destination as? TransactionsTableViewController {
-            vc.eventId = self.eventsList[self.selectedRow].getUid()
+            let eventId: String = self.eventsList[self.selectedRow].getUid()
+            vc.eventId = eventId
+            EventManager.sharedInstance.setActiveEvent(eventId: eventId)
         }
     }
     
@@ -166,5 +170,6 @@ class EventsTableViewController: UITableViewController {
         // TODO: Segue to the new event's transactions
     }
     
-    @IBAction func unwindToEvents(segue: UIStoryboardSegue) { }
+    @IBAction func unwindToEvents(segue: UIStoryboardSegue) {
+    }
 }

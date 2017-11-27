@@ -22,7 +22,18 @@ class ExpenseTransaction : Transaction {
     var date: Date = Date()
     var transDescription: String?
     var splitMode: SplitMode = .percent
-    var contributions: [Contribution] = []
+    var percentContributions: [PercentContribution] = []
+    var lineItemContributions: [LineItemContribution] = []
+    var contributions: [Contribution] {
+        get {
+            if splitMode == .percent {
+                return percentContributions
+            }
+            else {
+                return lineItemContributions
+            }
+        }
+    }
     
     init(uid: String? = nil) {
         self.uid = uid

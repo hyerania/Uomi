@@ -26,6 +26,8 @@ class ExpenseTransactionTableViewCell: UITableViewCell {
     }
     
     func updateUI() {
+        participantView.memberId = transaction.payer
+        
         descriptionLabel.text = transaction.transDescription
         dateLabel.text = UomiFormatters.dateFormatter.string(for: transaction.date)
         

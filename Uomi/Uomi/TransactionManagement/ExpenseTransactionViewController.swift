@@ -21,7 +21,7 @@ protocol ExpenseTransactionDelegate {
     func shouldSave(expenseController controller: ExpenseTransactionViewController,  transaction: Transaction)
 }
 
-class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     let dateFormatter = getDateFormatter()
     
@@ -55,24 +55,27 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         dateField.rightView = imageView
         dateField.rightViewMode = .always
         
+        payerLabel.delegate = self
+        payerLabel.viewController = self
         
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 30))
         label.text = "$"
         label.textColor = UIColor.gray
         label.textAlignment = .right
         
         totalField.leftView = label
-        label.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        label.heightAnchor.constraint(equalToConstant: totalField.bounds.height).isActive = true
         totalField.leftViewMode = .always
+        
+        totalField.addTarget(self, action: #selector(updateTotal), for: .editingChanged)
         
         updateUI()
         
         // Do any additional setup after loading the view.
         tableView.setEditing(true, animated: false)
         
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.delegate = self
+        view.addGestureRecognizer(tapGesture)
     }
     
     @objc func dismissKeyboard() {
@@ -90,6 +93,7 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         
         dateField.text = dateFormatter.string(from: transaction.date)
         
+        payerLabel.memberId = transaction.payer
         totalField.text = "\(Float(transaction.total) / 100)"
         descriptionField.text = transaction.transDescription
         splitSeg.selectedSegmentIndex = transaction.splitMode == .percent ? 0 : 1
@@ -120,28 +124,40 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Data Source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return transaction.splitMode == .percent ? 1 : 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            return tableView.dequeueReusableCell(withIdentifier: percentResueIdentifier, for: indexPath)
-        case 1:
-            return tableView.dequeueReusableCell(withIdentifier: lineItemReuseIdentifier, for: indexPath)
-        case 2:
-            return tableView.dequeueReusableCell(withIdentifier: lineItemTotalReuseIdentifier, for: indexPath)
-        default:
-            return UITableViewCell()
+        if transaction.splitMode == .percent {
+            return transaction.percentContributions.count
+        }
+        else {
+            return section == 0 ? transaction.lineItemContributions.count : 1
         }
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if transaction.splitMode == .percent {
+            let cell = tableView.dequeueReusableCell(withIdentifier: percentResueIdentifier, for: indexPath) as! PercentageSplitTableViewCell
+            cell.contribution = transaction.percentContributions[indexPath.row] as! PercentContribution
+            
+            return cell
+        }
+        else {
+            if indexPath.section == 0 {
+                let cell: LineItemSplitTableViewCell = tableView.dequeueReusableCell(withIdentifier: lineItemReuseIdentifier, for: indexPath) as! LineItemSplitTableViewCell
+                return cell
+            }
+            else {
+                let cell: LineItemTotalTableViewCell = tableView.dequeueReusableCell(withIdentifier: lineItemTotalReuseIdentifier, for: indexPath) as! LineItemTotalTableViewCell
+                return cell
+            }
+        }
+    }
+    
+    // FIXME This can be more elegant and enable new percentage contributions when some are removed
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        if indexPath.row == 2 {
+        if transaction.splitMode == .lineItem && indexPath.row == transaction.lineItemContributions.count - 1 {
             return .insert
         }
         
@@ -151,6 +167,22 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - Table Delegate
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let row = indexPath.row
+        
+        if indexPath.section == 0 {
+            if transaction.splitMode == .percent {
+                transaction.percentContributions.remove(at: row)
+            }
+            else {
+                transaction.lineItemContributions.remove(at: row)
+            }
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        else {
+            // Create new line-item entry
+        }
+    }
 
     /*
     // MARK: - Navigation
@@ -185,17 +217,36 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         transaction.date = date
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        if textField === totalField {
-            // Only change value when value is set
-            if let totalTxt = totalField.text, !totalTxt.isEmpty, var newTotal = Float(totalTxt) {
-                newTotal = newTotal * 100
-                transaction.total = Int(newTotal)
-            }
+    @objc func updateTotal() {
+        // Only change value when value is set
+        if let totalTxt = totalField.text, !totalTxt.isEmpty, var newTotal = Float(totalTxt) {
+            newTotal = newTotal * 100
+            transaction.total = Int(newTotal)
         }
-        else if textField === descriptionField {
+        else {
+            transaction.total = 0
+        }
+        
+        if transaction.splitMode == .percent {
+            // Update contribution labels
+            
+            tableView.reloadData()
+        }
+    }
+    
+    
+    // MARK: - Text Field Delegate
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.selectAll(nil)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField === descriptionField {
             transaction.transDescription = textField.text
         }
+        
+        return true
     }
     
     
@@ -210,6 +261,15 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         // HEY THIS COULD BE SOMETHING WORTH LOOKING INTO. Does changing split mode happen mainly by accident? Desire to convert from one to the other? Or start fresh? How would user navigate auto population?
         // Probably just infer what they should be as best as possible
         
+    }
+    
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let view = touch.view, String(describing: type(of: view)) == "UITableViewCellEditControl" {
+            return false
+        }
+
+        return true
     }
     
     
@@ -232,4 +292,12 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         dismissKeyboard()
         delegate?.shouldSave(expenseController: self, transaction: transaction)
     }
+}
+
+extension ExpenseTransactionViewController: ParticipantViewDelegate {
+    func participantSelected(participant: User) {
+        transaction.payer = participant.getUid()
+    }
+    
+    
 }

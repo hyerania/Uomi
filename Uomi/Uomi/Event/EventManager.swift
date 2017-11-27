@@ -151,4 +151,16 @@ class EventManager {
         
     }
     
+    
+    // MARK: - Active Event
+    fileprivate var activeEvent: String?
+    
+    func setActiveEvent(eventId: String?) {
+        activeEvent = eventId
+    }
+    
+    func getActiveEvent() -> String? {
+        return activeEvent
+    }
+    
 }
