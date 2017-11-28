@@ -33,6 +33,9 @@ class SettleViewController: UIViewController {
         
         self.NameText.text = userCellData.getName()
         self.InitialsText.text = userCellData.getInitials()
+        
+        
+        
         self.PaymentText.text = "You owe \(userCellData.getBalance())"
         self.title = "Settle"
         // Uncomment the following line to preserve selection between presentations

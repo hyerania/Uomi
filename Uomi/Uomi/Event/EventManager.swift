@@ -234,7 +234,7 @@ class EventManager {
                         
                     }
                 }
-                completionHandler(total)
+                completionHandler(total/10000.00)
                 
             })
         }
@@ -276,7 +276,7 @@ class EventManager {
                         
                     }
                 }
-                completionHandler(total)
+                completionHandler(total/10000.00)
             })
         }
     }

@@ -149,7 +149,7 @@
         <scene sceneID="Vlu-hJ-ECc">
             <objects>
                 <tableViewController title="Event" id="ERj-HG-wN9" customClass="TransactionsTableViewController" customModule="Uomi" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="1c7-rk-kEL">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="1c7-rk-kEL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -173,15 +173,15 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="transactionCell" rowHeight="74" id="qtn-iI-DMn" customClass="ExpenseTransactionTableViewCell" customModule="Uomi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="125" width="375" height="74"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="transactionCell" rowHeight="75" id="qtn-iI-DMn" customClass="ExpenseTransactionTableViewCell" customModule="Uomi" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="125" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qtn-iI-DMn" id="n38-nB-ekn">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="73.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yIt-GQ-dUL" customClass="ParticipantView" customModule="Uomi" customModuleProvider="target">
-                                            <rect key="frame" x="236" y="8" width="35" height="35"/>
+                                            <rect key="frame" x="281" y="5" width="35" height="35"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="yIt-GQ-dUL" secondAttribute="height" multiplier="1:1" id="902-DB-MnT"/>
@@ -189,43 +189,46 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1D0-FX-8Pc">
-                                            <rect key="frame" x="279" y="15.5" width="80" height="20.5"/>
+                                            <rect key="frame" x="324" y="12" width="47" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="80" id="J9g-Yd-niU"/>
+                                                <constraint firstAttribute="width" constant="47" id="J9g-Yd-niU"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You covered Kevin and Yerania" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="okq-38-ygp">
-                                            <rect key="frame" x="111" y="51" width="248" height="14.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                            <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="November 16" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVx-Ix-rQR">
-                                            <rect key="frame" x="16" y="48" width="75" height="15"/>
+                                            <rect key="frame" x="16" y="49" width="75" height="15"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                             <color key="textColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dixie Chicken" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCd-Oa-el4">
-                                            <rect key="frame" x="16" y="13.5" width="212" height="24"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dixie Chicken" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="iCd-Oa-el4">
+                                            <rect key="frame" x="16" y="5" width="234" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="RY5-HI-4Rl"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You covered Kevin and Yerania" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="okq-38-ygp">
+                                            <rect key="frame" x="123" y="49" width="248" height="14.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                            <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="yIt-GQ-dUL" firstAttribute="top" secondItem="n38-nB-ekn" secondAttribute="top" constant="8" id="2Cg-9X-kjC"/>
-                                        <constraint firstAttribute="bottom" secondItem="okq-38-ygp" secondAttribute="bottom" constant="8" id="5GL-8P-4f0"/>
-                                        <constraint firstItem="okq-38-ygp" firstAttribute="leading" secondItem="JVx-Ix-rQR" secondAttribute="trailing" constant="20" id="CDO-Rp-X4n"/>
+                                        <constraint firstItem="yIt-GQ-dUL" firstAttribute="top" secondItem="n38-nB-ekn" secondAttribute="top" constant="5" id="2Cg-9X-kjC"/>
+                                        <constraint firstAttribute="bottom" secondItem="okq-38-ygp" secondAttribute="bottom" constant="11" id="5GL-8P-4f0"/>
+                                        <constraint firstItem="okq-38-ygp" firstAttribute="leading" secondItem="JVx-Ix-rQR" secondAttribute="trailing" constant="32" id="CDO-Rp-X4n"/>
                                         <constraint firstItem="1D0-FX-8Pc" firstAttribute="leading" secondItem="yIt-GQ-dUL" secondAttribute="trailing" constant="8" id="FbB-CQ-ag2"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="JVx-Ix-rQR" secondAttribute="bottom" id="Gdi-Je-KJF"/>
-                                        <constraint firstItem="yIt-GQ-dUL" firstAttribute="leading" secondItem="iCd-Oa-el4" secondAttribute="trailing" constant="8" id="YnG-ie-EJ3"/>
+                                        <constraint firstItem="yIt-GQ-dUL" firstAttribute="leading" secondItem="iCd-Oa-el4" secondAttribute="trailing" constant="31" id="YnG-ie-EJ3"/>
                                         <constraint firstItem="JVx-Ix-rQR" firstAttribute="leading" secondItem="n38-nB-ekn" secondAttribute="leadingMargin" id="abX-VE-2Bz"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="okq-38-ygp" secondAttribute="trailing" id="cff-1A-7gq"/>
-                                        <constraint firstItem="1D0-FX-8Pc" firstAttribute="trailing" secondItem="n38-nB-ekn" secondAttribute="trailingMargin" id="eMi-SB-Ydf"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="okq-38-ygp" secondAttribute="trailing" constant="-12" id="cff-1A-7gq"/>
+                                        <constraint firstItem="1D0-FX-8Pc" firstAttribute="trailing" secondItem="n38-nB-ekn" secondAttribute="trailingMargin" constant="12" id="eMi-SB-Ydf"/>
                                         <constraint firstItem="iCd-Oa-el4" firstAttribute="leading" secondItem="n38-nB-ekn" secondAttribute="leadingMargin" id="iDC-Cn-I74"/>
                                         <constraint firstItem="yIt-GQ-dUL" firstAttribute="centerY" secondItem="iCd-Oa-el4" secondAttribute="centerY" id="tYq-rK-guF"/>
                                         <constraint firstItem="1D0-FX-8Pc" firstAttribute="centerY" secondItem="yIt-GQ-dUL" secondAttribute="centerY" id="xda-fC-ppv"/>

@@ -47,25 +47,28 @@ class BalanceManager{
     }
     
     func loadBalance(userId: String, otherId: String, eventId: String, completionHandler: @escaping(Balance?) -> ()){
-        EventManager.sharedInstance.loadEvent(id: eventId){event in
-            guard let event = event else{
-                print("Error getting event.")
+        AccountManager.sharedInstance.load(id: otherId){otherUser in
+            guard let validUser = otherUser else{
                 return
             }
-
-            AccountManager.sharedInstance.load(id: otherId){otherUser in
-                guard let validUser = otherUser else{
-                    return
+            let name = validUser.getName()
+            let initials = self.findInitials(fullname: name)
+            EventManager.sharedInstance.fetchAmountOwed(by: otherId, event: eventId) { (amount) in
+                var balanceAmount = 0.00
+                if (amount != nil) {
+                    balanceAmount = amount!
                 }
-                let name = validUser.getName()
-                let initials = self.findInitials(fullname: name)
-                let totalBalanceValue = self.totalBalance(userId: userId, otherId: otherId, eventId: eventId) //This last parameter could be something in event, such as the list of transaction ids in order to add them up
-                let balanceValue = self.balance(userId: userId, otherId: otherId, eventId: eventId)
+                EventManager.sharedInstance.fetchAmountOwed(to: otherId, event: eventId) { (toAmount) in
+                    var subtractAmount = 0.00
+                    if (toAmount != nil) {
+                        subtractAmount = toAmount!
+                    }
+                    let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: balanceAmount - subtractAmount)
+                    completionHandler(balance)
+                }
                 
-                let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: "$" + "0")
-                completionHandler(balance)
             }
-
+            
             
         }
     }

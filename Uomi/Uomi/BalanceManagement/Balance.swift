@@ -14,9 +14,9 @@ class Balance {
     private var uid: String
     private var eventuid: String
     private var totalBalance: String
-    private var balance: String
+    private var balance: Double
     
-    init(initials: String, name: String, uid: String, eventuid: String, totalBalance: String, balance: String){
+    init(initials: String, name: String, uid: String, eventuid: String, totalBalance: String, balance: Double){
         self.initials = initials
         self.name = name
         self.uid = uid
@@ -40,7 +40,7 @@ class Balance {
     func getTotalBalance() -> String {
         return self.totalBalance
     }
-    func getBalance() -> String {
+    func getBalance() -> Double {
         return self.balance
     }
     
