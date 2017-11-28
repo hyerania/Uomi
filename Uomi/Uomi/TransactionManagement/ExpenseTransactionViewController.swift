@@ -57,6 +57,8 @@ UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        descriptionField.addTarget(self, action: #selector(descriptionChanged), for: .editingChanged)
+        
         imagePicker.delegate = self
         let imageView: UIImageView = UIImageView(image: UIImage(named: "calendar"))
         imageView.bounds.size = CGSize(width: 20, height: 20)
@@ -315,7 +317,7 @@ UINavigationControllerDelegate {
     }
     
     
-    // MARK: - Text Delegate
+    // MARK: - Date Selection
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField === dateField {
@@ -335,6 +337,9 @@ UINavigationControllerDelegate {
         self.dateField.text = dateFormatter.string(from: date)
         transaction.date = date
     }
+    
+    
+    // MARK: - Syncing Total
     
     @objc func updateTotal() {
         // Only change value when value is set
@@ -362,12 +367,8 @@ UINavigationControllerDelegate {
         textField.selectAll(nil)
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField === descriptionField {
-            transaction.transDescription = textField.text
-        }
-        
-        return true
+    @objc func descriptionChanged() {
+        transaction.transDescription = descriptionField.text
     }
     
     

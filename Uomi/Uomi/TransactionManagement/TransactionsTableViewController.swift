@@ -48,7 +48,7 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
             }
             
             self.transactions.removeAll()
-            self.transactions.append(contentsOf: transactions)
+            self.transactions.append(contentsOf: transactions.reversed())
             self.tableView.reloadData()
         })
     }

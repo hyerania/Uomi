@@ -93,7 +93,7 @@ class EventsTableViewController: UITableViewController {
             
             EventManager.sharedInstance.loadEvents(userId: userId) { events in
                 
-                self.eventsList = events
+                self.eventsList = events.reversed()
                 self.tableView.reloadData()
                 
                 if let refreshControl = refreshControl {
