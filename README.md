@@ -81,6 +81,7 @@ The following need to be dressed up:
 - [ ] Active on Events need to be replaced with date of last transaction or removed.
 - [ ] TransactionsTableViewController
   - [ ] Balances (Inbalances) on top of balances button.
+    -[ ] Color the numbers as described in BalancesTableViewController
   - [ ] Settlement should have two ParticipantViews with an arrow. (reference keynote - Slide 23)
   - [ ] Update "You covered Kevin and Yerania" with actual description.
   - [ ] Selecting a "Payment"/Settlement transaction should not highight it.
