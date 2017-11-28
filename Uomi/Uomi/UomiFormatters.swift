@@ -23,6 +23,7 @@ func getDollarFormatter() -> NumberFormatter {
 
 func getSymbollessFormatter() -> NumberFormatter {
     let formatter = NumberFormatter()
+    formatter.minimumIntegerDigits = 1
     formatter.maximumFractionDigits = 2
     formatter.minimumFractionDigits = 2
     return formatter
