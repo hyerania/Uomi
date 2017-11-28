@@ -65,8 +65,65 @@ class SettleViewController: UIViewController {
     // MARK: - Helper functions
     private func createAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        alert.addTextField(configurationHandler: textFieldHandler)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log", style: .default, handler: { [weak alert] (_) in
+            
+            guard let textField = alert?.textFields?[0] else {
+                return
+            }
+            
+            var value = textField.text!
+            
+            let amount = UomiFormatters.dollarFormatter.number(from: value)
+            
+            if let amount = amount {
+                let newSettleTrans = SettlementTransaction()
+                AccountManager.sharedInstance.getCurrentUser() { (currentUser) in
+                    guard let currentUser = currentUser else {
+                        return
+                    }
+                    newSettleTrans.payer = currentUser.getUid()
+                    newSettleTrans.recipient = self.userCellData!.getUid()
+                    newSettleTrans.total = Int(round(amount.floatValue * 100))
+                    TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
+                        
+                        print(result)
+                    }
+                }
+//                newSettleTrans.payer = self.userCellData.
+//                newSettleTrans.recipient
+//                newSettleTrans.total = Int(round(amount.floatValue * 100))
+//
+//                TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getUid(), transaction: newSettleTrans) { (result) in
+//
+//                    print(result)
+//                }
+//                print(newSettleTrans.total)
+            }
+            
+            
+        }))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func textFieldHandler(textField: UITextField!)
+    {
+        if (textField) != nil {
+            
+            guard let balance = userCellData?.getBalance() else {
+                textField.text = UomiFormatters.dollarFormatter.string(for: 0.00)
+                return
+            }
+            
+            if (balance < 0.00) {
+                textField.text = UomiFormatters.dollarFormatter.string(for: balance * -1)
+            } else {
+                textField.text = UomiFormatters.dollarFormatter.string(for: balance)
+            }
+        }
+    }
+    
+    
 
 }

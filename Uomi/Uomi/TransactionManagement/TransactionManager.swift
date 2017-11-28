@@ -27,6 +27,7 @@ enum TransactionKeys : String {
     case description
     case splitMode
     case contributions
+    case recipient
 }
 
 protocol Transaction {
@@ -198,14 +199,17 @@ class TransactionManager {
         // TODO Add current user to participants
         //        transactPayload["participants/\(AccountManager.currentAccount)"]
         
-        transactPayload["total"] = transaction.total
-        transactPayload["payer"] = transaction.payer
-        transactPayload["date"] = transaction.date.timeIntervalSince1970
+        transactPayload[TransactionKeys.total.rawValue] = transaction.total
+        transactPayload[TransactionKeys.payer.rawValue] = transaction.payer
+        transactPayload[TransactionKeys.date.rawValue] = transaction.date.timeIntervalSince1970
         
         if let transaction = transaction as? ExpenseTransaction {
-            transactPayload["contributions"] = transform(contributions: transaction.contributions)
-            transactPayload["description"] = transaction.transDescription
-            transactPayload["splitMode"] = transaction.splitMode.rawValue
+            transactPayload[TransactionKeys.contributions.rawValue] = transform(contributions: transaction.contributions)
+            transactPayload[TransactionKeys.description.rawValue] = transaction.transDescription
+            transactPayload[TransactionKeys.splitMode.rawValue] = transaction.splitMode.rawValue
+        }
+        else if let transaction = transaction as? SettlementTransaction {
+            transactPayload[TransactionKeys.recipient.rawValue] = transaction.recipient
         }
         
         return transactPayload
@@ -235,17 +239,19 @@ class TransactionManager {
     private func parseTransaction(id: String, data: [String:Any]) -> Transaction {
         var transaction: Transaction
         
+        let totalValue: Int = data[TransactionKeys.total.rawValue] as! Int
+        let payer: String = data[TransactionKeys.payer.rawValue] as! String
+        let date = Date(timeIntervalSince1970: data[TransactionKeys.date.rawValue] as! TimeInterval)
+        
         if let splitMode = data[TransactionKeys.splitMode.rawValue] as? String {
             let eventTransaction = ExpenseTransaction(uid: id)
-            eventTransaction.payer = data[TransactionKeys.payer.rawValue] as! String
-            eventTransaction.total = data[TransactionKeys.total.rawValue] as! Int
-            if let time = data[TransactionKeys.date.rawValue] as? TimeInterval {
-                eventTransaction.date = Date(timeIntervalSince1970: time)
-            }
+            eventTransaction.payer = payer
+            eventTransaction.total = totalValue
+            
+            eventTransaction.date = date
             eventTransaction.transDescription = data[TransactionKeys.description.rawValue] as? String
             eventTransaction.splitMode = SplitMode(rawValue: splitMode)!
             
-            // FIXME Uncomment when transactions have been cleaned out
             if let contributions = data[TransactionKeys.contributions.rawValue] as? [[String:Any]] {
                 parseContributions(for: eventTransaction, withData: contributions)
             }
@@ -253,8 +259,14 @@ class TransactionManager {
             transaction = eventTransaction
         }
         else {
-            // FIXME Create settlement transaction
-            transaction = ExpenseTransaction()
+            //  Create settlement transaction
+            let settlementTransaction = SettlementTransaction()
+            settlementTransaction.recipient = data[TransactionKeys.recipient.rawValue] as! String
+            settlementTransaction.payer = payer
+            settlementTransaction.date = date
+            settlementTransaction.total = totalValue
+            
+            transaction = settlementTransaction
         }
         
         return transaction
@@ -297,7 +309,7 @@ class TransactionManager {
             })
         }
         else if let transaction = transaction as? SettlementTransaction {
-            owingsPayload[OwingsKeys.owers.rawValue] = [[transaction.recipient : transaction.total]]
+            owingsPayload[OwingsKeys.owers.rawValue] = [transaction.recipient : transaction.total]
         }
         else {
             print("Unknown transaction type, can't save owings")

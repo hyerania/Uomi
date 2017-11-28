@@ -51,6 +51,7 @@
 		AA85857D1FBBA477005B2221 /* SettleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA85857B1FBBA477005B2221 /* SettleTableViewCell.swift */; };
 		AA85857E1FBBA477005B2221 /* SettleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA85857C1FBBA477005B2221 /* SettleTableViewCell.xib */; };
 		EA45F08C1FB4E8A900BDCD5C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */; };
+		EAD95BA71FCE239200140A70 /* SettlementTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD95BA61FCE239200140A70 /* SettlementTransactionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 		AA85857C1FBBA477005B2221 /* SettleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettleTableViewCell.xib; sourceTree = "<group>"; };
 		C735C56250DC6E22CE8C9F8D /* Pods-Uomi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.debug.xcconfig"; sourceTree = "<group>"; };
 		EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EAD95BA61FCE239200140A70 /* SettlementTransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettlementTransactionTableViewCell.swift; sourceTree = "<group>"; };
 		F76C56FBEC5F778D413940D8 /* Pods_Uomi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Uomi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -129,6 +131,7 @@
 				078834AA1FBB831D0052D1CF /* ExpenseTransaction.swift */,
 				078834AC1FBB89610052D1CF /* Contribution.swift */,
 				07DC65591FBE8F4C00638BA3 /* ExpenseTransactionTableViewCell.swift */,
+				EAD95BA61FCE239200140A70 /* SettlementTransactionTableViewCell.swift */,
 				07CD92511FC51BA80008B93D /* SettlementTransaction.swift */,
 			);
 			path = TransactionManagement;
@@ -405,6 +408,7 @@
 				078834AD1FBB89610052D1CF /* Contribution.swift in Sources */,
 				AA83D3E91FBCCA910081815E /* EventTableViewCell.swift in Sources */,
 				AA83D3ED1FBCD15F0081815E /* SettleViewController.swift in Sources */,
+				EAD95BA71FCE239200140A70 /* SettlementTransactionTableViewCell.swift in Sources */,
 				07CD92541FC64A8A0008B93D /* UomiFormatters.swift in Sources */,
 				078834B41FBB8F2C0052D1CF /* Event.swift in Sources */,
 				079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */,

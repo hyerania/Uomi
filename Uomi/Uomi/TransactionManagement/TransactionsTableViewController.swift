@@ -11,6 +11,7 @@ import UIKit
 fileprivate let unwindSegue = "goBackButton"
 fileprivate let editTransactionSegue = "editTransaction"
 fileprivate let transactionCellReuseIdentifier = "transactionCell"
+fileprivate let settlementCellReuseIdentifier = "settlementCell"
 
 let viewBalancesSegue = "viewBalances"
 
@@ -98,9 +99,9 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
         }
         else if let transaction = transactions[indexPath.row] as? SettlementTransaction {
             // FIXME Add cell for settlement transaction
-            let settleCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! ExpenseTransactionTableViewCell
+            let settleCell = tableView.dequeueReusableCell(withIdentifier: settlementCellReuseIdentifier, for: indexPath) as! SettlementTransactionTableViewCell
                 
-            settleCell.transaction = transaction as! ExpenseTransaction
+            settleCell.transaction = transaction
             
             cell = settleCell
         }
@@ -116,7 +117,11 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     // MARK: Table View Delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        editingTransaction = transactions[indexPath.row]
+        guard let transaction = transactions[indexPath.row] as? ExpenseTransaction else {
+            return
+        }
+        
+        editingTransaction = transaction
         performSegue(withIdentifier: editTransactionSegue, sender: nil)
     }
 
