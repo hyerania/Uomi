@@ -50,6 +50,9 @@ UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,10 +121,31 @@ UINavigationControllerDelegate {
         }
         // Extract contribution data
         tableView.reloadData()
+        
+        updateSaveState()
     }
     
     
-    // MARK: Image Selection
+    // MARK: - Save state
+    
+    func updateSaveState() {
+        saveButton.isEnabled = canSave()
+    }
+    
+    private func canSave() -> Bool {
+        guard transaction.total > 0 else {
+            return false
+        }
+        guard transaction.splitMode == .lineItem else {
+            return true
+        }
+        
+        return !transaction.contributions.isEmpty &&  transaction.contributions.filter({ (contrib) -> Bool in
+            return contrib.member == nil || contrib.getContributionAmount() == 0
+        }).isEmpty
+    }
+    
+    // MARK: - Image Selection
     
     @IBAction func hitCamera(_ sender: Any) {
     
@@ -275,6 +299,7 @@ UINavigationControllerDelegate {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 recalculateLineItemTotal()
                 tableView.endUpdates()
+                updateSaveState()
             }
         }
         else {
@@ -283,6 +308,8 @@ UINavigationControllerDelegate {
             let currentCount: Int = transaction.lineItemContributions.count
             transaction.lineItemContributions.append(newContribution)
             tableView.insertRows(at: [IndexPath(row: currentCount, section: 0)], with: .automatic)
+            
+            updateSaveState()
         }    
     }
     
@@ -323,6 +350,8 @@ UINavigationControllerDelegate {
             
             tableView.reloadData()
         }
+        
+        updateSaveState()
     }
     
     
@@ -347,6 +376,7 @@ UINavigationControllerDelegate {
         transaction.splitMode = splitSeg.selectedSegmentIndex == 0 ? .percent : .lineItem
         
         tableView.reloadData()
+        updateSaveState()
     }
     
     
@@ -395,6 +425,8 @@ extension ExpenseTransactionViewController: ParticipantViewDelegate {
     
     func participantSelected(participantView: ParticipantView, participant: User) {
         transaction.payer = participant.getUid()
+
+        updateSaveState()
     }
     
 }
@@ -407,6 +439,8 @@ extension ExpenseTransactionViewController: LineItemSplitDelegate {
     
     func contributionDidUpdate(lineItemCell: LineItemSplitTableViewCell, contribution: Contribution) {
         recalculateLineItemTotal()
+        
+        updateSaveState()
     }
     
     

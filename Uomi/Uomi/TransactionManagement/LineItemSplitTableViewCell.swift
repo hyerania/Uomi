@@ -48,6 +48,7 @@ class LineItemSplitTableViewCell: UITableViewCell, ParticipantViewDelegate {
         else {
             subtotalLabel.text = UomiFormatters.dollarFormatter.string(for: 0)
         }
+        
     }
     
     func updateUI() {
@@ -61,5 +62,6 @@ class LineItemSplitTableViewCell: UITableViewCell, ParticipantViewDelegate {
     
     func participantSelected(participantView: ParticipantView, participant: User) {
         contribution?.member = participant.getUid()
+        delegate?.contributionDidUpdate(lineItemCell: self, contribution: contribution!)
     }
 }
