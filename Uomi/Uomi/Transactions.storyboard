@@ -374,7 +374,7 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNs-yx-YAk">
-                                                                        <rect key="frame" x="117.5" y="111" width="44" height="44"/>
+                                                                        <rect key="frame" x="109.5" y="103" width="44" height="44"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="44" id="WOW-fC-xcm"/>
                                                                             <constraint firstAttribute="height" constant="44" id="Xu1-rt-cIc"/>
@@ -391,8 +391,8 @@
                                                                     <constraint firstAttribute="bottom" secondItem="492-T6-hA1" secondAttribute="bottom" id="JbQ-22-6Wn"/>
                                                                     <constraint firstItem="492-T6-hA1" firstAttribute="leading" secondItem="KwK-mi-vQU" secondAttribute="leading" id="PAL-EL-fQR"/>
                                                                     <constraint firstAttribute="trailing" secondItem="492-T6-hA1" secondAttribute="trailing" id="cm2-jw-BhJ"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="xNs-yx-YAk" secondAttribute="trailing" id="kGV-OP-RMV"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="xNs-yx-YAk" secondAttribute="bottom" id="rja-So-hSI"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="xNs-yx-YAk" secondAttribute="trailing" constant="8" id="kGV-OP-RMV"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="xNs-yx-YAk" secondAttribute="bottom" constant="8" id="rja-So-hSI"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
