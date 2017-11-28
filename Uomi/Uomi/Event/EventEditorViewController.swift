@@ -122,11 +122,11 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
                 AccountManager.sharedInstance.getCurrentUser() { currentUser in
                     if (currentUser != nil) {
                         if (currentUser?.getEmail() != textField.text! && !self.lowerContains(value: textField.text!)) {
-                            self.plusButton.backgroundColor = UIColor(red: 122/255, green: 202/255, blue: 78/255, alpha: 1)
+//                            self.plusButton.backgroundColor = UIColor(red: 122/255, green: 202/255, blue: 78/255, alpha: 1)
                             self.plusButton.isEnabled = true
                             
                         } else {
-                            self.plusButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+//                            self.plusButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
                             self.plusButton.isEnabled = false;
                         }
                     }
@@ -134,7 +134,7 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
                     
                 }
             } else {
-                self.plusButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+//                self.plusButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
                 self.plusButton.isEnabled = false;
             }
             
