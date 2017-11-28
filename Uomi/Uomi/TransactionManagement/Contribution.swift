@@ -8,6 +8,8 @@
 
 import Foundation
 
+let descriptionParseRegex = "^\\s*(\\d*\\.?\\d*)?.*@(\\d*\\.?\\d*)"
+
 enum ContributionKeys: String {
     case member
     case percent
@@ -42,30 +44,33 @@ class PercentContribution : Contribution {
 
 class LineItemContribution : Contribution {
     var member: String?
-    var units: Float = 1.0
-    var cost: Int = 0
-    var description: String? {
-        didSet {
-            parseDescription(description: description)
-        }
-    }
-    
-    func parseDescription(description: String?) {
-        if let description = description {
-            // TODO parse out unit
-            // TODO parse out description
-            // TODO parse out cost per unit
-        }
-        else {
-            // Reset variables
-            units = 1
-            cost = 0
-            self.description = nil
-        }
-    }
+    var description: String?
     
     func getContributionAmount() -> Int {
-        return Int(round(units * Float(cost)))
+        
+        if let description = description {
+            do {
+                let regex = try NSRegularExpression(pattern: descriptionParseRegex)
+                if let match = regex.firstMatch(in: description, options: [], range: NSRange(description.startIndex..., in: description)),
+                    let costRange = Range(match.range(at: 2), in: description),
+                    let cost = Float(description[costRange])
+                {
+                    var units: Float = 1.0
+                    if let unitRange = Range(match.range(at: 1), in: description),
+                        let parsedUnits = Float(description[unitRange]) {
+                        units = parsedUnits
+                    }
+                    
+                    return Int(round(units * cost * 100))
+                }
+            }
+            catch {
+                print("Exception!")
+            }
+        }
+        
+        return 0
+        
     }
     
 }

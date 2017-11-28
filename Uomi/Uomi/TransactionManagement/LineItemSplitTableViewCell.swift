@@ -24,15 +24,25 @@ class LineItemSplitTableViewCell: UITableViewCell, ParticipantViewDelegate {
         // Initialization code
         
         participantView.delegate = self
+        descriptionField.addTarget(self, action: #selector(updatedDescription), for: .editingChanged)
     }
     
-    func updateUI() {
+    @objc fileprivate func updatedDescription() {
+        contribution?.description = descriptionField.text
+        updateSubtotal()
+    }
+    
+    fileprivate func updateSubtotal() {
         if let total = contribution?.getContributionAmount() {
             subtotalLabel.text = UomiFormatters.dollarFormatter.string(for: Float(total) / 100)
         }
         else {
             subtotalLabel.text = UomiFormatters.dollarFormatter.string(for: 0)
         }
+    }
+    
+    func updateUI() {
+        updateSubtotal()
         participantView.memberId = contribution?.member
         descriptionField.text = contribution?.description
     }
