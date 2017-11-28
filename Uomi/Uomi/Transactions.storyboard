@@ -645,7 +645,7 @@
                         <outlet property="receiptView" destination="492-T6-hA1" id="fry-8U-Ypy"/>
                         <outlet property="saveButton" destination="gmF-k4-0OW" id="z6N-Be-PY2"/>
                         <outlet property="splitSeg" destination="IK1-7U-2gB" id="Qzj-YD-9vn"/>
-                        <outlet property="tableView" destination="eJM-2e-Yst" id="Hpr-mg-xGB"/>
+                        <outlet property="tableview" destination="eJM-2e-Yst" id="Hpr-mg-xGB"/>
                         <outlet property="totalField" destination="ORl-aZ-iQc" id="IGu-cv-V0j"/>
                     </connections>
                 </viewController>

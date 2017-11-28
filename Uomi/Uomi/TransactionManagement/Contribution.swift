@@ -11,7 +11,7 @@ import Foundation
 let descriptionParseRegex = "^\\s*(\\d*\\.?\\d*)?.*@(\\d*\\.?\\d*)"
 
 enum ContributionKeys: String {
-    case member
+    case contributor
     case percent
     case description
 }

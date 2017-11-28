@@ -222,7 +222,7 @@ class TransactionManager {
     private func parseTransaction(id: String, data: [String:Any]) -> Transaction {
         var transaction: Transaction
         
-        if let contributions = data[TransactionKeys.splitMode.rawValue] as? String {
+        if let splitMode = data[TransactionKeys.splitMode.rawValue] as? String {
             let eventTransaction = ExpenseTransaction(uid: id)
             eventTransaction.payer = data[TransactionKeys.payer.rawValue] as! String
             eventTransaction.total = data[TransactionKeys.total.rawValue] as! Int
@@ -230,10 +230,12 @@ class TransactionManager {
                 eventTransaction.date = Date(timeIntervalSince1970: time)
             }
             eventTransaction.transDescription = data[TransactionKeys.description.rawValue] as? String
-            eventTransaction.splitMode = SplitMode(rawValue: data[TransactionKeys.splitMode.rawValue] as! String)!
+            eventTransaction.splitMode = SplitMode(rawValue: splitMode)!
             
             // FIXME Uncomment when transactions have been cleaned out
-//            parseContributions(for: eventTransaction, withData: data[TransactionKeys.contributions.rawValue] as! [[String:Any]])
+            if let contributions = data[TransactionKeys.contributions.rawValue] as? [[String:Any]] {
+                parseContributions(for: eventTransaction, withData: contributions)
+            }
             
             transaction = eventTransaction
         }
@@ -249,7 +251,7 @@ class TransactionManager {
         if transaction.splitMode == .percent {
             for contribData in data {
                 let contribution = PercentContribution(transaction: transaction)
-                contribution.member = contribData[ContributionKeys.member.rawValue] as? String
+                contribution.member = contribData[ContributionKeys.contributor.rawValue] as? String
                 contribution.percent = contribData[ContributionKeys.percent.rawValue] as! Int
                 
                 transaction.percentContributions.append(contribution)
@@ -258,6 +260,11 @@ class TransactionManager {
         else {
             for contribData in data {
                 // TODO Instantiate a line-item contribution
+                let contribution = LineItemContribution()
+                contribution.member = contribData[ContributionKeys.contributor.rawValue] as? String
+                contribution.description = contribData[ContributionKeys.description.rawValue] as? String
+                
+                transaction.lineItemContributions.append(contribution)
             }
         }
     }

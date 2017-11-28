@@ -10,6 +10,7 @@ import Foundation
 
 struct UomiFormatters {
     static let dateFormatter = getDateFormatter()
+    static let dollarNoSignFormatter = getSymbollessFormatter()
     static let dollarFormatter = getDollarFormatter()
     static let wholeDollarFormatter = getWholeDollarFormatter()
 }
@@ -17,6 +18,13 @@ struct UomiFormatters {
 func getDollarFormatter() -> NumberFormatter {
     let formatter = NumberFormatter()
     formatter.numberStyle = .currency
+    return formatter
+}
+
+func getSymbollessFormatter() -> NumberFormatter {
+    let formatter = NumberFormatter()
+    formatter.maximumFractionDigits = 2
+    formatter.minimumFractionDigits = 2
     return formatter
 }
 

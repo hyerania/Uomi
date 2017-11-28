@@ -33,6 +33,7 @@ UINavigationControllerDelegate {
     
     var transaction: ExpenseTransaction! {
         didSet {
+            assertInitialContributions()
             updateUI()
         }
     }
@@ -48,7 +49,7 @@ UINavigationControllerDelegate {
     
     @IBOutlet weak var splitSeg: UISegmentedControl!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableview: UITableView!
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
@@ -79,7 +80,7 @@ UINavigationControllerDelegate {
         updateUI()
         
         // Do any additional setup after loading the view.
-        tableView.setEditing(true, animated: false)
+        tableview.setEditing(true, animated: false)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.delegate = self
@@ -107,7 +108,7 @@ UINavigationControllerDelegate {
         dateField.text = dateFormatter.string(from: transaction.date)
         
         payerLabel.memberId = transaction.payer
-        totalField.text = "\(Float(transaction.total) / 100)"
+        totalField.text = UomiFormatters.dollarNoSignFormatter.string(for: Float(transaction.total) / 100)
         descriptionField.text = transaction.transDescription
         splitSeg.selectedSegmentIndex = transaction.splitMode == .percent ? 0 : 1
         let event = EventManager.sharedInstance.getActiveEvent()
@@ -120,7 +121,7 @@ UINavigationControllerDelegate {
             self.receiptView.image = photo
         }
         // Extract contribution data
-        tableView.reloadData()
+        tableview.reloadData()
         
         updateSaveState()
     }
@@ -348,7 +349,7 @@ UINavigationControllerDelegate {
         if transaction.splitMode == .percent {
             // Update contribution labels
             
-            tableView.reloadData()
+            tableview.reloadData()
         }
         
         updateSaveState()
@@ -372,10 +373,31 @@ UINavigationControllerDelegate {
     
     // MARK: Split Mode
     
+    fileprivate func assertInitialContributions() {
+        // Initialize an equal split
+        guard transaction.splitMode == .percent && transaction.percentContributions.isEmpty else {
+            return
+        }
+        
+        let eventId = EventManager.sharedInstance.getActiveEvent()!
+        AccountManager.sharedInstance.getUserIds(event: eventId) { (userIds) in
+            let percentage = 100 / userIds.count
+            for userId in userIds {
+                let contrib = PercentContribution(transaction: self.transaction)
+                contrib.member = userId
+                contrib.percent = percentage
+                self.transaction.percentContributions.append(contrib)
+            }
+            self.tableview.reloadData()
+        }
+    }
+    
     @IBAction func setSplitMode(_ sender: Any) {
         transaction.splitMode = splitSeg.selectedSegmentIndex == 0 ? .percent : .lineItem
         
-        tableView.reloadData()
+            assertInitialContributions()
+        
+        tableview.reloadData()
         updateSaveState()
     }
     
@@ -406,7 +428,10 @@ UINavigationControllerDelegate {
     
     @IBAction func hitSave(_ sender: Any) {
         dismissKeyboard()
-        delegate?.shouldSave(expenseController: self, transaction: transaction)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.delegate?.shouldSave(expenseController: self, transaction: self.transaction)
+        }
     }
     
     
@@ -434,7 +459,7 @@ extension ExpenseTransactionViewController: ParticipantViewDelegate {
 extension ExpenseTransactionViewController: LineItemSplitDelegate {
     fileprivate func recalculateLineItemTotal() {
         // Update the running total
-        tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+        tableview.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
     }
     
     func contributionDidUpdate(lineItemCell: LineItemSplitTableViewCell, contribution: Contribution) {

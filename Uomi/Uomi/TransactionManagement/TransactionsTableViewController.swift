@@ -62,23 +62,8 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
         AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
             if let user = user {
                 transaction.payer = user.getUid()
-                
-                AccountManager.sharedInstance.getUserIds(event: self.eventId) { (userIds) in
-                    let percentage = 100 / userIds.count
-                    for userId in userIds {
-                        let contrib = PercentContribution(transaction: transaction)
-                        contrib.member = userId
-                        contrib.percent = percentage
-                        
-                        transaction.percentContributions.append(contrib)
-                    }
-                    
-                    self.editingTransaction = transaction
-                    
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
-                    }
-                }
+                self.editingTransaction = transaction
+                self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
             }
             else {
                 // They shouldn't be here! They aren't logged in!
@@ -164,7 +149,9 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     func shouldSave(expenseController controller: ExpenseTransactionViewController, transaction: Transaction) {
         TransactionManager.sharedInstance.saveTransaction(event: eventId, transaction: transaction) { (success) in
             if success {
-                self.dismiss(animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
             else {
                 // TODO Alert user of failure
