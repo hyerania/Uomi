@@ -17,6 +17,7 @@ class NewAccountViewController: UIViewController {
     @IBOutlet weak var passwordLabel: UITextField!
     @IBOutlet weak var confirmPasswordLabel: UITextField!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var ref: DatabaseReference!
     
@@ -24,6 +25,8 @@ class NewAccountViewController: UIViewController {
         super.viewDidLoad()
         ref = Database.database().reference()
         self.registerButton.layer.cornerRadius = 8
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
+        view.addGestureRecognizer(tapGesture)
         // Do any additional setup after loading the view.
     }
 
@@ -32,6 +35,46 @@ class NewAccountViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.registerKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.unregisterKeyboardNotifications()
+    }
+    
+    func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func unregisterKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    
+    @objc func keyboardDidShow(notification: NSNotification) {
+        let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardInfo = userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue
+        let keyboardSize = keyboardInfo.cgRectValue.size
+        
+        // Get the existing contentInset for the scrollView and set the bottom property to be the height of the keyboard
+        var contentInset = self.scrollView.contentInset
+        contentInset.bottom = keyboardSize.width
+        
+        self.scrollView.contentInset = contentInset
+        self.scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        var contentInset = self.scrollView.contentInset
+        contentInset.bottom = 0
+        
+        self.scrollView.contentInset = contentInset
+        self.scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
 
     /*
     // MARK: - Navigation
@@ -78,4 +121,13 @@ class NewAccountViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    @objc func tap(gesture: UITapGestureRecognizer) {
+        fullNameLabel.resignFirstResponder()
+        emailLabel.resignFirstResponder()
+        passwordLabel.resignFirstResponder()
+        confirmPasswordLabel.resignFirstResponder()
+    }
+    
+    
 }
