@@ -11,8 +11,14 @@ import Firebase
 import FirebaseStorage
 import UIKit
 
+let owingsChild = "owings"
 let eventsChild = "events"
 let transactionsChild = "transactions"
+
+enum OwingsKeys : String {
+    case payer
+    case owers
+}
 
 enum TransactionKeys : String {
     case payer
@@ -75,82 +81,89 @@ class TransactionManager {
 //
     // MARK: Storage
     
+    fileprivate func updateSavedTransaction(_ transactionsPath: String, _ uid: String, _ payload: [String : Any], _ transaction: Transaction, _ eventId: String, _ success: @escaping ((Bool) -> ())) {
+        var updates: [String:Any] = [:]
+        
+        // Update existing transaction
+        updates["\(transactionsPath)/\(uid)"] = payload
+        
+        // Update owings for the transaction
+        let owingsPayload = self.getOwingsPayload(transaction: transaction)
+        updates["\(owingsChild)/\(eventId)/\(uid)"] = owingsPayload
+        
+        self.ref.updateChildValues(updates) { (error, scope) in
+            success(error == nil)
+        }
+        
+        if let transaction = transaction as? ExpenseTransaction, let imageData = transaction.imageData {
+            self.uploadImage(image: imageData, eventId: eventId, transactionId: uid) { (didSave) in
+                if !didSave {
+                    print("Failed to save image")
+                }
+            }
+        }
+    }
+    
+    fileprivate func saveNewTransaction(_ transactionsPath: String, _ eventId: String, _ payload: [String : Any], _ transaction: Transaction, _ success: @escaping ((Bool) -> ())) {
+        // Save new transaction
+        
+        var updates: [String:Any] = [:]
+        
+        let key = ref.child(transactionsPath).childByAutoId().key
+        
+        // Add link to event reference
+        let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
+        updates[eventTransactionsPath] = true
+        
+        // Update main transaction payload
+        updates["\(transactionsPath)/\(key)"] = payload
+        
+        // Update owings for the transaction
+        let owingsPayload = self.getOwingsPayload(transaction: transaction)
+        updates["\(owingsChild)/\(eventId)/\(key)"] = owingsPayload
+        
+        self.ref.updateChildValues(updates) { (error, scope) in
+            success(error == nil)
+        }
+        
+        if let transaction = transaction as? ExpenseTransaction, let imageData = transaction.imageData {
+            self.uploadImage(image: imageData, eventId: eventId, transactionId: key) { (didSave) in
+                if !didSave {
+                    print("Failed to save new transaction image")
+                }
+            }
+        }
+    }
+    
     func saveTransaction(event eventId: String, transaction: Transaction, success: @escaping ((Bool) -> ()) ) {
         
         let payload = transform(transaction: transaction)
         let transactionsPath = "\(transactionsChild)/\(eventId)"
-
+        
         if let uid = transaction.uid {
-            var updates: [String:Any] = [:]
-            
-            // Update existing transaction
-            updates["\(transactionsPath)/\(uid)"] = payload
-            
-            // TODO Update owings for the transaction
-            self.uploadImage(image: transaction.imageData, eventId: eventId, transactionId: uid) { (status) in
-                
-                if (status) {
-                    self.ref.updateChildValues(updates) { (error, scope) in
-                        success(error == nil)
-                    }
-                } else {
-                    success(false)
-                }
-            }
-            
-            
+            updateSavedTransaction(transactionsPath, uid, payload, transaction, eventId, success)
         }
         else {
-            // Save new transaction
-            
-            // TODO Validate transaction
-            
-            var updates: [String:Any] = [:]
-            
-            let key = ref.child(transactionsPath).childByAutoId().key
-            self.uploadImage(image: transaction.imageData, eventId: eventId, transactionId: key) { (status) in
-                
-                if (status) {
-                    // Add link to event reference
-                    let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
-                    updates[eventTransactionsPath] = true
-                    
-                    // Update main transaction payload
-                    updates["\(transactionsPath)/\(key)"] = payload
-                    
-                    // Update owings for the transaction
-                    
-                    self.ref.updateChildValues(updates) { (error, scope) in
-                        success(error == nil)
-                    }
-                } else {
-                    success(false)
-                }
-            }
-            
+            saveNewTransaction(transactionsPath, eventId, payload, transaction, success)
         }
     }
     
-    func uploadImage(image: UIImage?, eventId: String, transactionId: String, completionHandler: @escaping ((Bool) -> ())) {
-        if let image = image {
-            var data = NSData()
-            data = UIImageJPEGRepresentation(image, 0.8)! as NSData
-            let filePath = "/receipts/\(eventId)/\(transactionId)"
-            let metaData = StorageMetadata()
-            metaData.contentType = "image/jpg"
-            self.storageRef.child(filePath).putData(data as Data, metadata: metaData) { (metadata, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    completionHandler(false)
-                    return
-                } else {
-                    _ = metadata?.downloadURL()?.absoluteString
-                    completionHandler(true)
-                    print("Image uploaded successfully.")
-                }
+    func uploadImage(image: UIImage, eventId: String, transactionId: String, completionHandler: @escaping ((Bool) -> ())) {
+        var data = NSData()
+        data = UIImageJPEGRepresentation(image, 0.8)! as NSData
+        let filePath = "/receipts/\(eventId)/\(transactionId)"
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        self.storageRef.child(filePath).putData(data as Data, metadata: metaData) { (metadata, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                completionHandler(false)
+                return
+            } else {
+                _ = metadata?.downloadURL()?.absoluteString
+                completionHandler(true)
+                print("Image uploaded successfully.")
             }
-        } else {
-            completionHandler(false)
         }
     }
     
@@ -267,6 +280,30 @@ class TransactionManager {
                 transaction.lineItemContributions.append(contribution)
             }
         }
+    }
+    
+    private func getOwingsPayload(transaction: Transaction) -> [String:Any] {
+        var owingsPayload: [String:Any] = [:]
+        owingsPayload[OwingsKeys.payer.rawValue] = transaction.payer
+        if let transaction = transaction as? ExpenseTransaction {
+            owingsPayload[OwingsKeys.owers.rawValue] = transaction.contributions.filter({ (contribution) -> Bool in
+                return contribution.member != transaction.payer
+            }).map({ (contribution) -> [String:Int] in
+                return [contribution.member! : contribution.getContributionAmount()]
+            }).reduce([:], { (current, pair) -> [String:Int] in
+                current.merging(pair, uniquingKeysWith: { (current, _) -> Int in
+                    current
+                })
+            })
+        }
+        else if let transaction = transaction as? SettlementTransaction {
+            owingsPayload[OwingsKeys.owers.rawValue] = [[transaction.recipient : transaction.total]]
+        }
+        else {
+            print("Unknown transaction type, can't save owings")
+        }
+        
+        return owingsPayload
     }
     
 }

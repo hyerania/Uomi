@@ -134,7 +134,7 @@ UINavigationControllerDelegate {
     }
     
     private func canSave() -> Bool {
-        guard transaction.total > 0 else {
+        guard transaction.total > 0/*, transaction.imageData != nil*/ else {
             return false
         }
         guard transaction.splitMode == .lineItem else {
