@@ -231,6 +231,7 @@ UINavigationControllerDelegate {
                 let cell: LineItemSplitTableViewCell = tableView.dequeueReusableCell(withIdentifier: lineItemReuseIdentifier, for: indexPath) as! LineItemSplitTableViewCell
                 cell.contribution = transaction.lineItemContributions[indexPath.row]
                 cell.participantView.viewController = self
+                cell.delegate = self
                 
                 return cell
             }
@@ -265,12 +266,16 @@ UINavigationControllerDelegate {
             if transaction.splitMode == .percent {
                 // Remove percent item
                 transaction.percentContributions.remove(at: row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
             }
             else {
                 // Remove line item
                 transaction.lineItemContributions.remove(at: row)
+                tableView.beginUpdates()
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                recalculateLineItemTotal()
+                tableView.endUpdates()
             }
-            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         else {
             // Create new line-item entry
@@ -373,15 +378,8 @@ UINavigationControllerDelegate {
         dismissKeyboard()
         delegate?.shouldSave(expenseController: self, transaction: transaction)
     }
-}
-
-extension ExpenseTransactionViewController: ParticipantViewDelegate {
     
-    func participantSelected(participantView: ParticipantView, participant: User) {
-        transaction.payer = participant.getUid()
-    }
     
-
     /*
      // MARK: - Navigation
      
@@ -391,4 +389,25 @@ extension ExpenseTransactionViewController: ParticipantViewDelegate {
      // Pass the selected object to the new view controller.
      }
      */
+}
+
+extension ExpenseTransactionViewController: ParticipantViewDelegate {
+    
+    func participantSelected(participantView: ParticipantView, participant: User) {
+        transaction.payer = participant.getUid()
+    }
+    
+}
+
+extension ExpenseTransactionViewController: LineItemSplitDelegate {
+    fileprivate func recalculateLineItemTotal() {
+        // Update the running total
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+    }
+    
+    func contributionDidUpdate(lineItemCell: LineItemSplitTableViewCell, contribution: Contribution) {
+        recalculateLineItemTotal()
+    }
+    
+    
 }

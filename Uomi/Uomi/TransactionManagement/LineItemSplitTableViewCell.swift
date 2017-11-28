@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol LineItemSplitDelegate {
+    func contributionDidUpdate(lineItemCell: LineItemSplitTableViewCell, contribution: Contribution)
+}
+
 class LineItemSplitTableViewCell: UITableViewCell, ParticipantViewDelegate {
     @IBOutlet weak var participantView: ParticipantView!
     @IBOutlet weak var descriptionField: UITextField!
     @IBOutlet weak var subtotalLabel: UILabel!
+    
+    var delegate: LineItemSplitDelegate?
     
     var contribution: LineItemContribution? {
         didSet {
@@ -30,6 +36,9 @@ class LineItemSplitTableViewCell: UITableViewCell, ParticipantViewDelegate {
     @objc fileprivate func updatedDescription() {
         contribution?.description = descriptionField.text
         updateSubtotal()
+        if let delegate = delegate, let contribution = contribution {
+            delegate.contributionDidUpdate(lineItemCell: self, contribution: contribution)
+        }
     }
     
     fileprivate func updateSubtotal() {
