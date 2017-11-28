@@ -46,6 +46,8 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     
     @IBOutlet weak var tableView: UITableView!
     
+    fileprivate var tapGesture: UITapGestureRecognizer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -73,13 +75,15 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         // Do any additional setup after loading the view.
         tableView.setEditing(true, animated: false)
         
-        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
+        tapGesture.isEnabled = false
     }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+        tapGesture.isEnabled = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -157,7 +161,7 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     
     // FIXME This can be more elegant and enable new percentage contributions when some are removed
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        if transaction.splitMode == .lineItem && indexPath.row == transaction.lineItemContributions.count - 1 {
+        if transaction.splitMode == .lineItem && indexPath.section == 1 {
             return .insert
         }
         
@@ -172,32 +176,29 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         
         if indexPath.section == 0 {
             if transaction.splitMode == .percent {
+                // Remove percent item
                 transaction.percentContributions.remove(at: row)
             }
             else {
+                // Remove line item
                 transaction.lineItemContributions.remove(at: row)
             }
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         else {
             // Create new line-item entry
-        }
+            let newContribution = LineItemContribution()
+            let currentCount: Int = transaction.lineItemContributions.count
+            transaction.lineItemContributions.append(newContribution)
+            tableView.insertRows(at: [IndexPath(row: currentCount, section: 0)], with: .automatic)
+        }    
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     
-    // MARK: Text Delegate
+    // MARK: - Text Delegate
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        tapGesture.isEnabled = true
         
         if textField === dateField {
         let datePicker = UIDatePicker()
@@ -255,12 +256,7 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     @IBAction func setSplitMode(_ sender: Any) {
         transaction.splitMode = splitSeg.selectedSegmentIndex == 0 ? .percent : .lineItem
         
-        // TODO Update applicable contributions
-        // Perhaps maintain two sets of contributions, one per type, and purge usused one leaving.
-        // Otherwise, convert one to the other... somehow
-        // HEY THIS COULD BE SOMETHING WORTH LOOKING INTO. Does changing split mode happen mainly by accident? Desire to convert from one to the other? Or start fresh? How would user navigate auto population?
-        // Probably just infer what they should be as best as possible
-        
+        tableView.reloadData()
     }
     
     
@@ -299,5 +295,14 @@ extension ExpenseTransactionViewController: ParticipantViewDelegate {
         transaction.payer = participant.getUid()
     }
     
-    
+
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 }

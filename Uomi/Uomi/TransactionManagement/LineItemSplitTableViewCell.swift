@@ -13,15 +13,19 @@ class LineItemSplitTableViewCell: UITableViewCell {
     @IBOutlet weak var descriptionField: UITextField!
     @IBOutlet weak var subtotalLabel: UILabel!
     
+    var contribution: LineItemContribution? {
+        didSet {
+            updateUI()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func updateUI() {
+        print("updating UI...")
     }
 
 }
