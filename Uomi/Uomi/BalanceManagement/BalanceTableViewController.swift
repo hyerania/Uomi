@@ -21,16 +21,10 @@ class BalanceTableViewController: UITableViewController {
     private var selectedRow = 0
     var eventId : String?
     
-//    var arrayOfCellData = [cellData]()
-//    var selectedRow = 0
     
     // MARK: - View Controller Overrides
     override func viewDidLoad(){
         super.viewDidLoad()
-//        arrayOfCellData = [cellData(uid : "123", initialsText : "KJ", nameText: "Kevin J Nguyen", balanceText : "$" + "3.30"),
-//                           cellData(uid : "123", initialsText : "YH", nameText: "Yerania Hernandez", balanceText : "$" + "5.50"),
-//                           cellData(uid : "123", initialsText : "EG", nameText: "Eric Gonzalez", balanceText : "$" + "2.30")
-//                           ]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,7 +40,6 @@ class BalanceTableViewController: UITableViewController {
     
     // MARK: - Table View Overrides
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return arrayOfCellData.count
         return self.balanceList.count
     }
     
@@ -56,10 +49,6 @@ class BalanceTableViewController: UITableViewController {
         cell.mainName.text = self.balanceList[indexPath.row].getName()
         cell.mainInitials.text = self.balanceList[indexPath.row].getInitials()
         cell.mainBalance.text = self.balanceList[indexPath.row].getBalance()
-        
-//        cell.mainInitials.text = arrayOfCellData[indexPath.row].initialsText
-//        cell.mainName.text = arrayOfCellData[indexPath.row].nameText
-//        cell.mainBalance.text = arrayOfCellData[indexPath.row].balanceText
         
         return cell
     }
