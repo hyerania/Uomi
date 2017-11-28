@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0706246B1FB9301800AE2137 /* ParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706246A1FB9301800AE2137 /* ParticipantView.swift */; };
-		077B45CD1FB7A2C400792C30 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */; };
+		077B45CD1FB7A2C400792C30 /* ExpenseTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45CC1FB7A2C400792C30 /* ExpenseTransactionViewController.swift */; };
 		077B45D01FB7A48100792C30 /* PercentageSplitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */; };
 		077B45D31FB7A58F00792C30 /* LineItemSplitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */; };
 		077B45D51FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */; };
 		078834A91FBB82D40052D1CF /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834A81FBB82D40052D1CF /* TransactionManager.swift */; };
-		078834AB1FBB831D0052D1CF /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834AA1FBB831D0052D1CF /* Transaction.swift */; };
+		078834AB1FBB831D0052D1CF /* ExpenseTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834AA1FBB831D0052D1CF /* ExpenseTransaction.swift */; };
 		078834AD1FBB89610052D1CF /* Contribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834AC1FBB89610052D1CF /* Contribution.swift */; };
 		078834AF1FBB8E390052D1CF /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834AE1FBB8E390052D1CF /* AccountManager.swift */; };
 		078834B21FBB8F070052D1CF /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078834B11FBB8F070052D1CF /* EventManager.swift */; };
@@ -32,6 +32,9 @@
 		07AB53BB1F993F3200BC23F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53B91F993F3200BC23F3 /* LaunchScreen.storyboard */; };
 		07AB53C31F99421100BC23F3 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AB53C21F99421100BC23F3 /* libz.tbd */; };
 		07AB53C61F99430900BC23F3 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 07AB53C51F99430900BC23F3 /* tessdata */; };
+		07CD92521FC51BA80008B93D /* SettlementTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CD92511FC51BA80008B93D /* SettlementTransaction.swift */; };
+		07CD92541FC64A8A0008B93D /* UomiFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CD92531FC64A8A0008B93D /* UomiFormatters.swift */; };
+		07DC655A1FBE8F4C00638BA3 /* ExpenseTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DC65591FBE8F4C00638BA3 /* ExpenseTransactionTableViewCell.swift */; };
 		07DE484F1FA91830008F1B96 /* Transactions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE484E1FA91830008F1B96 /* Transactions.storyboard */; };
 		07DE48511FA9184D008F1B96 /* Balances.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE48501FA9184D008F1B96 /* Balances.storyboard */; };
 		07DE48521FA91916008F1B96 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07DE484D1FA917CB008F1B96 /* Events.storyboard */; };
@@ -52,12 +55,12 @@
 
 /* Begin PBXFileReference section */
 		0706246A1FB9301800AE2137 /* ParticipantView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantView.swift; sourceTree = "<group>"; };
-		077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		077B45CC1FB7A2C400792C30 /* ExpenseTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransactionViewController.swift; sourceTree = "<group>"; };
 		077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageSplitTableViewCell.swift; sourceTree = "<group>"; };
 		077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineItemSplitTableViewCell.swift; sourceTree = "<group>"; };
 		077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineItemTotalTableViewCell.swift; sourceTree = "<group>"; };
 		078834A81FBB82D40052D1CF /* TransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
-		078834AA1FBB831D0052D1CF /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		078834AA1FBB831D0052D1CF /* ExpenseTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransaction.swift; sourceTree = "<group>"; };
 		078834AC1FBB89610052D1CF /* Contribution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contribution.swift; sourceTree = "<group>"; };
 		078834AE1FBB8E390052D1CF /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		078834B11FBB8F070052D1CF /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
@@ -78,6 +81,9 @@
 		07AB53BC1F993F3200BC23F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07AB53C21F99421100BC23F3 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		07AB53C51F99430900BC23F3 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		07CD92511FC51BA80008B93D /* SettlementTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementTransaction.swift; sourceTree = "<group>"; };
+		07CD92531FC64A8A0008B93D /* UomiFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UomiFormatters.swift; sourceTree = "<group>"; };
+		07DC65591FBE8F4C00638BA3 /* ExpenseTransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTransactionTableViewCell.swift; sourceTree = "<group>"; };
 		07DE484D1FA917CB008F1B96 /* Events.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		07DE484E1FA91830008F1B96 /* Transactions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transactions.storyboard; sourceTree = "<group>"; };
 		07DE48501FA9184D008F1B96 /* Balances.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Balances.storyboard; sourceTree = "<group>"; };
@@ -115,13 +121,15 @@
 			isa = PBXGroup;
 			children = (
 				079009211FBDEC1800B6E83A /* TransactionsTableViewController.swift */,
-				077B45CC1FB7A2C400792C30 /* TransactionViewController.swift */,
+				077B45CC1FB7A2C400792C30 /* ExpenseTransactionViewController.swift */,
 				077B45CE1FB7A48100792C30 /* PercentageSplitTableViewCell.swift */,
 				077B45D21FB7A58F00792C30 /* LineItemSplitTableViewCell.swift */,
 				077B45D41FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift */,
 				078834A81FBB82D40052D1CF /* TransactionManager.swift */,
-				078834AA1FBB831D0052D1CF /* Transaction.swift */,
+				078834AA1FBB831D0052D1CF /* ExpenseTransaction.swift */,
 				078834AC1FBB89610052D1CF /* Contribution.swift */,
+				07DC65591FBE8F4C00638BA3 /* ExpenseTransactionTableViewCell.swift */,
+				07CD92511FC51BA80008B93D /* SettlementTransaction.swift */,
 			);
 			path = TransactionManagement;
 			sourceTree = "<group>";
@@ -188,6 +196,7 @@
 				07AB53BC1F993F3200BC23F3 /* Info.plist */,
 				EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */,
 				078834B71FBB9E930052D1CF /* UomiErrors.swift */,
+				07CD92531FC64A8A0008B93D /* UomiFormatters.swift */,
 			);
 			path = Uomi;
 			sourceTree = "<group>";
@@ -337,6 +346,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Uomi/Pods-Uomi-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/McPicker/McPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -344,6 +354,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/McPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -377,7 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				078834AB1FBB831D0052D1CF /* Transaction.swift in Sources */,
+				078834AB1FBB831D0052D1CF /* ExpenseTransaction.swift in Sources */,
 				AA83D3EF1FBCDEA10081815E /* BalanceManager.swift in Sources */,
 				079CEF8E1FA8F67A00AC1FE4 /* LoginViewController.swift in Sources */,
 				AA85857D1FBBA477005B2221 /* SettleTableViewCell.swift in Sources */,
@@ -388,19 +399,22 @@
 				07AB53B11F993F3200BC23F3 /* AppDelegate.swift in Sources */,
 				078834AF1FBB8E390052D1CF /* AccountManager.swift in Sources */,
 				079CEF971FA8FBA500AC1FE4 /* EventsTableViewController.swift in Sources */,
+				07CD92521FC51BA80008B93D /* SettlementTransaction.swift in Sources */,
 				078834B81FBB9E930052D1CF /* UomiErrors.swift in Sources */,
 				079009221FBDEC1800B6E83A /* TransactionsTableViewController.swift in Sources */,
 				078834AD1FBB89610052D1CF /* Contribution.swift in Sources */,
 				AA83D3E91FBCCA910081815E /* EventTableViewCell.swift in Sources */,
 				AA83D3ED1FBCD15F0081815E /* SettleViewController.swift in Sources */,
+				07CD92541FC64A8A0008B93D /* UomiFormatters.swift in Sources */,
 				078834B41FBB8F2C0052D1CF /* Event.swift in Sources */,
 				079CEF991FA8FC4800AC1FE4 /* EventEditorViewController.swift in Sources */,
 				078834B21FBB8F070052D1CF /* EventManager.swift in Sources */,
 				079CEF911FA8F6A300AC1FE4 /* NewAccountViewController.swift in Sources */,
-				077B45CD1FB7A2C400792C30 /* TransactionViewController.swift in Sources */,
+				077B45CD1FB7A2C400792C30 /* ExpenseTransactionViewController.swift in Sources */,
 				078834B61FBB8F3C0052D1CF /* User.swift in Sources */,
 				AA85857A1FBBA389005B2221 /* BalanceTableViewController.swift in Sources */,
 				077B45D01FB7A48100792C30 /* PercentageSplitTableViewCell.swift in Sources */,
+				07DC655A1FBE8F4C00638BA3 /* ExpenseTransactionTableViewCell.swift in Sources */,
 				077B45D51FB7A6FE00792C30 /* LineItemTotalTableViewCell.swift in Sources */,
 				AA83D3F11FBDDC700081815E /* Balance.swift in Sources */,
 				AA8585771FBBA10B005B2221 /* BalancesTableViewCell.swift in Sources */,

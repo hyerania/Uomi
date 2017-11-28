@@ -8,9 +8,18 @@
 
 import UIKit
 
-class TransactionsTableViewController: UITableViewController {
+fileprivate let unwindSegue = "goBackButton"
+fileprivate let editTransactionSegue = "editTransaction"
+fileprivate let transactionCellReuseIdentifier = "transactionCell"
 
-    var eventId: String?
+let viewBalancesSegue = "viewBalances"
+
+class TransactionsTableViewController: UITableViewController, ExpenseTransactionDelegate {
+
+    var eventId: String!
+    var editingTransaction: Transaction!
+    
+    private var transactions: [Transaction] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,106 +37,139 @@ class TransactionsTableViewController: UITableViewController {
             return
         }
         
-        EventManager.sharedInstance.loadEvent(id: eventId) { event in
-            
-            guard let event = event else {
+        EventManager.sharedInstance.loadEvent(id: eventId) { (event) in
+            self.title = event?.getName()
+        }
+        TransactionManager.sharedInstance.loadTransactions(eventId: eventId, completion: { (transactions) in
+            guard let transactions = transactions else {
+                self.performSegue(withIdentifier: unwindSegue, sender: self)
                 return
             }
             
-            self.title = event.getName()
-        }
+            self.transactions.removeAll()
+            self.transactions.append(contentsOf: transactions)
+            self.tableView.reloadData()
+        })
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func hitAdd(_ sender: Any) {
+        let transaction = ExpenseTransaction()
+        AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
+            if let user = user {
+                transaction.payer = user.getUid()
+                
+                AccountManager.sharedInstance.getUserIds(event: self.eventId) { (userIds) in
+                    let percentage = 100 / userIds.count
+                    for userId in userIds {
+                        let contrib = PercentContribution(transaction: transaction)
+                        contrib.member = userId
+                        contrib.percent = percentage
+                        
+                        transaction.percentContributions.append(contrib)
+                    }
+                    
+                    self.editingTransaction = transaction
+                    
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
+                    }
+                }
+            }
+            else {
+                // They shouldn't be here! They aren't logged in!
+            }
+        })
+    }
+    
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
-    @IBAction func settingsButton(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "editEvent", sender: self)
-    }
-
-    @IBAction func backButton(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "goBackButton", sender: self)
+        return transactions.count
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        var cell: UITableViewCell
+        
+        if let transaction = transactions[indexPath.row] as? ExpenseTransaction {
+        
+            let eventCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! ExpenseTransactionTableViewCell
+
+            eventCell.transaction = transaction
+            
+            cell = eventCell
+        }
+        else if let transaction = transactions[indexPath.row] as? SettlementTransaction {
+            // FIXME Add cell for settlement transaction
+            let settleCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! ExpenseTransactionTableViewCell
+                
+            settleCell.transaction = transaction as! ExpenseTransaction
+            
+            cell = settleCell
+        }
+        else {
+            print("Problem parsing transaction type, could not generate proper cell type")
+            cell = UITableViewCell()
+        }
+        
+        return cell
+    }
+    
+    
+    // MARK: Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        editingTransaction = transactions[indexPath.row]
+        performSegue(withIdentifier: editTransactionSegue, sender: nil)
+    }
+
+   
+
+    // MARK: - Navigation
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? EventEditorViewController {
             vc.eventId = self.eventId
         }
-            
         else if let nc = segue.destination as? UINavigationController {
-            
-            if let rootVc = nc.topViewController as? BalanceTableViewController {
+            if segue.identifier == viewBalancesSegue, let rootVc = nc.topViewController as? BalanceTableViewController {
                 rootVc.eventId = self.eventId
+            }
+            else if let vc = nc.viewControllers.first as? ExpenseTransactionViewController {
+                vc.transaction = editingTransaction as! ExpenseTransaction
+                vc.delegate = self
             }
         }
     }
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    
+    // MARK: - Expense Delegate
+    
+    func shouldCancel(expenseController controller: ExpenseTransactionViewController) {
+        dismiss(animated: true, completion: nil)
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    func shouldSave(expenseController controller: ExpenseTransactionViewController, transaction: Transaction) {
+        TransactionManager.sharedInstance.saveTransaction(event: eventId, transaction: transaction) { (success) in
+            if success {
+                self.dismiss(animated: true, completion: nil)
+            }
+            else {
+                // TODO Alert user of failure
+            }
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

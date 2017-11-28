@@ -8,30 +8,42 @@
 
 import Foundation
 
+enum ContributionKeys: String {
+    case member
+    case percent
+    case description
+}
+
 protocol Contribution {
-    var member: User? { get set }
+    var member: String? { get set }
     
-    func getContributionAmount() -> Float
+    func getContributionAmount() -> Int
 }
 
 class PercentContribution : Contribution {
-    var member: User?
-    var percent: Float = 0
-    var transaction: Transaction
+    static func ==(lhs: PercentContribution, rhs: PercentContribution) -> Bool {
+        return lhs.member == rhs.member
+    }
     
-    init(transaction: Transaction) {
+    var member: String?
+    var percent: Int = 0
+    var transaction: ExpenseTransaction
+    
+    init(transaction: ExpenseTransaction) {
         self.transaction = transaction
     }
     
-    func getContributionAmount() -> Float {
+    func getContributionAmount() -> Int {
         return transaction.total * percent
     }
+    
+    
 }
 
 class LineItemContribution : Contribution {
-    var member: User?
+    var member: String?
     var units: Float = 1.0
-    var cost: Float = 0
+    var cost: Int = 0
     var description: String? {
         didSet {
             parseDescription(description: description)
@@ -52,8 +64,8 @@ class LineItemContribution : Contribution {
         }
     }
     
-    func getContributionAmount() -> Float {
-        return units * cost
+    func getContributionAmount() -> Int {
+        return Int(round(units * Float(cost)))
     }
     
 }

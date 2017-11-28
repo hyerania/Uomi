@@ -11,5 +11,6 @@ pod 'FirebaseAuth'
 pod 'FirebaseDatabase'
 #pod 'TesseractOCRiOS', '~> 4.0'
 #pod 'BraintreeDropIn'
+pod 'McPicker'
 
 end

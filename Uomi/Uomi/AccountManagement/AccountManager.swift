@@ -10,6 +10,8 @@ import Foundation
 import FirebaseDatabase
 import FirebaseAuth
 
+let participantsChild = "participants"
+
 class AccountManager {
     
     var ref: DatabaseReference!
@@ -175,5 +177,46 @@ class AccountManager {
     }
     
     static let sharedInstance = AccountManager()
+    
+    func getUserIds(event eventId: String, completion: @escaping ([String]) -> ()) {
+        ref.child("\(eventsChild)/\(eventId)/\(participantsChild)").observeSingleEvent(of: .value) { (snapshot) in
+            if let value = snapshot.value as? [String: Bool] {
+                let keys = Array(value.keys)
+                completion(keys)
+            }
+        }
+    }
+            
+    func getUsers(event eventId: String, completion: @escaping ([User]) -> ()) {
+        ref.child("\(eventsChild)/\(eventId)/\(participantsChild)").observeSingleEvent(of: .value) { (snapshot) in
+            if let value = snapshot.value as? [String: Bool] {
+                let users: [User] = []
+                let keys = Array(value.keys)
+                self.loadNextUser(userIds: keys, users: users, completion: completion)
+            }
+        }
+    }
+    
+    func loadNextUser(userIds: [String], users: [User], completion: @escaping ([User]) -> () ) {
+        if userIds.isEmpty {
+            completion(users)
+            return
+        }
+        
+        
+        let accountId = userIds[0]
+        AccountManager.sharedInstance.load(id: accountId, completionHandler: { (user) in
+            
+            var users = users
+            if let user = user {
+                users.append(user)
+                
+                self.loadNextUser(userIds: Array(userIds.dropFirst()), users: users, completion: completion)
+            }
+            else {
+                print("Something went wrong loading user \(accountId)")
+            }
+        })
+    }
     
 }
