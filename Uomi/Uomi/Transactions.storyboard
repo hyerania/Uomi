@@ -374,7 +374,7 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNs-yx-YAk">
-                                                                        <rect key="frame" x="117.5" y="111" width="44" height="44"/>
+                                                                        <rect key="frame" x="109.5" y="103" width="44" height="44"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="44" id="WOW-fC-xcm"/>
                                                                             <constraint firstAttribute="height" constant="44" id="Xu1-rt-cIc"/>
@@ -391,8 +391,8 @@
                                                                     <constraint firstAttribute="bottom" secondItem="492-T6-hA1" secondAttribute="bottom" id="JbQ-22-6Wn"/>
                                                                     <constraint firstItem="492-T6-hA1" firstAttribute="leading" secondItem="KwK-mi-vQU" secondAttribute="leading" id="PAL-EL-fQR"/>
                                                                     <constraint firstAttribute="trailing" secondItem="492-T6-hA1" secondAttribute="trailing" id="cm2-jw-BhJ"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="xNs-yx-YAk" secondAttribute="trailing" id="kGV-OP-RMV"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="xNs-yx-YAk" secondAttribute="bottom" id="rja-So-hSI"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="xNs-yx-YAk" secondAttribute="trailing" constant="8" id="kGV-OP-RMV"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="xNs-yx-YAk" secondAttribute="bottom" constant="8" id="rja-So-hSI"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
@@ -519,7 +519,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[#] [description] @[cost]" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9NM-Cc-3Wq">
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="[#] [description] @[cost]" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9NM-Cc-3Wq">
                                                                     <rect key="frame" x="59" y="11" width="198" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="GW5-b4-Vly"/>
@@ -550,6 +550,7 @@
                                                                 <constraint firstItem="NuZ-Lt-4mE" firstAttribute="centerY" secondItem="hJB-aF-n2O" secondAttribute="centerY" id="1Bn-2z-ttM"/>
                                                                 <constraint firstAttribute="trailing" secondItem="NuZ-Lt-4mE" secondAttribute="trailing" id="BPR-Uu-3jY"/>
                                                                 <constraint firstItem="NuZ-Lt-4mE" firstAttribute="leading" secondItem="9NM-Cc-3Wq" secondAttribute="trailing" constant="20" id="Jlg-J8-Rch"/>
+                                                                <constraint firstItem="9NM-Cc-3Wq" firstAttribute="centerY" secondItem="hJB-aF-n2O" secondAttribute="centerY" id="Jqp-Xq-zFo"/>
                                                                 <constraint firstItem="9NM-Cc-3Wq" firstAttribute="leading" secondItem="oxu-vR-y9x" secondAttribute="trailing" constant="12" id="Pbs-Jp-NTV"/>
                                                                 <constraint firstItem="oxu-vR-y9x" firstAttribute="leading" secondItem="hJB-aF-n2O" secondAttribute="leading" constant="12" id="Qqx-AX-jro"/>
                                                                 <constraint firstItem="oxu-vR-y9x" firstAttribute="centerY" secondItem="hJB-aF-n2O" secondAttribute="centerY" id="kM2-et-wqp"/>
@@ -561,7 +562,7 @@
                                                             <outlet property="subtotalLabel" destination="NuZ-Lt-4mE" id="N3l-h0-2oB"/>
                                                         </connections>
                                                     </tableViewCell>
-                                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="lineItemTotalCell" rowHeight="52" id="YSM-ZM-R5Q" customClass="LineItemTotalTableViewCell" customModule="Uomi" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="lineItemTotalCell" rowHeight="52" id="YSM-ZM-R5Q" customClass="LineItemTotalTableViewCell" customModule="Uomi" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="105" width="335" height="52"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YSM-ZM-R5Q" id="X3p-J4-xef">
@@ -594,7 +595,7 @@
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
-                                                            <outlet property="totalLabel" destination="X3p-J4-xef" id="eEB-So-Mce"/>
+                                                            <outlet property="totalLabel" destination="O8w-0T-Pbr" id="9e3-d8-J7m"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>

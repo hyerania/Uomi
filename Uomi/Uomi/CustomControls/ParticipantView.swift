@@ -10,8 +10,10 @@ import UIKit
 import McPicker
 
 protocol ParticipantViewDelegate {
-    func participantSelected(participant: User)
+    func participantSelected(participantView: ParticipantView, participant: User)
 }
+
+fileprivate let loadUserImageName = "loadUser"
 
 @IBDesignable class ParticipantView: UIView {
     
@@ -27,10 +29,13 @@ protocol ParticipantViewDelegate {
         didSet {
             if let member = member {
                 participantButton.setTitle(initials(for: member), for: .normal)
+                participantButton.setImage(nil, for: .normal)
             }
             else {
                 participantButton.setTitle(nil, for: .normal)
+                participantButton.setImage(UIImage(named: loadUserImageName), for: .normal)
             }
+            
         }
     }
     var memberId: String? { didSet {
@@ -75,7 +80,7 @@ protocol ParticipantViewDelegate {
         // use bounds not frame or it'll be offset
         view.frame = bounds
         
-        participantButton.layer.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1.0, alpha: 1.0).cgColor
+//        participantButton.layer.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1.0, alpha: 1.0).cgColor
         participantButton.titleLabel?.adjustsFontSizeToFitWidth = true
         participantButton.addTarget(self, action: #selector(selectMember), for: .touchUpInside)
         participantButton.isEnabled = false
@@ -131,7 +136,7 @@ protocol ParticipantViewDelegate {
                 }) {
                     let user: User = participants[index]
                     self.memberId = user.getUid()
-                    self.delegate?.participantSelected(participant: user)
+                    self.delegate?.participantSelected(participantView: self, participant: user)
                 }
             }
         }

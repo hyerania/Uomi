@@ -9,13 +9,6 @@
 import Foundation
 import FirebaseDatabase
 
-//private var initials: String
-//private var name: String
-//private var uid: String
-//private var eventuid: String
-//private var totalBalance: String
-//private var balance: String
-
 class BalanceManager{
     var ref: DatabaseReference!
     
@@ -66,15 +59,32 @@ class BalanceManager{
                 }
                 let name = validUser.getName()
                 let initials = self.findInitials(fullname: name)
-
+                let totalBalanceValue = self.totalBalance(userId: userId, otherId: otherId, eventId: eventId) //This last parameter could be something in event, such as the list of transaction ids in order to add them up
+                let balanceValue = self.balance(userId: userId, otherId: otherId, eventId: eventId)
                 
-                
-                let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "0", balance: "0")
+                let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: "$" + "0")
                 completionHandler(balance)
             }
 
             
         }
+    }
+    
+    // MARK: - Helper Functions
+    func totalBalance(userId: String, otherId: String, eventId: String) -> String{
+        //Must get total of each transaction
+        var totalBalance = 0.00;
+        
+        
+        return " "
+    }
+    
+    func balance(userId: String, otherId: String, eventId: String) -> String{
+        var balanceOweTo = 0.00
+        
+        var balanceOweMe = 0.00
+        
+        return " "
     }
     
     func findInitials(fullname: String) -> String{
