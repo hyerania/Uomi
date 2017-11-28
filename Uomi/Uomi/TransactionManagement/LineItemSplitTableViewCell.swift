@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LineItemSplitTableViewCell: UITableViewCell {
+class LineItemSplitTableViewCell: UITableViewCell, ParticipantViewDelegate {
     @IBOutlet weak var participantView: ParticipantView!
     @IBOutlet weak var descriptionField: UITextField!
     @IBOutlet weak var subtotalLabel: UILabel!
@@ -22,10 +22,25 @@ class LineItemSplitTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        participantView.delegate = self
     }
     
     func updateUI() {
-        print("updating UI...")
+        if let total = contribution?.getContributionAmount() {
+            subtotalLabel.text = UomiFormatters.dollarFormatter.string(for: Float(total) / 100)
+        }
+        else {
+            subtotalLabel.text = UomiFormatters.dollarFormatter.string(for: 0)
+        }
+        participantView.memberId = contribution?.member
+        descriptionField.text = contribution?.description
     }
 
+    
+    // MARK: - Participant Delegatedelegate
+    
+    func participantSelected(participantView: ParticipantView, participant: User) {
+        contribution?.member = participant.getUid()
+    }
 }

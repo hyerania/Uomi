@@ -595,7 +595,7 @@
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
-                                                            <outlet property="totalLabel" destination="X3p-J4-xef" id="eEB-So-Mce"/>
+                                                            <outlet property="totalLabel" destination="O8w-0T-Pbr" id="9e3-d8-J7m"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>

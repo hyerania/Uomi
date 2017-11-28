@@ -46,8 +46,6 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     
     @IBOutlet weak var tableView: UITableView!
     
-    fileprivate var tapGesture: UITapGestureRecognizer!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -75,15 +73,13 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         // Do any additional setup after loading the view.
         tableView.setEditing(true, animated: false)
         
-        tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
-        tapGesture.isEnabled = false
     }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
-        tapGesture.isEnabled = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -143,17 +139,25 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if transaction.splitMode == .percent {
             let cell = tableView.dequeueReusableCell(withIdentifier: percentResueIdentifier, for: indexPath) as! PercentageSplitTableViewCell
-            cell.contribution = transaction.percentContributions[indexPath.row] as! PercentContribution
+            cell.contribution = transaction.percentContributions[indexPath.row]
             
             return cell
         }
         else {
             if indexPath.section == 0 {
                 let cell: LineItemSplitTableViewCell = tableView.dequeueReusableCell(withIdentifier: lineItemReuseIdentifier, for: indexPath) as! LineItemSplitTableViewCell
+                cell.contribution = transaction.lineItemContributions[indexPath.row]
+                cell.participantView.viewController = self
+                
                 return cell
             }
             else {
                 let cell: LineItemTotalTableViewCell = tableView.dequeueReusableCell(withIdentifier: lineItemTotalReuseIdentifier, for: indexPath) as! LineItemTotalTableViewCell
+                
+                let totalAmount: Int = transaction.lineItemContributions.reduce(0, { (sum, contrib) -> Int in
+                    return sum + contrib.getContributionAmount()
+                })
+                cell.totalLabel.text = UomiFormatters.dollarFormatter.string(for: Float(totalAmount) / 100)
                 return cell
             }
         }
@@ -198,8 +202,6 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Text Delegate
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        tapGesture.isEnabled = true
-        
         if textField === dateField {
         let datePicker = UIDatePicker()
         datePicker.setDate(transaction.date, animated: false)
@@ -291,7 +293,8 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
 }
 
 extension ExpenseTransactionViewController: ParticipantViewDelegate {
-    func participantSelected(participant: User) {
+    
+    func participantSelected(participantView: ParticipantView, participant: User) {
         transaction.payer = participant.getUid()
     }
     

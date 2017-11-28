@@ -10,7 +10,7 @@ import UIKit
 import McPicker
 
 protocol ParticipantViewDelegate {
-    func participantSelected(participant: User)
+    func participantSelected(participantView: ParticipantView, participant: User)
 }
 
 fileprivate let loadUserImageName = "loadUser"
@@ -136,7 +136,7 @@ fileprivate let loadUserImageName = "loadUser"
                 }) {
                     let user: User = participants[index]
                     self.memberId = user.getUid()
-                    self.delegate?.participantSelected(participant: user)
+                    self.delegate?.participantSelected(participantView: self, participant: user)
                 }
             }
         }

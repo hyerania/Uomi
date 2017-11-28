@@ -9,7 +9,7 @@
 import UIKit
 
 class LineItemTotalTableViewCell: UITableViewCell {
-    @IBOutlet weak var totalLabel: UIView!
+    @IBOutlet weak var totalLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
