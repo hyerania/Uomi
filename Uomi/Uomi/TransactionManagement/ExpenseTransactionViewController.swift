@@ -21,11 +21,15 @@ protocol ExpenseTransactionDelegate {
     func shouldSave(expenseController controller: ExpenseTransactionViewController,  transaction: Transaction)
 }
 
-class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate,
+UINavigationControllerDelegate {
     
     let dateFormatter = getDateFormatter()
     
     var delegate: ExpenseTransactionDelegate?
+    let imagePicker = UIImagePickerController()
+    var imageView: UIImageView!
+    var scrollImg: UIScrollView!
     
     var transaction: ExpenseTransaction! {
         didSet {
@@ -48,7 +52,8 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        imagePicker.delegate = self
         let imageView: UIImageView = UIImageView(image: UIImage(named: "calendar"))
         imageView.bounds.size = CGSize(width: 20, height: 20)
         
@@ -76,6 +81,11 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
+        
+        let pictureTap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        receiptView.addGestureRecognizer(pictureTap)
+        receiptView.isUserInteractionEnabled = true
+        
     }
     
     @objc func dismissKeyboard() {
@@ -97,7 +107,15 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
         totalField.text = "\(Float(transaction.total) / 100)"
         descriptionField.text = transaction.transDescription
         splitSeg.selectedSegmentIndex = transaction.splitMode == .percent ? 0 : 1
+        let event = EventManager.sharedInstance.getActiveEvent()
         
+        guard let eventId = event, let uid = transaction.uid else {
+            return
+        }
+        TransactionManager.sharedInstance.fetchImage(eventId: eventId, transactionId: uid) { (photo) in
+            self.receiptView.contentMode = .scaleAspectFill
+            self.receiptView.image = photo
+        }
         // Extract contribution data
         tableView.reloadData()
     }
@@ -106,21 +124,86 @@ class ExpenseTransactionViewController: UIViewController, UITableViewDelegate, U
     // MARK: Image Selection
     
     @IBAction func hitCamera(_ sender: Any) {
-        // TODO Display image picker with camera
-        if  UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = .camera
-            
-            imagePicker.mediaTypes = [UIImagePickerControllerMediaType]
+    
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            self.imagePicker.sourceType = .camera;
+            self.imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            // TODO Display alert.
         }
-        else {
-            // TODO Display warning saying image picker not available, change in settings
-        }
-        
         // TODO Get image from camera
     }
     
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        receiptView.contentMode = .scaleAspectFill
+        receiptView.image = chosenImage
+        transaction.imageData = chosenImage
+        dismiss(animated:true, completion: nil)
+        
+        
+    }
     
+    @IBAction func imageTapped(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        
+        scrollImg = UIScrollView(frame: self.view.bounds)
+        scrollImg.delegate = self
+        scrollImg.backgroundColor = UIColor(red: 90, green: 90, blue: 90, alpha: 0.90)
+        scrollImg.alwaysBounceVertical = false
+        scrollImg.alwaysBounceHorizontal = false
+        scrollImg.showsVerticalScrollIndicator = true
+        scrollImg.flashScrollIndicators()
+        
+        scrollImg.minimumZoomScale = 1.0
+        scrollImg.maximumZoomScale = 10.0
+        
+        let doubleTapGest = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTapScrollView(recognizer:)))
+        doubleTapGest.numberOfTapsRequired = 2
+        scrollImg.addGestureRecognizer(doubleTapGest)
+        
+        self.view.addSubview(scrollImg)
+        
+        imageView = UIImageView(frame: self.view.bounds)
+        imageView.image = receiptView.image
+        imageView!.layer.cornerRadius = 11.0
+        imageView!.clipsToBounds = false
+        
+        scrollImg.addSubview(imageView!)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        scrollImg.addGestureRecognizer(tap)
+    }
+    
+    @objc func handleDoubleTapScrollView(recognizer: UITapGestureRecognizer) {
+        if scrollImg.zoomScale == 1 {
+            scrollImg.zoom(to: zoomRectForScale(scale: scrollImg.maximumZoomScale, center: recognizer.location(in: recognizer.view)), animated: true)
+        } else {
+            scrollImg.setZoomScale(1, animated: true)
+        }
+    }
+    
+    func zoomRectForScale(scale: CGFloat, center: CGPoint) -> CGRect {
+        var zoomRect = CGRect.zero
+        zoomRect.size.height = imageView.frame.size.height / scale
+        zoomRect.size.width  = imageView.frame.size.width  / scale
+        let newCenter = imageView.convert(center, from: scrollImg)
+        zoomRect.origin.x = newCenter.x - (zoomRect.size.width / 2.0)
+        zoomRect.origin.y = newCenter.y - (zoomRect.size.height / 2.0)
+        return zoomRect
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.imageView
+    }
+    
+    @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
+
     // MARK: - Data Source
     
     func numberOfSections(in tableView: UITableView) -> Int {

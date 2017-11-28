@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class SettlementTransaction : Transaction {
 
@@ -15,6 +16,8 @@ class SettlementTransaction : Transaction {
     var total: Int = 0
     var date: Date = Date()
     var recipient: String = ""
+    var receiptImageUID: String?
+    var imageData: UIImage?
     
     init(uid: String? = nil) {
         self.uid = uid

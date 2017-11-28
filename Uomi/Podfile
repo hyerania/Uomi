@@ -9,6 +9,7 @@ target 'Uomi' do
 pod 'Firebase/Core'
 pod 'FirebaseAuth'
 pod 'FirebaseDatabase'
+pod 'FirebaseStorage'
 #pod 'TesseractOCRiOS', '~> 4.0'
 #pod 'BraintreeDropIn'
 pod 'McPicker'

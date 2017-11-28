@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 enum SplitMode: String {
@@ -34,7 +35,9 @@ class ExpenseTransaction : Transaction {
             }
         }
     }
-    
+    var receiptImageUID: String?
+    var imageData: UIImage?
+
     init(uid: String? = nil) {
         self.uid = uid
     }

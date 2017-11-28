@@ -8,6 +8,8 @@
 
 import Foundation
 import Firebase
+import FirebaseStorage
+import UIKit
 
 let eventsChild = "events"
 let transactionsChild = "transactions"
@@ -26,15 +28,17 @@ protocol Transaction {
     var payer: String { get set }
     var date: Date { get set }
     var uid: String? { get }
+    var imageData: UIImage? { get set}
 }
 
 class TransactionManager {
     private var ref: DatabaseReference!
-    
+    private var storageRef: StorageReference!
     static let sharedInstance = TransactionManager()    
     
     init() {
         ref = Database.database().reference()
+        storageRef = Storage.storage().reference()
     }
     
     
@@ -66,8 +70,9 @@ class TransactionManager {
             }
         }
     }
-    
-    
+//
+//    func loadImage(id transactionId: String)
+//
     // MARK: Storage
     
     func saveTransaction(event eventId: String, transaction: Transaction, success: @escaping ((Bool) -> ()) ) {
@@ -82,11 +87,18 @@ class TransactionManager {
             updates["\(transactionsPath)/\(uid)"] = payload
             
             // TODO Update owings for the transaction
-            
-            
-            ref.updateChildValues(updates) { (error, scope) in
-                success(error == nil)
+            self.uploadImage(image: transaction.imageData, eventId: eventId, transactionId: uid) { (status) in
+                
+                if (status) {
+                    self.ref.updateChildValues(updates) { (error, scope) in
+                        success(error == nil)
+                    }
+                } else {
+                    success(false)
+                }
             }
+            
+            
         }
         else {
             // Save new transaction
@@ -96,20 +108,65 @@ class TransactionManager {
             var updates: [String:Any] = [:]
             
             let key = ref.child(transactionsPath).childByAutoId().key
-            
-            // Add link to event reference
-            let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
-            updates[eventTransactionsPath] = true
-            
-            // Update main transaction payload
-            updates["\(transactionsPath)/\(key)"] = payload
-            
-            // Update owings for the transaction
-            
-            ref.updateChildValues(updates) { (error, scope) in
-                success(error == nil)
+            self.uploadImage(image: transaction.imageData, eventId: eventId, transactionId: key) { (status) in
+                
+                if (status) {
+                    // Add link to event reference
+                    let eventTransactionsPath = "/\(eventsChild)/\(eventId)/\(transactionsChild)/\(key)"
+                    updates[eventTransactionsPath] = true
+                    
+                    // Update main transaction payload
+                    updates["\(transactionsPath)/\(key)"] = payload
+                    
+                    // Update owings for the transaction
+                    
+                    self.ref.updateChildValues(updates) { (error, scope) in
+                        success(error == nil)
+                    }
+                } else {
+                    success(false)
+                }
             }
+            
         }
+    }
+    
+    func uploadImage(image: UIImage?, eventId: String, transactionId: String, completionHandler: @escaping ((Bool) -> ())) {
+        if let image = image {
+            var data = NSData()
+            data = UIImageJPEGRepresentation(image, 0.8)! as NSData
+            let filePath = "/receipts/\(eventId)/\(transactionId)"
+            let metaData = StorageMetadata()
+            metaData.contentType = "image/jpg"
+            self.storageRef.child(filePath).putData(data as Data, metadata: metaData) { (metadata, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    completionHandler(false)
+                    return
+                } else {
+                    _ = metadata?.downloadURL()?.absoluteString
+                    completionHandler(true)
+                    print("Image uploaded successfully.")
+                }
+            }
+        } else {
+            completionHandler(false)
+        }
+    }
+    
+    func fetchImage(eventId: String, transactionId: String, completionHandler: @escaping (UIImage?) -> ()) {
+        let filePath = "/receipts/\(eventId)/\(transactionId)"
+        self.storageRef.child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
+            
+            guard
+                let image = data,
+                let photo = UIImage(data: image)
+            else {
+                completionHandler(nil)
+                return
+            }
+            completionHandler(photo)
+        })
     }
     
     func deleteTransaction(transaction: Transaction, inEvent event: Event, failure: ((Error) -> ())? ) {
