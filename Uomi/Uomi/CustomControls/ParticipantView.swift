@@ -27,13 +27,20 @@ fileprivate let loadUserImageName = "loadUser"
     var view: UIView!
     private var member: User? {
         didSet {
-            if let member = member {
-                participantButton.setTitle(initials(for: member), for: .normal)
-                participantButton.setImage(nil, for: .normal)
-            }
-            else {
-                participantButton.setTitle(nil, for: .normal)
-                participantButton.setImage(UIImage(named: loadUserImageName), for: .normal)
+            
+            UIView.animate(withDuration: 0.25) {
+                if let member = self.member {
+                    self.participantButton.setTitle(self.initials(for: member), for: .normal)
+                    self.participantButton.setImage(nil, for: .normal)
+                    self.participantButton.layer.backgroundColor = self.participantButton.tintColor.cgColor
+                    self.participantButton.layer.borderWidth = 0
+                }
+                else {
+                    self.participantButton.setTitle(nil, for: .normal)
+                    self.participantButton.setImage(UIImage(named: loadUserImageName), for: .normal)
+                    self.participantButton.layer.backgroundColor = nil
+                    self.participantButton.layer.borderWidth = 1.0
+                }
             }
             
         }
@@ -82,6 +89,7 @@ fileprivate let loadUserImageName = "loadUser"
         
 //        participantButton.layer.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1.0, alpha: 1.0).cgColor
         participantButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        participantButton.layer.borderColor = participantButton.tintColor.cgColor
         participantButton.addTarget(self, action: #selector(selectMember), for: .touchUpInside)
         participantButton.isEnabled = false
         
