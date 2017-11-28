@@ -276,7 +276,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Events" id="7aO-ea-OSG">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="55c-uU-mtI"/>
+                        <barButtonItem key="leftBarButtonItem" title="Signout" id="55c-uU-mtI">
+                            <connections>
+                                <action selector="signout:" destination="5Hv-nO-ISi" id="iB3-hS-S4Y"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="R4S-04-HZc">
                             <connections>
                                 <segue destination="oFu-Dj-NWQ" kind="show" identifier="newEvent" id="w0E-47-ruj"/>
@@ -323,7 +327,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="menu" width="25" height="25"/>
         <image name="plus" width="16" height="16"/>
     </resources>
 </document>

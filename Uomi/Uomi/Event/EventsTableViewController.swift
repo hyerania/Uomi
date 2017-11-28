@@ -115,6 +115,11 @@ class EventsTableViewController: UITableViewController {
         }
     }
     
+    @IBAction func signout(_ sender: UIBarButtonItem) {
+        AccountManager.sharedInstance.logout() { (result) in
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
