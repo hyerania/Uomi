@@ -89,7 +89,7 @@ The following need to be dressed up:
 - [ ] BalancesTableViewController
   - [ ] Change Initials to be ParticipantView
   - [ ] Add the banner for inbalances (Negative is RED, Positive is Orange, Green is 0.00)
-  - [ ] Change the amount to use the Uomi Formatter (Kevin)
+  - [x] Change the amount to use the Uomi Formatter (Kevin)
 - [ ] SettlementTableViewController
   - [ ] Change Initials to be ParticipantView
   - [ ] Fix "You owe" to actual text with the banner colors referenced above.
