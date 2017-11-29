@@ -83,7 +83,18 @@ class EventManager {
                     participantsIds.append(key)
                 }
             }
+            
+            var lastTime: Date = Date()
+            if let time = eventData["time"] as? NSDictionary {
+                guard let date = time["date"] as? TimeInterval else {
+                    return
+                }
+                
+                let time = Date(timeIntervalSince1970: date)
+                lastTime = time            }
+
             let event = Event(owner: owner, name: name, description: description, contributors: participantsIds, uid: id, status: status)
+            event.setDate(date: lastTime)
             completionHanlder(event)
         })
     }
@@ -281,6 +292,11 @@ class EventManager {
         }
     }
     
+    func updateEventTime(eventId: String, date: Date, completionHandler: @escaping(Bool) -> ()) {
+        let timeEvent = ["date" : date.timeIntervalSince1970]
+        var childUpdates = ["/events/\(eventId)/time": timeEvent]
+        self.ref.updateChildValues(childUpdates)
+    }
     
     // MARK: - Active Event
     fileprivate var activeEvent: String?

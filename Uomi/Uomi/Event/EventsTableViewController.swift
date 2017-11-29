@@ -63,7 +63,7 @@ class EventsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventTableViewCell
         cell.nameLabel.text = self.eventsList[indexPath.row].getName()
-        cell.timeLabel.text = self.eventsList[indexPath.row].getStatus()
+        cell.timeLabel.text = UomiFormatters.dateFormatter.string(from: self.eventsList[indexPath.row].getDate())
         cell.descriptionLabel.text = self.eventsList[indexPath.row].getDescription()
         return cell
     }
@@ -93,7 +93,10 @@ class EventsTableViewController: UITableViewController {
             
             EventManager.sharedInstance.loadEvents(userId: userId) { events in
                 
-                self.eventsList = events.reversed()
+//                self.eventsList = events.reversed()
+                self.eventsList = events.sorted( by: {$0.getDate() > $1.getDate() })
+//                images.sorted({ $0.fileID > $1.fileID })
+//                self.eventsList = events.sorted( {$0.})
                 self.tableView.reloadData()
                 
                 if let refreshControl = refreshControl {

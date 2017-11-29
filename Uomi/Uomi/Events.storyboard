@@ -191,16 +191,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9a-ic-KF9">
-                                            <rect key="frame" x="16" y="11" width="297" height="35"/>
+                                            <rect key="frame" x="16" y="11" width="270" height="35"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4XS-2p-t2w">
-                                            <rect key="frame" x="304" y="11" width="55" height="21"/>
+                                            <rect key="frame" x="271" y="11" width="97" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="0MT-qt-DMY"/>
-                                                <constraint firstAttribute="width" constant="55" id="v2A-gz-33P"/>
+                                                <constraint firstAttribute="width" constant="97" id="v2A-gz-33P"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="13"/>
                                             <nil key="textColor"/>
@@ -216,14 +216,14 @@
                                     <constraints>
                                         <constraint firstItem="C9a-ic-KF9" firstAttribute="leading" secondItem="f2e-D5-PYc" secondAttribute="leading" id="Iny-L1-IuD"/>
                                         <constraint firstItem="f2e-D5-PYc" firstAttribute="top" secondItem="C9a-ic-KF9" secondAttribute="bottom" constant="1" id="Nc2-hR-0zf"/>
-                                        <constraint firstItem="4XS-2p-t2w" firstAttribute="trailing" secondItem="f2e-D5-PYc" secondAttribute="trailing" id="SD2-F8-nvk"/>
+                                        <constraint firstItem="4XS-2p-t2w" firstAttribute="trailing" secondItem="f2e-D5-PYc" secondAttribute="trailing" constant="9" id="SD2-F8-nvk"/>
                                         <constraint firstItem="C9a-ic-KF9" firstAttribute="top" secondItem="omP-Yp-gU2" secondAttribute="topMargin" id="Xhg-EH-XJy"/>
                                         <constraint firstItem="C9a-ic-KF9" firstAttribute="firstBaseline" secondItem="4XS-2p-t2w" secondAttribute="firstBaseline" constant="6" id="Xme-PZ-TGH"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="f2e-D5-PYc" secondAttribute="bottom" constant="9.5" id="Ylo-88-Kg4"/>
                                         <constraint firstItem="C9a-ic-KF9" firstAttribute="bottom" secondItem="4XS-2p-t2w" secondAttribute="bottom" constant="13.5" id="Yvg-Ly-xoe"/>
                                         <constraint firstItem="C9a-ic-KF9" firstAttribute="leading" secondItem="omP-Yp-gU2" secondAttribute="leadingMargin" id="tde-Rd-hYU"/>
-                                        <constraint firstItem="4XS-2p-t2w" firstAttribute="leading" secondItem="C9a-ic-KF9" secondAttribute="trailing" constant="-9" id="ypR-u0-9aR"/>
-                                        <constraint firstItem="4XS-2p-t2w" firstAttribute="trailing" secondItem="omP-Yp-gU2" secondAttribute="trailingMargin" id="z8D-un-g3J"/>
+                                        <constraint firstItem="4XS-2p-t2w" firstAttribute="leading" secondItem="C9a-ic-KF9" secondAttribute="trailing" constant="-15" id="ypR-u0-9aR"/>
+                                        <constraint firstItem="4XS-2p-t2w" firstAttribute="trailing" secondItem="omP-Yp-gU2" secondAttribute="trailingMargin" constant="9" id="z8D-un-g3J"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

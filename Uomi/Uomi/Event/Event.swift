@@ -16,6 +16,7 @@ class Event {
     private var contributors: [String]
     private var uid: String
     private var status: String
+    private var date: Date
     
     init(owner: String, name: String, description: String, contributors: [String], uid: String, status: String) {
         self.owner = owner
@@ -24,6 +25,7 @@ class Event {
         self.contributors = contributors
         self.uid = uid
         self.status = status
+        self.date = Date()
     }
     
     func getOwner() -> String {
@@ -48,5 +50,13 @@ class Event {
     
     func getStatus() -> String {
         return self.status
+    }
+    
+    func setDate(date: Date) {
+        self.date = date
+    }
+    
+    func getDate() -> Date {
+        return self.date
     }
 }

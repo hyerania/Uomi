@@ -46,9 +46,8 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
                 self.performSegue(withIdentifier: unwindSegue, sender: self)
                 return
             }
-            
-            self.transactions.removeAll()
-            self.transactions.append(contentsOf: transactions.reversed())
+        
+            self.transactions = transactions.sorted(by: {$0.date > $1.date})
             self.tableView.reloadData()
         })
     }
