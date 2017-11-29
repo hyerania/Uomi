@@ -78,7 +78,7 @@ The following **additional** features are implemented:
 
 
 The following need to be dressed up:
-- [ ] Active on Events need to be replaced with date of last transaction or removed.
+- [x] Active on Events need to be replaced with date of last transaction or removed.
 - [ ] TransactionsTableViewController
   - [ ] Balances (Inbalances) on top of balances button.
     -[ ] Color the numbers as described in BalancesTableViewController
@@ -89,7 +89,7 @@ The following need to be dressed up:
 - [ ] BalancesTableViewController
   - [ ] Change Initials to be ParticipantView
   - [ ] Add the banner for inbalances (Negative is RED, Positive is Orange, Green is 0.00)
-  - [ ] Change the amount to use the Uomi Formatter (Kevin)
+  - [x] Change the amount to use the Uomi Formatter (Kevin)
 - [ ] SettlementTableViewController
   - [ ] Change Initials to be ParticipantView
   - [ ] Fix "You owe" to actual text with the banner colors referenced above.
