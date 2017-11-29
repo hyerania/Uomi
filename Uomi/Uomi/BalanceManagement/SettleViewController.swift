@@ -43,6 +43,11 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.reloadTableViewData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -58,18 +63,60 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = Bundle.main.loadNibNamed("SettleTableViewCell", owner: self, options: nil)?.first as! SettleTableViewCell
         
-        tableCell.mainTransactionName.text = self.settleList[indexPath.row].getTransactionName()
-        tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: self.settleList[indexPath.row].getTransactionDate())
-        tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.settleList[indexPath.row].getTransactionTotal())
+        let transaction = self.settleList[indexPath.row]
+        TransactionManager.sharedInstance.loadTransaction(id: (userCellData?.getEventuid())!, id: transaction.getTransactionId()){ (singleTrans, error) in
+            guard let singleTrans = singleTrans else {
+                print("Error getting single transaction for Settle View.")
+                return
+            }
+            
+            tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: singleTrans.date)
+            tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for:(singleTrans.total/100))
+            if let expenseTrans = singleTrans as? ExpenseTransaction{
+                tableCell.mainTransactionName.text = expenseTrans.transDescription
+            }else{
+                tableCell.mainTransactionName.text = "PAYMENT LOGGED"
+            }
+
+        }
+        //tableCell.mainTransactionName.text = self.settleList[indexPath.row].getTransactionName()
+        //tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: self.settleList[indexPath.row].getTransactionDate())
+//        tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.settleList[indexPath.row].getTransactionTotal())
         tableCell.mainTypeTrans.text = "FIX :)"
         
         return tableCell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
     
     
     
     
     // MARK: - Helper functions
+    private func reloadTableViewData(){
+        AccountManager.sharedInstance.getCurrentUser(){ user in
+            guard let user = user else{
+                print("There is something wrong. User is supposed to be logged in.")
+                return
+            }
+            let userId = user.getUid()
+            
+            guard let userCellData = self.userCellData else {
+                return
+            }
+            
+            BalanceManager.sharedInstance.loadSettleList(userId: userId, eventId: userCellData.getEventuid(), otherUserId: userCellData.getUid()){settles in
+                self.settleList = settles
+                self.settleTableView.reloadData()
+            }
+        }
+    }
     private func createAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField(configurationHandler: textFieldHandler)

@@ -66,8 +66,8 @@ class TransactionManager {
         }
     }
     
-    func loadTransaction(id transactionId: String, completion: @escaping ((Transaction?, Error?) -> ())) {
-        self.ref.child(transactionId).observeSingleEvent(of: .value) { (snapshot) in
+    func loadTransaction(id eventId: String, id transactionId: String, completion: @escaping ((Transaction?, Error?) -> ())) {
+        self.ref.child("/transactions").child(eventId).child(transactionId).observeSingleEvent(of: .value) { (snapshot) in
             if let transData = snapshot.value as? [String:Any] {
                 let transaction = self.parseTransaction(id: transactionId, data: transData)
                 completion(transaction, nil)
