@@ -97,7 +97,7 @@ The following need to be dressed up:
   - [ ] Change "Pay Back" button to "Log Payment".
   - [ ] Only show "Log Payment" button whenever you are owed money.
   - [ ] Update Transactions Table View below with actual transactions.
-- [ ] Pull to referesh on each of the tableview controllers or wherever necessary.
+- [x] Pull to referesh on each of the tableview controllers or wherever necessary.
 
 ## Video Walkthrough
 

@@ -24,12 +24,37 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        refreshControl = UIRefreshControl()
+        refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl?.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshControl!) // not required when using UITableViewController
 //        self.title = event.getName()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    @objc public func refresh(refreshControl: UIRefreshControl) {
+        self.reloadTableViewData(refreshControl: refreshControl)
+        // Code to refresh table view
+    }
+    
+    private func reloadTableViewData(refreshControl: UIRefreshControl?) {
+        EventManager.sharedInstance.loadEvent(id: eventId) { (event) in
+            self.title = event?.getName()
+        }
+        TransactionManager.sharedInstance.loadTransactions(eventId: eventId, completion: { (transactions) in
+            guard let transactions = transactions else {
+                self.performSegue(withIdentifier: unwindSegue, sender: self)
+                return
+            }
+            
+            self.transactions = transactions.sorted(by: {$0.date > $1.date})
+            self.tableView.reloadData()
+            refreshControl?.endRefreshing()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
