@@ -78,7 +78,7 @@ The following **additional** features are implemented:
 
 
 The following need to be dressed up:
-- [ ] Active on Events need to be replaced with date of last transaction or removed.
+- [x] Active on Events need to be replaced with date of last transaction or removed.
 - [ ] TransactionsTableViewController
   - [ ] Balances (Inbalances) on top of balances button.
     -[ ] Color the numbers as described in BalancesTableViewController
