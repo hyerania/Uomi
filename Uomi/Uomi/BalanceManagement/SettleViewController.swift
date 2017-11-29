@@ -71,18 +71,23 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             
             tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: singleTrans.date)
-            tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for:(singleTrans.total/100))
+            tableCell.mainTotalBalance.text = UomiFormatters.dollarFormatter.string(for:(singleTrans.total/100))
             if let expenseTrans = singleTrans as? ExpenseTransaction{
                 tableCell.mainTransactionName.text = expenseTrans.transDescription
             }else{
-                tableCell.mainTransactionName.text = "PAYMENT LOGGED"
+                tableCell.mainTransactionName.text = "Payment"
             }
 
         }
-        //tableCell.mainTransactionName.text = self.settleList[indexPath.row].getTransactionName()
-        //tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: self.settleList[indexPath.row].getTransactionDate())
-//        tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.settleList[indexPath.row].getTransactionTotal())
-        tableCell.mainTypeTrans.text = "FIX :)"
+        
+        if(self.settleList[indexPath.row].getBalanceOweTo() > 0.00){
+            tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweTo()/100))
+            tableCell.mainTypeTrans.text = "TO"
+        }
+        else{
+            tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweMe()/100))
+            tableCell.mainTypeTrans.text = "ME"
+        }
         
         return tableCell
     }

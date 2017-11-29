@@ -22,7 +22,7 @@ class Settle {
     func getTransactionId() -> String{
         return self.transactionId
     }
-    func getBalanaceOweTo() -> Double{
+    func getBalanceOweTo() -> Double{
         return self.balanceOweTo
     }
     func getBalanceOweMe() -> Double {
