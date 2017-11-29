@@ -85,7 +85,7 @@ The following need to be dressed up:
   - [ ] Settlement should have two ParticipantViews with an arrow. (reference keynote - Slide 23)
   - [ ] Update "You covered Kevin and Yerania" with actual description.
   - [ ] Selecting a "Payment"/Settlement transaction should not highight it.
-- [ ] Update + button on EventEdit to be more style friendly. (Eric)
+- [x] Update + button on EventEdit to be more style friendly. (Eric)
 - [ ] BalancesTableViewController
   - [ ] Change Initials to be ParticipantView
   - [ ] Add the banner for inbalances (Negative is RED, Positive is Orange, Green is 0.00)
