@@ -9,18 +9,24 @@
 import UIKit
 
 class SettleTableViewCell: UITableViewCell {
+    @IBOutlet weak var mainTransactionName: UILabel!
+    @IBOutlet weak var mainTransactionDate: UILabel!
+    @IBOutlet weak var mainUserInitials: ParticipantView!
+    @IBOutlet weak var mainTotalBalance: UILabel!
+    @IBOutlet weak var mainBalance: UILabel!
+    @IBOutlet weak var mainTypeTrans: UILabel!
+    
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
 
-    
-    
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        // Initialization code
-//    }
-//
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
     
 }

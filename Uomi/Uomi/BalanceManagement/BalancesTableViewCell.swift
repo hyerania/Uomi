@@ -12,6 +12,7 @@ class BalancesTableViewCell: UITableViewCell {
     @IBOutlet weak var mainInitials: UILabel!
     @IBOutlet weak var mainName: UILabel!
     @IBOutlet weak var mainBalance: UILabel!
+    @IBOutlet weak var userInitials: ParticipantView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

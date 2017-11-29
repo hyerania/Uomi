@@ -8,35 +8,34 @@
 
 import UIKit
 
-class SettleViewController: UIViewController {
+class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     @IBOutlet weak var InitialsText: UILabel!
     @IBOutlet weak var NameText: UILabel!
     @IBOutlet weak var PaymentText: UILabel!
-//    var userCellData : cellData?
+    @IBOutlet weak var settleTableView: UITableView!
+    //    var userCellData : cellData?
     var userCellData : Balance?
+    private var settleList = [Settle]()
+    private var transactionList = [Transaction]() //Transaction lists for this one event
     
     @IBAction func btnPaySettle(_ sender: Any) {
         self.createAlert(title: "Pay back time!.", message: "Please click an option.")
         return
     }
     
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.settleTableView.dataSource = self
+        self.settleTableView.delegate = self
         
         guard let userCellData = userCellData else {
             return
         }
-//        self.NameText.text = userCellData.nameText
-//        self.InitialsText.text = userCellData.initialsText
-//        self.PaymentText.text = "You owe \(userCellData.balanceText!)"
         
         self.NameText.text = userCellData.getName()
         self.InitialsText.text = userCellData.getInitials()
-        
-        
-        
-        self.PaymentText.text = "You owe \(userCellData.getBalance())"
+        self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: userCellData.getBalance())!
         self.title = "Settle"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -50,17 +49,25 @@ class SettleViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
     // MARK: - Table view data source
-//
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        return 0
-//    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.settleList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tableCell = Bundle.main.loadNibNamed("SettleTableViewCell", owner: self, options: nil)?.first as! SettleTableViewCell
+        
+        tableCell.mainTransactionName.text = self.settleList[indexPath.row].getTransactionName()
+        tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: self.settleList[indexPath.row].getTransactionDate())
+        tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.settleList[indexPath.row].getTransactionTotal())
+        tableCell.mainTypeTrans.text = "FIX :)"
+        
+        return tableCell
+    }
+    
+    
+    
     
     // MARK: - Helper functions
     private func createAlert(title: String, message: String) {
@@ -123,7 +130,5 @@ class SettleViewController: UIViewController {
             }
         }
     }
-    
-    
 
 }

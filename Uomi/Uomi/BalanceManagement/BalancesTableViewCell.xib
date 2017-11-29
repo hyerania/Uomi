@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,13 +21,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o2Q-2d-FcX">
-                        <rect key="frame" x="70" y="11" width="169" height="21"/>
+                        <rect key="frame" x="59" y="14" width="169" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Initial" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1b-Fv-lj3">
-                        <rect key="frame" x="16" y="11" width="46" height="21"/>
+                        <rect key="frame" x="150" y="14" width="46" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="46" id="TV7-Ha-9Mc"/>
                         </constraints>
@@ -35,19 +36,30 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Money" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpO-KK-iH4">
-                        <rect key="frame" x="237" y="11" width="73" height="21"/>
+                        <rect key="frame" x="236" y="14" width="73" height="21"/>
                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mdz-7w-7l5" customClass="ParticipantView" customModule="Uomi" customModuleProvider="target">
+                        <rect key="frame" x="16" y="7" width="35" height="35"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="mdz-7w-7l5" secondAttribute="height" multiplier="1:1" id="XcK-rl-Vq4"/>
+                            <constraint firstAttribute="width" constant="35" id="aRH-L9-LsT"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="o2Q-2d-FcX" firstAttribute="leading" secondItem="mdz-7w-7l5" secondAttribute="trailing" constant="8" symbolic="YES" id="15o-Tv-gRz"/>
+                    <constraint firstItem="mdz-7w-7l5" firstAttribute="width" secondItem="mdz-7w-7l5" secondAttribute="height" multiplier="1:1" id="C2R-xe-O1W"/>
                     <constraint firstItem="o2Q-2d-FcX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="L0V-ep-h0a"/>
                     <constraint firstAttribute="trailing" secondItem="kpO-KK-iH4" secondAttribute="trailing" constant="10" id="O4l-gn-huY"/>
                     <constraint firstItem="o2Q-2d-FcX" firstAttribute="leading" secondItem="y1b-Fv-lj3" secondAttribute="trailing" constant="8" symbolic="YES" id="RUS-aC-WYk"/>
                     <constraint firstItem="y1b-Fv-lj3" firstAttribute="baseline" secondItem="o2Q-2d-FcX" secondAttribute="baseline" id="Vwk-qp-9cB"/>
                     <constraint firstItem="kpO-KK-iH4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ZXJ-dp-vTw"/>
                     <constraint firstAttribute="bottom" secondItem="kpO-KK-iH4" secondAttribute="bottom" constant="10.5" id="eU8-ej-KVS"/>
+                    <constraint firstItem="mdz-7w-7l5" firstAttribute="centerY" secondItem="y1b-Fv-lj3" secondAttribute="centerY" id="hpu-xM-Fpe"/>
                     <constraint firstAttribute="bottom" secondItem="o2Q-2d-FcX" secondAttribute="bottom" constant="13.5" id="iZC-Kj-Kxp"/>
                     <constraint firstItem="y1b-Fv-lj3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="xXK-zh-Dy3"/>
                 </constraints>
@@ -57,6 +69,7 @@
                 <outlet property="mainBalance" destination="kpO-KK-iH4" id="V6n-ZQ-Yrf"/>
                 <outlet property="mainInitials" destination="y1b-Fv-lj3" id="V5C-AC-Q9Q"/>
                 <outlet property="mainName" destination="o2Q-2d-FcX" id="csb-B5-5ZE"/>
+                <outlet property="userInitials" destination="mdz-7w-7l5" id="e2P-ca-IgM"/>
             </connections>
             <point key="canvasLocation" x="34" y="82"/>
         </tableViewCell>

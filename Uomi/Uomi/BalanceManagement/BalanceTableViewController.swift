@@ -48,7 +48,7 @@ class BalanceTableViewController: UITableViewController {
         
         cell.mainName.text = self.balanceList[indexPath.row].getName()
         cell.mainInitials.text = self.balanceList[indexPath.row].getInitials()
-        cell.mainBalance.text = "\(self.balanceList[indexPath.row].getBalance())"
+        cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.balanceList[indexPath.row].getBalance())
         
         return cell
     }

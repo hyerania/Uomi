@@ -73,6 +73,83 @@ class BalanceManager{
         }
     }
     
+    // MARK: - Settle
+    func loadSettleList(userId: String, eventId: String, otherUserId: String, completionHandler: @escaping([Settle]) -> ()){
+        var userSettleList = [Settle]()
+        
+        self.ref.child("/owings").child(eventId).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let owingTransactiosn = snapshot.value as? NSDictionary else {
+                print("Error with getting object from owings.")
+                return
+            }
+
+            for transactionObj in owingTransactiosn {
+                guard
+                    let transactionId = transactionObj.key as? String,
+                    let transaction = transactionObj.value as? NSDictionary,
+                    let payer = transaction["payer"] as? String,
+                    let owers = transaction["owers"] as? NSDictionary
+                    else {
+                        print("Invalid data for this transaction. Moving on to the next one.")
+                        continue
+                }
+                
+                var balanceOweMe: Double = 0.00
+                var balanceOweTo: Double = 0.00
+                
+                if (payer == userId) {
+                    
+                    for ower in owers {
+                        guard let owerId = ower.key as? String, let amount = ower.value as? Double else {
+                            print("Invalid data for this transaction. Moving on to the next one.")
+                            continue
+                        }
+                        if (owerId == otherUserId) {
+                            balanceOweMe = amount
+                        }
+                    }
+                    
+                }
+                if (payer == otherUserId){
+                    for ower in owers {
+                        guard let owerId = ower.key as? String, let amount = ower.value as? Double else {
+                            print("Invalid data for this transaction. Moving on to the next one.")
+                            continue
+                        }
+                        if (owerId == userId) {
+                            balanceOweTo = amount
+                        }
+                    }
+                    
+                }
+                
+                TransactionManager.sharedInstance.loadTransaction(id: transactionId){singleTrans, error in
+                    guard let singleTrans = singleTrans else{
+                        print("Error getting single transaction for Settle View.")
+                        return
+                    }
+                    var transDate : Date
+                    var transName : String
+                    var transTotalBalance : Double = 0.00
+                    
+                    transDate = singleTrans.date
+                    transTotalBalance = Double(singleTrans.total/100)
+                    
+                    if let expenseTrans = singleTrans as? ExpenseTransaction{
+                        transName = expenseTrans.transDescription!
+                    } else{
+                        transName = "PAYMENT LOGGED"
+                    }
+                    let settle = Settle(transactionId: transactionId, transactionName: transName, transactionDate: transDate, transactionTotal: transTotalBalance, balanceOweTo: balanceOweTo, balanceOweMe: balanceOweMe)
+                    userSettleList.append(settle)
+                }
+            
+            }
+            completionHandler(userSettleList)
+        })
+        
+    }
+    
     // MARK: - Helper Functions
     func totalBalance(userId: String, otherId: String, eventId: String) -> String{
         //Must get total of each transaction
