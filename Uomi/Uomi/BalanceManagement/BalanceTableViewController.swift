@@ -48,16 +48,19 @@ class BalanceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Bundle.main.loadNibNamed("BalancesTableViewCell", owner: self, options: nil)?.first as! BalancesTableViewCell
         
-        cell.mainName.text = self.balanceList[indexPath.row].getName()
-        cell.payerId = self.balanceList[indexPath.row].getUid()
+        let balance = self.balanceList[indexPath.row]
         
-        cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.balanceList[indexPath.row].getBalance())
+        cell.mainName.text = balance.getName()
+        cell.payerId = balance.getUid()
         
-        if (self.balanceList[indexPath.row].getBalance() == 0) {
+        let dollarVersion = Float(balance.getBalance()) / 100
+        cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: dollarVersion)
+        
+        if (balance.getBalance() == 0) {
             cell.mainBalance.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha : 1)
             cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: 0)
         }
-        else if (self.balanceList[indexPath.row].getBalance() > 0){
+        else if (balance.getBalance() > 0){
             cell.mainBalance.textColor = .orange
         }
         else{

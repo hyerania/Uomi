@@ -104,7 +104,7 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
                 self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: -1*owes)
                 if (owes == 0) {
                     self.imbalanceView.oweLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
-                    self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: 0.00)
+                    self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: 0)
                 } else if (owes > 0) {
                     self.imbalanceView.oweLabel.textColor = .red
                 }

@@ -204,7 +204,7 @@ class BalanceManager{
     
     static let sharedInstance = BalanceManager()
     
-    func getOwingBalances(user userId: String, event eventId: String, completion: @escaping ((Int, Int) -> ())) {
+    func getOwingBalances(user userId: String, event eventId: String, completion: @escaping ((Float, Float) -> ())) {
             loadBalanceList(userId: userId, eventId: eventId) { (balances) in
                 var owed = 0
                 var isOwed = 0
@@ -217,7 +217,7 @@ class BalanceManager{
                     }
                 }
                 
-                completion(owed, isOwed)
+                completion(Float(owed) / 100, Float(isOwed) / 100)
         }
     }
 }
