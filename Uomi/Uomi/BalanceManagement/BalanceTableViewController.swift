@@ -47,9 +47,21 @@ class BalanceTableViewController: UITableViewController {
         let cell = Bundle.main.loadNibNamed("BalancesTableViewCell", owner: self, options: nil)?.first as! BalancesTableViewCell
         
         cell.mainName.text = self.balanceList[indexPath.row].getName()
-        cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.balanceList[indexPath.row].getBalance())
         cell.payerId = self.balanceList[indexPath.row].getUid()
+        
+        cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.balanceList[indexPath.row].getBalance())
+        
+        if (self.balanceList[indexPath.row].getBalance() > 0.01){
+            cell.mainBalance.textColor = .orange
+        }
+        else if (self.balanceList[indexPath.row].getBalance() < -0.01){
+            cell.mainBalance.textColor = .red
+        }
+        else{
+            cell.mainBalance.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha : 1)
+        }
         return cell
+        
     }
    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

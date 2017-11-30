@@ -79,16 +79,15 @@ The following **additional** features are implemented:
 
 The following need to be dressed up:
 - [x] Active on Events need to be replaced with date of last transaction or removed.
-- [ ] TransactionsTableViewController
+- [x] TransactionsTableViewController
   - [x] Balances (Inbalances) on top of balances button.
     -[x] Color the numbers as described in BalancesTableViewController
-  - [ ] Settlement should have two ParticipantViews with an arrow. (reference keynote - Slide 23)
   - [x] Update "You covered Kevin and Yerania" with actual description. (REMOVED Not necessary)
   - [x] Selecting a "Payment"/Settlement transaction should not highight it.
 - [x] Update + button on EventEdit to be more style friendly. (Eric)
-- [ ] BalancesTableViewController
+- [x] BalancesTableViewController
   - [x] Change Initials to be ParticipantView
-  - [ ] Add the banner for inbalances (Negative is RED, Positive is Orange, Green is 0.00)
+  - [x] Add the banner for inbalances (Negative is RED, Positive is Orange, Green is 0.00)
   - [x] Change the amount to use the Uomi Formatter (Kevin)
 - [x] SettlementTableViewController
   - [x] Change Initials to be ParticipantView (Custom implementation since size restriction)
