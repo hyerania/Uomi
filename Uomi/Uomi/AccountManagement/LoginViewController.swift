@@ -72,15 +72,14 @@ class LoginViewController: UIViewController {
         let password = self.passwordLabel.text!
         
         AccountManager.sharedInstance.login(email: email, password: password) { user in
-            guard user != nil else {
+            guard let user = user else {
                 let alert = UIAlertController(title: "Unable to login", message: "The login credentials provided are invalid. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 return
             }
             
-            self.performSegue(withIdentifier: "doLogin", sender: user?.getUid())
-
+            self.performSegue(withIdentifier: "doLogin", sender: user.getUid())
         }
 
     }

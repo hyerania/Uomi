@@ -72,16 +72,21 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
         self.present(activitiyViewController, animated: true, completion: nil)
         var participantsIds = [String]()
         AccountManager.sharedInstance.getCurrentUser() { currentUser in
-            self.participants.append(currentUser!.getEmail())
+            guard let currentUser = currentUser else {
+                return
+            }
+            
+            self.participants.append(currentUser.getEmail())
             for email in self.participants {
                 AccountManager.sharedInstance.load(email: email) { user in
-                    if (user != nil) {
-                        participantsIds.append(user!.getUid())
-                        if (participantsIds.count == self.participants.count) {
-                            self.createEvent(participantsId: participantsIds, owner: currentUser!.getUid())
-                        }
+                    guard let user = user else {
+                        return
                     }
                     
+                    participantsIds.append(user.getUid())
+                    if (participantsIds.count == self.participants.count) {
+                        self.createEvent(participantsId: participantsIds, owner: currentUser.getUid())
+                    }
                 }
             }
         }
