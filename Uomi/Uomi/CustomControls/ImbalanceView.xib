@@ -24,16 +24,16 @@
                     <rect key="frame" x="0.0" y="12" width="375" height="76"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Pib-5B-wqx">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="33.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="30.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Owe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvz-on-oBE">
-                                    <rect key="frame" x="0.0" y="0.0" width="187.5" height="33.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="187.5" height="30.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are owed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyh-nh-5eX">
-                                    <rect key="frame" x="187.5" y="0.0" width="187.5" height="33.5"/>
+                                    <rect key="frame" x="187.5" y="0.0" width="187.5" height="30.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -41,17 +41,17 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="0zv-jP-tYH">
-                            <rect key="frame" x="0.0" y="33.5" width="375" height="42.5"/>
+                            <rect key="frame" x="0.0" y="30.5" width="375" height="45.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EVx-RS-knh">
-                                    <rect key="frame" x="0.0" y="0.0" width="187.5" height="42.5"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="187.5" height="45.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djK-cR-Gvy">
-                                    <rect key="frame" x="187.5" y="0.0" width="187.5" height="42.5"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <rect key="frame" x="187.5" y="0.0" width="187.5" height="45.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
