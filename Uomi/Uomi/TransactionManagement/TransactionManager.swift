@@ -146,7 +146,11 @@ class TransactionManager {
         }
         else {
             saveNewTransaction(transactionsPath, eventId, payload, transaction, success)
+            EventManager.sharedInstance.updateEventTime(eventId: eventId, date: transaction.date) { (res) in
+                print("Time updated: \(res)")
+            }
         }
+        
     }
     
     func uploadImage(image: UIImage, eventId: String, transactionId: String, completionHandler: @escaping ((Bool) -> ())) {
@@ -242,7 +246,7 @@ class TransactionManager {
         let totalValue: Int = data[TransactionKeys.total.rawValue] as! Int
         let payer: String = data[TransactionKeys.payer.rawValue] as! String
         let date = Date(timeIntervalSince1970: data[TransactionKeys.date.rawValue] as! TimeInterval)
-        
+
         if let splitMode = data[TransactionKeys.splitMode.rawValue] as? String {
             let eventTransaction = ExpenseTransaction(uid: id)
             eventTransaction.payer = payer
