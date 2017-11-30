@@ -51,14 +51,14 @@ class BalanceTableViewController: UITableViewController {
         
         cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.balanceList[indexPath.row].getBalance())
         
-        if (self.balanceList[indexPath.row].getBalance() > 0.01){
+        if (self.balanceList[indexPath.row].getBalance() > -0.01 && self.balanceList[indexPath.row].getBalance() < 0.01){
+            cell.mainBalance.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha : 1)
+        }
+        else if (self.balanceList[indexPath.row].getBalance() > 0.01){
             cell.mainBalance.textColor = .orange
         }
-        else if (self.balanceList[indexPath.row].getBalance() < -0.01){
-            cell.mainBalance.textColor = .red
-        }
         else{
-            cell.mainBalance.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha : 1)
+            cell.mainBalance.textColor = .red
         }
         return cell
         
