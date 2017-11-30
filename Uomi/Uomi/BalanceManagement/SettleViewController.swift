@@ -26,9 +26,9 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.createLogAlert(title:"Log Payment", message: "Fill out amount of payment that will be logged.")
             return
         }
-        else {
-            self.createPayAlert(title:"Payment", message: "Please choose an option for payment.")
-        }
+//        else {
+//            self.createPayAlert(title:"Payment", message: "Please choose an option for payment.")
+//        }
         
     }
     
@@ -48,16 +48,9 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.btnPayment.layer.cornerRadius = 10.00
         self.Initials.layer.cornerRadius = 10.00
         self.Initials.setTitle(userCellData.getInitials(), for:.normal)
-        
-        self.setLabelInformation()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    func setLabelInformation() {
+
+    func updateLabelInformation() {
         guard let userCellData = self.userCellData else {
             return
         }
@@ -76,10 +69,10 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.btnPayment.isHidden = true
         }
         else{
-            self.PaymentText.text = "No payments"
+            self.PaymentText.text = "Squared Up!"
             self.PaymentText.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha : 1)
-            self.btnPayment.setTitle("Log Payment", for: .normal)
-            self.btnPayment.isHidden = false
+//            self.btnPayment.setTitle("Log Payment", for: .normal)
+            self.btnPayment.isHidden = true
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -140,6 +133,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - Helper functions
     private func reloadTableViewData(){
+        
         if(userCellData!.getBalance() == 0){
             self.btnPayment.isHidden = true
         }
@@ -154,7 +148,13 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 return
             }
             
-            BalanceManager.sharedInstance.loadSettleList(userId: userId, eventId: userCellData.getEventuid(), otherUserId: userCellData.getUid()){settles in
+            BalanceManager.sharedInstance.loadBalance(userId: userId, otherId: userCellData.getUid(), eventId: userCellData.getEventuid(), completionHandler: { (balance) in
+                self.userCellData = balance
+                self.updateLabelInformation()
+            })
+            
+            
+            BalanceManager.sharedInstance.loadSettleList(userId: userId, eventId: userCellData.getEventuid(), otherUserId: userCellData.getUid()){ settles in
                 var joinedSettlesTransaction = [Settle]()
                 var count = 0
                 for settlement in settles {
@@ -177,9 +177,9 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             self.settleList = joinedSettlesTransaction.sorted(by: {$0.getDate() > $1.getDate()})
                             self.settleTableView.reloadData()
                         }
+                        
                     }
                 }
-                
             }
         }
     }
@@ -207,42 +207,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     newSettleTrans.recipient = currentUser.getUid()
                     newSettleTrans.total = Int(round(amount.floatValue * 100))
                     TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
-                        self.setLabelInformation()
-
-                        print(result)
-                    }
-                }
-            }
-            self.reloadTableViewData()
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func createPayAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addTextField(configurationHandler: textFieldHandler)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Log", style: .default, handler: { [weak alert] (_) in
-            
-            guard let textField = alert?.textFields?[0] else {
-                return
-            }
-            
-            var value = textField.text!
-            
-            let amount = UomiFormatters.dollarFormatter.number(from: value)
-            
-            if let amount = amount {
-                let newSettleTrans = SettlementTransaction()
-                AccountManager.sharedInstance.getCurrentUser() { (currentUser) in
-                    guard let currentUser = currentUser else {
-                        return
-                    }
-                    newSettleTrans.payer = currentUser.getUid()
-                    newSettleTrans.recipient = self.userCellData!.getUid()
-                    newSettleTrans.total = Int(round(amount.floatValue * 100))
-                    TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
-                        self.setLabelInformation()
+                        self.reloadTableViewData()
                         
                         print(result)
                     }
@@ -252,6 +217,41 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }))
         self.present(alert, animated: true, completion: nil)
     }
+    
+//    private func createPayAlert(title: String, message: String) {
+//        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+//        alert.addTextField(configurationHandler: textFieldHandler)
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        alert.addAction(UIAlertAction(title: "Log", style: .default, handler: { [weak alert] (_) in
+//
+//            guard let textField = alert?.textFields?[0] else {
+//                return
+//            }
+//
+//            var value = textField.text!
+//
+//            let amount = UomiFormatters.dollarFormatter.number(from: value)
+//
+//            if let amount = amount {
+//                let newSettleTrans = SettlementTransaction()
+//                AccountManager.sharedInstance.getCurrentUser() { (currentUser) in
+//                    guard let currentUser = currentUser else {
+//                        return
+//                    }
+//                    newSettleTrans.payer = currentUser.getUid()
+//                    newSettleTrans.recipient = self.userCellData!.getUid()
+//                    newSettleTrans.total = Int(round(amount.floatValue * 100))
+//                    TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
+//                        self.updateLabelInformation()
+//
+//                        print(result)
+//                    }
+//                }
+//            }
+//            self.reloadTableViewData()
+//        }))
+//        self.present(alert, animated: true, completion: nil)
+//    }
     
     func textFieldHandler(textField: UITextField!)
     {
