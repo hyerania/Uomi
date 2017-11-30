@@ -115,6 +115,8 @@ class BalanceManager{
                         }
                         if (owerId == otherUserId) {
                             balanceOweMe = amount
+                            let settle = Settle(transactionId: transactionId, balanceOweTo: balanceOweTo, balanceOweMe: balanceOweMe)
+                            userSettleList.append(settle)
                         }
                     }
                     
@@ -127,12 +129,13 @@ class BalanceManager{
                         }
                         if (owerId == userId) {
                             balanceOweTo = amount
+                            let settle = Settle(transactionId: transactionId, balanceOweTo: balanceOweTo, balanceOweMe: balanceOweMe)
+                            userSettleList.append(settle)
                         }
                     }
                     
                 }
-                let settle = Settle(transactionId: transactionId, balanceOweTo: balanceOweTo, balanceOweMe: balanceOweMe)
-                userSettleList.append(settle)
+
                 
             
             }
