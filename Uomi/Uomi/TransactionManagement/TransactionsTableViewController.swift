@@ -118,7 +118,6 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
             let eventCell = tableView.dequeueReusableCell(withIdentifier: transactionCellReuseIdentifier, for: indexPath) as! ExpenseTransactionTableViewCell
 
             eventCell.transaction = transaction
-            
             cell = eventCell
         }
         else if let transaction = transactions[indexPath.row] as? SettlementTransaction {
