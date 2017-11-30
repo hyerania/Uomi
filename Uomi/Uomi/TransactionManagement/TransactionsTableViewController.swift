@@ -99,7 +99,22 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
                     }
                 }
                 self.imbalanceView.owedLabel.text = UomiFormatters.dollarFormatter.string(for: areOwed)
+                
+                if (areOwed > -0.01 && areOwed < 0.01) {
+                    self.imbalanceView.owedLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
+                    self.imbalanceView.owedLabel.text = UomiFormatters.dollarFormatter.string(for: 0.00)
+                } else if (areOwed > 0.01) {
+                    self.imbalanceView.owedLabel.textColor = .orange
+                }
+                
                 self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: -1*owed)
+                if (-1 * owed > -0.01 &&  -1 * owed < 0.01) {
+                    self.imbalanceView.oweLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
+                    self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: 0.00)
+                } else if (-1 * owed > 0.01) {
+                    self.imbalanceView.oweLabel.textColor = .red
+                }
+                
             }
         }
         
