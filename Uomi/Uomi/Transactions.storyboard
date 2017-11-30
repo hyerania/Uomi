@@ -36,7 +36,7 @@
                                         <segue destination="RBd-Sc-f4e" kind="show" identifier="viewBalances" id="Xli-00-PSY"/>
                                     </connections>
                                 </button>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dXh-o0-vNc" customClass="ImbalanceView" customModule="Uomi" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dXh-o0-vNc" customClass="ImbalanceView" customModule="Uomi" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
@@ -364,7 +364,7 @@
                                                             <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="KwK-mi-vQU">
                                                                 <rect key="frame" x="0.0" y="20.5" width="161.5" height="159.5"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="492-T6-hA1">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="492-T6-hA1">
                                                                         <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="492-T6-hA1" secondAttribute="height" multiplier="1:1" id="eDK-Xt-iOf"/>
