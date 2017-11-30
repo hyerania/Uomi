@@ -71,6 +71,7 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
             }
         
             self.transactions = transactions.sorted(by: {$0.date > $1.date})
+            self.calculateImbalanceView()
             self.tableView.reloadData()
         })
     }
