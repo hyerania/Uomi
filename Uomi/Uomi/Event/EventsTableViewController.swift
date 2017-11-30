@@ -85,7 +85,9 @@ class EventsTableViewController: UITableViewController {
     // MARK: - Helper Functions
     private func reloadTableViewData(refreshControl: UIRefreshControl?) {
         EventManager.sharedInstance.loadEvents(userId: accountId) { events in
-            
+            guard events.count > 0 else {
+                return
+            }
             self.eventsList = events.sorted( by: {$0.getDate() > $1.getDate() })
             //                images.sorted({ $0.fileID > $1.fileID })
             //                self.eventsList = events.sorted( {$0.})

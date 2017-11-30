@@ -38,6 +38,8 @@ UINavigationControllerDelegate {
         }
     }
     
+    private let activitiyViewController = ActivityViewController(message: "Saving...")
+
     @IBOutlet weak var dateField: UITextField!
     @IBOutlet weak var descriptionField: UITextField!
     
