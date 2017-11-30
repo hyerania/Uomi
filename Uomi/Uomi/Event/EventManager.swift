@@ -206,7 +206,7 @@ class EventManager {
     /**
      @param accountId the account to
     */
-    func fetchAmountOwed(by owerId: String, to purchaserId: String, event eventId: String, completionHandler: @escaping((Int?) -> ())) {
+    func fetchAmountOwed(by owerId: String, to purchaserId: String, event eventId: String, completionHandler: @escaping((Float?) -> ())) {
         
         self.ref.child("/owings").child(eventId).observeSingleEvent(of: .value) { (snapshot) in
             
@@ -242,7 +242,7 @@ class EventManager {
                     }
                 }
             }
-            completionHandler(total)
+            completionHandler(Float(total) / 100)
         }
     }
     

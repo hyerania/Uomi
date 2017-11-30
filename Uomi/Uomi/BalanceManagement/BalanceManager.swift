@@ -61,14 +61,14 @@ class BalanceManager{
                 }
                 
                 EventManager.sharedInstance.fetchAmountOwed(by: otherId, to: currentUserId, event: eventId) { (amount) in
-                    var balanceAmount = 0
+                    var balanceAmount: Float = 0.0
                     if let amount = amount {
-                        balanceAmount = amount
+                        balanceAmount = Float(amount)
                     }
                     EventManager.sharedInstance.fetchAmountOwed(by: currentUserId, to: otherId, event: eventId) { (toAmount) in
-                        var subtractAmount = 0
+                        var subtractAmount:Float = 0
                         if let toAmount = toAmount {
-                            subtractAmount = toAmount
+                            subtractAmount = Float(toAmount)
                         }
                         
                         let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: balanceAmount - subtractAmount)
@@ -206,8 +206,8 @@ class BalanceManager{
     
     func getOwingBalances(user userId: String, event eventId: String, completion: @escaping ((Float, Float) -> ())) {
             loadBalanceList(userId: userId, eventId: eventId) { (balances) in
-                var owed = 0
-                var isOwed = 0
+                var owed: Float = 0.0
+                var isOwed: Float = 0.0
                 
                 for balance in balances {
                     if (balance.getBalance() > 0) {
@@ -217,7 +217,7 @@ class BalanceManager{
                     }
                 }
                 
-                completion(Float(owed) / 100, Float(isOwed) / 100)
+                completion(Float(owed), Float(isOwed))
         }
     }
 }
