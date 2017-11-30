@@ -63,7 +63,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mdu-QD-8Uc">
-                                <rect key="frame" x="0.0" y="252" width="375" height="415"/>
+                                <rect key="frame" x="0.0" y="249.5" width="375" height="417.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7i9-HB-WRD">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="21"/>
@@ -84,7 +84,7 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXD-Hw-06R">
-                                <rect key="frame" x="10" y="187" width="144" height="30"/>
+                                <rect key="frame" x="10" y="184.5" width="144" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="VFs-2s-IOK"/>
                                 </constraints>
@@ -93,7 +93,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tbp-wc-Oxy">
-                                <rect key="frame" x="191" y="187" width="168" height="30"/>
+                                <rect key="frame" x="191" y="184.5" width="168" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47934520244598389" blue="0.99908632040023804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Payment">
@@ -113,7 +113,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wwN-OU-2vY">
-                                <rect key="frame" x="37" y="89" width="90" height="90"/>
+                                <rect key="frame" x="37" y="89" width="90" height="87.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.47934520244598389" blue="0.99908632040023804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="CMY-GP-yy5"/>
@@ -133,7 +133,7 @@
                             <constraint firstItem="wwN-OU-2vY" firstAttribute="centerX" secondItem="uXD-Hw-06R" secondAttribute="centerX" id="IAb-VT-RPb"/>
                             <constraint firstItem="uXD-Hw-06R" firstAttribute="top" secondItem="wwN-OU-2vY" secondAttribute="bottom" constant="8" id="M3Q-Sb-eJi"/>
                             <constraint firstItem="mdu-QD-8Uc" firstAttribute="top" secondItem="uXD-Hw-06R" secondAttribute="bottom" constant="35" id="O7o-eQ-xGS"/>
-                            <constraint firstItem="Tbp-wc-Oxy" firstAttribute="top" secondItem="izO-NE-F4Q" secondAttribute="bottom" constant="33" id="TmF-HZ-Ts0"/>
+                            <constraint firstItem="Tbp-wc-Oxy" firstAttribute="top" secondItem="izO-NE-F4Q" secondAttribute="bottom" constant="30.5" id="TmF-HZ-Ts0"/>
                             <constraint firstItem="mdu-QD-8Uc" firstAttribute="leading" secondItem="fbe-an-VLy" secondAttribute="leading" id="Txc-u7-BDr"/>
                             <constraint firstItem="Tbp-wc-Oxy" firstAttribute="leading" secondItem="uXD-Hw-06R" secondAttribute="trailing" constant="37" id="ZNR-Nr-gjm"/>
                             <constraint firstAttribute="trailing" secondItem="mdu-QD-8Uc" secondAttribute="trailing" id="ZzW-SL-eUQ"/>

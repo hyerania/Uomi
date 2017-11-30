@@ -128,6 +128,9 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - Helper functions
     private func reloadTableViewData(){
+        if(userCellData!.getBalance() == 0.00){
+            self.btnPayment.isHidden = true
+        }
         AccountManager.sharedInstance.getCurrentUser(){ user in
             guard let user = user else{
                 print("There is something wrong. User is supposed to be logged in.")
