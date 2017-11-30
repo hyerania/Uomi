@@ -37,6 +37,10 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         self.settleTableView.dataSource = self
         self.settleTableView.delegate = self
+        var refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        self.settleTableView.addSubview(refreshControl)
         
         guard let userCellData = userCellData else {
             return
@@ -50,6 +54,16 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.Initials.setTitle(userCellData.getInitials(), for:.normal)
     }
 
+    @objc public func refresh(refreshControl: UIRefreshControl) {
+        self.reloadTableViewData(refreshControl: refreshControl)
+        // Code to refresh table view
+    }
+    
+    private func reloadTableViewData(refreshControl: UIRefreshControl?) {
+        self.reloadTableViewData()
+        refreshControl?.endRefreshing()
+    }
+    
     func updateLabelInformation() {
         guard let userCellData = self.userCellData else {
             return

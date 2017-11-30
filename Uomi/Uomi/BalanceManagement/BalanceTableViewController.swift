@@ -42,9 +42,7 @@ class BalanceTableViewController: UITableViewController {
     }
     
     private func reloadTableViewData(refreshControl: UIRefreshControl?) {
-        EventManager.sharedInstance.loadEvent(id: eventId) { (event) in
-            self.title = event?.getName()
-        }
+
         self.reloadTableViewData()
         refreshControl?.endRefreshing()
     }
