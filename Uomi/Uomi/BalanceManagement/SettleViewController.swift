@@ -44,6 +44,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.InitialsText.text = userCellData.getInitials()
         self.title = "Settle"
         
+        self.btnPayment.layer.cornerRadius = 10.00
         if(userCellData.getBalance() == 0.00){
             self.btnPayment.isHidden = true
         }
@@ -106,6 +107,8 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
             tableCell.mainTypeTrans.text = "Owe Me"
         }
         
+        tableCell.payerId = transaction.getPayerId()
+        
         return tableCell
     }
     
@@ -141,6 +144,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         guard let transaction = transaction else {
                             return
                         }
+                        settlement.setPayerId(payerId: transaction.payer)
                         settlement.setDate(date: transaction.date)
                         settlement.setTotal(total: transaction.total)
                         if let expenseTrans = transaction as? ExpenseTransaction{
@@ -251,3 +255,14 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
 }
+
+//extension SettleViewController: ParticipantViewDelegate {
+//
+//    func participantSelected(participantView: ParticipantView, participant: User) {
+//        transaction.payer = participant.getUid()
+//
+//        updateSaveState()
+//    }
+//
+//}
+

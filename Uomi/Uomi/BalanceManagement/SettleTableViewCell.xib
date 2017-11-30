@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,12 +39,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HPt-eW-3uz">
-                        <rect key="frame" x="185" y="40" width="69" height="15"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="O/R" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWR-nF-aQR">
                         <rect key="frame" x="252" y="11" width="68" height="21"/>
                         <constraints>
@@ -53,6 +48,20 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HPt-eW-3uz">
+                        <rect key="frame" x="185" y="40" width="69" height="15"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xPA-Fg-znj" customClass="ParticipantView" customModule="Uomi" customModuleProvider="target">
+                        <rect key="frame" x="202" y="4" width="35" height="35"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="HCM-zY-OT3"/>
+                            <constraint firstAttribute="width" secondItem="xPA-Fg-znj" secondAttribute="height" multiplier="1:1" id="vrl-Mh-N4f"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="IWR-nF-aQR" secondAttribute="trailing" id="2Mg-9B-M2h"/>
@@ -64,10 +73,13 @@
                     <constraint firstItem="rmI-RI-AgD" firstAttribute="top" secondItem="uaN-JA-Wfl" secondAttribute="bottom" constant="3" id="BM1-cU-Zbq"/>
                     <constraint firstItem="uaN-JA-Wfl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Cfr-HT-JTa"/>
                     <constraint firstItem="IWR-nF-aQR" firstAttribute="trailing" secondItem="jmE-KC-5ns" secondAttribute="trailing" id="Hkb-de-AOV"/>
+                    <constraint firstItem="xPA-Fg-znj" firstAttribute="centerY" secondItem="IWR-nF-aQR" secondAttribute="centerY" id="J3b-re-YXY"/>
                     <constraint firstItem="uaN-JA-Wfl" firstAttribute="leading" secondItem="rmI-RI-AgD" secondAttribute="leading" id="KxE-NA-XNL"/>
                     <constraint firstItem="HPt-eW-3uz" firstAttribute="top" secondItem="IWR-nF-aQR" secondAttribute="bottom" constant="8" symbolic="YES" id="aHo-Kj-4I3"/>
                     <constraint firstItem="IWR-nF-aQR" firstAttribute="leading" secondItem="jmE-KC-5ns" secondAttribute="leading" id="cCw-PV-7QM"/>
                     <constraint firstItem="uaN-JA-Wfl" firstAttribute="baseline" secondItem="IWR-nF-aQR" secondAttribute="firstBaseline" id="fDt-FJ-W32"/>
+                    <constraint firstItem="xPA-Fg-znj" firstAttribute="centerX" secondItem="HPt-eW-3uz" secondAttribute="centerX" id="hgY-aR-YUT"/>
+                    <constraint firstItem="xPA-Fg-znj" firstAttribute="width" secondItem="xPA-Fg-znj" secondAttribute="height" multiplier="1:1" id="p1i-Me-BdI"/>
                     <constraint firstItem="IWR-nF-aQR" firstAttribute="leading" secondItem="uaN-JA-Wfl" secondAttribute="trailing" constant="68" id="tga-MI-gQG"/>
                     <constraint firstItem="uaN-JA-Wfl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-5" id="u2S-st-Tyw"/>
                     <constraint firstAttribute="bottomMargin" secondItem="rmI-RI-AgD" secondAttribute="bottom" constant="2" id="uMr-hf-pT9"/>
@@ -80,6 +92,7 @@
                 <outlet property="mainTransactionDate" destination="rmI-RI-AgD" id="JBj-ab-fsk"/>
                 <outlet property="mainTransactionName" destination="uaN-JA-Wfl" id="x96-Ji-luC"/>
                 <outlet property="mainTypeTrans" destination="IWR-nF-aQR" id="biI-Ar-7hf"/>
+                <outlet property="mainUserInitials" destination="xPA-Fg-znj" id="p2V-kh-iQV"/>
             </connections>
             <point key="canvasLocation" x="34" y="64.5"/>
         </tableViewCell>

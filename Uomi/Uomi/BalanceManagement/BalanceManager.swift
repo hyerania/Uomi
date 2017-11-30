@@ -126,25 +126,6 @@ class BalanceManager{
                 let settle = Settle(transactionId: transactionId, balanceOweTo: balanceOweTo, balanceOweMe: balanceOweMe)
                 userSettleList.append(settle)
                 
-//                TransactionManager.sharedInstance.loadTransaction(id: eventId, id: transactionId){ (singleTrans, error) in
-//                    guard let singleTrans = singleTrans else {
-//                        print("Error getting single transaction for Settle View.")
-//                        return
-//                    }
-//                    var transDate : Date
-//                    var transName : String
-//                    var transTotalBalance : Double = 0.00
-//
-//                    transDate = singleTrans.date
-//                    transTotalBalance = Double(singleTrans.total/100)
-//
-//                    if let expenseTrans = singleTrans as? ExpenseTransaction{
-//                        transName = expenseTrans.transDescription!
-//                    } else{
-//                        transName = "PAYMENT LOGGED"
-//                    }
-//
-//                }
             
             }
             completionHandler(userSettleList)

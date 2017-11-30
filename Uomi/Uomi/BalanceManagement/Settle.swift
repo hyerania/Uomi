@@ -16,6 +16,7 @@ class Settle {
     private var total: Int
     private var isSettle: Bool
     private var description: String
+    private var payerId: String
     
     init(transactionId: String, balanceOweTo: Double, balanceOweMe: Double){
         self.transactionId = transactionId
@@ -25,6 +26,7 @@ class Settle {
         self.total = 0
         self.isSettle = true
         self.description = ""
+        self.payerId = ""
     }
     
     func getTransactionId() -> String{
@@ -59,6 +61,12 @@ class Settle {
     }
     func setDescription(description: String) {
         self.description = description
+    }
+    func setPayerId(payerId: String) {
+        self.payerId = payerId
+    }
+    func getPayerId() -> String {
+        return self.payerId
     }
 }
 
