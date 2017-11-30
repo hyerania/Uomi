@@ -80,11 +80,11 @@ The following **additional** features are implemented:
 The following need to be dressed up:
 - [x] Active on Events need to be replaced with date of last transaction or removed.
 - [ ] TransactionsTableViewController
-  - [ ] Balances (Inbalances) on top of balances button.
+  - [x] Balances (Inbalances) on top of balances button.
     -[ ] Color the numbers as described in BalancesTableViewController
   - [ ] Settlement should have two ParticipantViews with an arrow. (reference keynote - Slide 23)
   - [x] Update "You covered Kevin and Yerania" with actual description. (REMOVED Not necessary)
-  - [ ] Selecting a "Payment"/Settlement transaction should not highight it.
+  - [x] Selecting a "Payment"/Settlement transaction should not highight it.
 - [x] Update + button on EventEdit to be more style friendly. (Eric)
 - [ ] BalancesTableViewController
   - [ ] Change Initials to be ParticipantView
