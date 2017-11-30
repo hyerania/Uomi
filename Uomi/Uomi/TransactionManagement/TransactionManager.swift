@@ -307,8 +307,8 @@ class TransactionManager {
             }).map({ (contribution) -> [String:Int] in
                 return [contribution.member! : contribution.getContributionAmount()]
             }).reduce([:], { (current, pair) -> [String:Int] in
-                current.merging(pair, uniquingKeysWith: { (current, _) -> Int in
-                    current
+                current.merging(pair, uniquingKeysWith: { (current, added) -> Int in
+                    current + added
                 })
             })
         }

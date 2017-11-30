@@ -310,7 +310,11 @@ UINavigationControllerDelegate {
             let newContribution = LineItemContribution()
             let currentCount: Int = transaction.lineItemContributions.count
             transaction.lineItemContributions.append(newContribution)
-            tableView.insertRows(at: [IndexPath(row: currentCount, section: 0)], with: .automatic)
+            let indexPath: IndexPath = IndexPath(row: currentCount, section: 0)
+            tableView.insertRows(at: [indexPath], with: .automatic)
+            
+            let cell = tableView.cellForRow(at: indexPath) as! LineItemSplitTableViewCell
+            cell.participantView.selectMember()
             
             updateSaveState()
         }    

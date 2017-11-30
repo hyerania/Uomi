@@ -73,13 +73,13 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         else if (userCellData.getBalance() < 0){
             self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: (userCellData.getBalance() * -1))!
             self.PaymentText.textColor = .red
-            self.btnPayment.setTitle("Pay Back", for: .normal)
+            self.btnPayment.isHidden = true
         }
         else{
-            self.btnPayment.isHidden = true
             self.PaymentText.text = "No payments"
             self.PaymentText.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha : 1)
-            
+            self.btnPayment.setTitle("Log Payment", for: .normal)
+            self.btnPayment.isHidden = false
         }
     }
     override func viewWillAppear(_ animated: Bool) {
