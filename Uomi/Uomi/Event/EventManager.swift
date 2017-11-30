@@ -206,89 +206,43 @@ class EventManager {
     /**
      @param accountId the account to
     */
-    func fetchAmountOwed(by accountId: String, event eventId: String, completionHandler: @escaping((Int?) -> ())) {
+    func fetchAmountOwed(by owerId: String, to purchaserId: String, event eventId: String, completionHandler: @escaping((Int?) -> ())) {
         
-        AccountManager.sharedInstance.getCurrentUser() { (user) in
-            let currentUserId = user?.getUid()
+        self.ref.child("/owings").child(eventId).observeSingleEvent(of: .value) { (snapshot) in
             
-            self.ref.child("/owings").child(eventId).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let owingTransactions = snapshot.value as? NSDictionary else {
+                completionHandler(nil)
+                return
+            }
+            
+            var total = 0
+            
+            for transactionObj in owingTransactions {
                 
-                guard let owingTransactions = snapshot.value as? NSDictionary else {
-                    completionHandler(nil)
-                    return
+                guard
+                    let transaction = transactionObj.value as? NSDictionary,
+                    let payer = transaction["payer"] as? String,
+                    let owers = transaction["owers"] as? NSDictionary
+                    else {
+                        print("Invalid data for this transaction. Moving on to the next one.")
+                        continue
                 }
                 
-                var total = 0
-                
-                for transactionObj in owingTransactions {
+                if (payer == purchaserId) {
                     
-                    guard
-                        let transaction = transactionObj.value as? NSDictionary,
-                        let payer = transaction["payer"] as? String,
-                        let owers = transaction["owers"] as? NSDictionary
-                        else {
+                    for ower in owers {
+                        guard let owerId = ower.key as? String, let amount = ower.value as? Int else {
                             print("Invalid data for this transaction. Moving on to the next one.")
                             continue
+                        }
+                        if (owerId == owerId) {
+                            total += amount
+                        }
                     }
                     
-                    if (payer == currentUserId) {
-                        
-                        for ower in owers {
-                            guard let owerId = ower.key as? String, let amount = ower.value as? Int else {
-                                print("Invalid data for this transaction. Moving on to the next one.")
-                                continue
-                            }
-                            if (owerId == accountId) {
-                                total += amount
-                            }
-                        }
-                        
-                    }
                 }
-                completionHandler(total)
-                
-            })
-        }
-        
-    }
-    
-    func fetchAmountOwed(to accountId: String, event eventId: String, completionHandler: @escaping((Int?) -> ())) {
-        AccountManager.sharedInstance.getCurrentUser() { (user) in
-            let currentUserId = user?.getUid()
-            self.ref.child("/owings").child(eventId).observeSingleEvent(of: .value, with: { (snapshot) in
-                guard let owingTransactiosn = snapshot.value as? NSDictionary else {
-                    completionHandler(nil)
-                    return
-                }
-                
-                var total = 0
-                
-                for transactionObj in owingTransactiosn {
-                    guard
-                        let transaction = transactionObj.value as? NSDictionary,
-                        let payer = transaction["payer"] as? String,
-                        let owers = transaction["owers"] as? NSDictionary
-                        else {
-                            print("Invalid data for this transaction. Moving on to the next one.")
-                            continue
-                    }
-                    
-                    if (payer == accountId) {
-                        
-                        for ower in owers {
-                            guard let owerId = ower.key as? String, let amount = ower.value as? Int else {
-                                print("Invalid data for this transaction. Moving on to the next one.")
-                                continue
-                            }
-                            if (owerId == currentUserId) {
-                                total = total + amount
-                            }
-                        }
-                        
-                    }
-                }
-                completionHandler(total)
-            })
+            }
+            completionHandler(total)
         }
     }
     

@@ -53,24 +53,30 @@ class BalanceManager{
             }
             let name = validUser.getName()
             let initials = self.findInitials(fullname: name)
-            EventManager.sharedInstance.fetchAmountOwed(by: otherId, event: eventId) { (amount) in
-                var balanceAmount = 0
-                if let amount = amount {
-                    balanceAmount = amount
-                }
-                EventManager.sharedInstance.fetchAmountOwed(to: otherId, event: eventId) { (toAmount) in
-                    var subtractAmount = 0
-                    if let toAmount = toAmount {
-                        subtractAmount = toAmount
-                    }
-                    
-                    let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: balanceAmount - subtractAmount)
-                    completionHandler(balance)
+            
+            AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
+                guard let currentUserId = user?.getUid() else {
+                    completionHandler(nil)
+                    return
                 }
                 
-            }
-            
-            
+                EventManager.sharedInstance.fetchAmountOwed(by: otherId, to: currentUserId, event: eventId) { (amount) in
+                    var balanceAmount = 0
+                    if let amount = amount {
+                        balanceAmount = amount
+                    }
+                    EventManager.sharedInstance.fetchAmountOwed(by: currentUserId, to: otherId, event: eventId) { (toAmount) in
+                        var subtractAmount = 0
+                        if let toAmount = toAmount {
+                            subtractAmount = toAmount
+                        }
+                        
+                        let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: balanceAmount - subtractAmount)
+                        completionHandler(balance)
+                    }
+                    
+                }
+            })
         }
     }
     
