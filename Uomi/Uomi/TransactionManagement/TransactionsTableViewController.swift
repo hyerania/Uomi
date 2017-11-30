@@ -49,6 +49,7 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
         EventManager.sharedInstance.loadEvent(id: eventId) { (event) in
             self.title = event?.getName()
         }
+        self.calculateImbalanceView()
         TransactionManager.sharedInstance.loadTransactions(eventId: eventId, completion: { (transactions) in
             guard let transactions = transactions else {
                 self.performSegue(withIdentifier: unwindSegue, sender: self)

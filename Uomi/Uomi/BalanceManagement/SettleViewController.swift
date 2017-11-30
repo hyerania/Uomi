@@ -48,21 +48,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.Initials.layer.cornerRadius = 10.00
         self.Initials.setTitle(userCellData.getInitials(), for:.normal)
         
-        if(userCellData.getBalance() == 0.00){
-            self.btnPayment.isHidden = true
-        }
-        else if (userCellData.getBalance() > 0.00){
-            let delimiter = " "
-            var token = userCellData.getName().components(separatedBy: delimiter)
-            let firstName = String(token[0])
-            
-            self.PaymentText.text = firstName + " owes " + UomiFormatters.dollarFormatter.string(for: userCellData.getBalance())!
-            self.btnPayment.setTitle("Log Payment", for: .normal)
-        }
-        else{
-            self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: (userCellData.getBalance() * -1))!
-            self.btnPayment.setTitle("Pay Back", for: .normal)
-        }
+        self.setLabelInformation()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -70,7 +56,31 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    
+    func setLabelInformation() {
+        guard let userCellData = self.userCellData else {
+            return
+        }
+        if (userCellData.getBalance() > 0.01){
+            let delimiter = " "
+            var token = userCellData.getName().components(separatedBy: delimiter)
+            let firstName = String(token[0])
+            
+            self.PaymentText.text = firstName + " owes " + UomiFormatters.dollarFormatter.string(for: userCellData.getBalance())!
+            self.PaymentText.textColor = .orange
+            self.btnPayment.setTitle("Log Payment", for: .normal)
+        }
+        else if (userCellData.getBalance() < -0.01){
+            self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: (userCellData.getBalance() * -1))!
+            self.PaymentText.textColor = .red
+            self.btnPayment.setTitle("Pay Back", for: .normal)
+        }
+        else{
+            self.btnPayment.isHidden = true
+            self.PaymentText.text = "No payments"
+            self.PaymentText.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha : 1)
+            
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadTableViewData()
@@ -128,7 +138,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - Helper functions
     private func reloadTableViewData(){
-        if(userCellData!.getBalance() == 0.00){
+        if(userCellData!.getBalance() > -0.01 && userCellData!.getBalance() < 0.01){
             self.btnPayment.isHidden = true
         }
         AccountManager.sharedInstance.getCurrentUser(){ user in
@@ -196,7 +206,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     newSettleTrans.total = Int(round(amount.floatValue * 100))
                     TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
                         self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.doubleValue)
-                        self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: self.userCellData?.getBalance())!
+                        self.setLabelInformation()
 
                         print(result)
                     }
@@ -232,7 +242,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     newSettleTrans.total = Int(round(amount.floatValue * 100))
                     TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
                         self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.doubleValue)
-                        self.PaymentText.text = "Pay " + UomiFormatters.dollarFormatter.string(for: self.userCellData?.getBalance())!
+                        self.setLabelInformation()
                         
                         print(result)
                     }

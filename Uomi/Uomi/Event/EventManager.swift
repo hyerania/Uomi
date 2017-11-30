@@ -287,7 +287,7 @@ class EventManager {
                         
                     }
                 }
-                completionHandler(total/100.00)
+                completionHandler(total)
             })
         }
     }
