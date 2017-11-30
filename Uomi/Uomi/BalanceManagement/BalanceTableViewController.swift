@@ -29,6 +29,24 @@ class BalanceTableViewController: UITableViewController {
     // MARK: - View Controller Overrides
     override func viewDidLoad(){
         super.viewDidLoad()
+        refreshControl = UIRefreshControl()
+        refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl?.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshControl!) // not required when using UITableViewController
+        self.reloadTableViewData()
+    }
+    
+    @objc public func refresh(refreshControl: UIRefreshControl) {
+        self.reloadTableViewData(refreshControl: refreshControl)
+        // Code to refresh table view
+    }
+    
+    private func reloadTableViewData(refreshControl: UIRefreshControl?) {
+        EventManager.sharedInstance.loadEvent(id: eventId) { (event) in
+            self.title = event?.getName()
+        }
+        self.reloadTableViewData()
+        refreshControl?.endRefreshing()
     }
     
     override func viewWillAppear(_ animated: Bool) {
