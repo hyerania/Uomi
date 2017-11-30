@@ -18,6 +18,7 @@ let viewBalancesSegue = "viewBalances"
 class TransactionsTableViewController: UITableViewController, ExpenseTransactionDelegate {
 
     var eventId: String!
+    var accountId: String!
     var editingTransaction: Transaction!
     
     private var transactions: [Transaction] = []
@@ -29,15 +30,7 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
         refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl?.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl!) // not required when using UITableViewController
-        imbalanceView.oweLabel.text = UomiFormatters.wholeDollarFormatter.string(for: 0.00)
-        imbalanceView.owedLabel.text = UomiFormatters.wholeDollarFormatter.string(for: 0.00)
         self.calculateImbalanceView()
-//        self.title = event.getName()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     @objc public func refresh(refreshControl: UIRefreshControl) {
@@ -83,39 +76,12 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     }
 
     func calculateImbalanceView() {
-        
-        AccountManager.sharedInstance.getCurrentUser() { (user) in
-            guard let user = user else {
-                return
+        BalanceManager.sharedInstance.getOwingBalances(user: accountId, event: self.eventId) { (iOwe, theyOwe) in
+                self.imbalanceView.iOweAmount = iOwe
+                self.imbalanceView.theyOweAmount = theyOwe
             }
-            BalanceManager.sharedInstance.getOwingBalances(user: user.getUid(), event: self.eventId) { (owes, isOwed) in
-                self.imbalanceView.owedLabel.text = UomiFormatters.dollarFormatter.string(for: isOwed)
-                
-                if (isOwed == 0) {
-                    self.imbalanceView.owedLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
-                    self.imbalanceView.owedLabel.text = UomiFormatters.dollarFormatter.string(for: 0.00)
-                } else if (isOwed > 0) {
-                    self.imbalanceView.owedLabel.textColor = .orange
-                }
-                else {
-                    print("isOwed should never be negative!")
-                }
-                
-                self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: -1*owes)
-                if (owes == 0) {
-                    self.imbalanceView.oweLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
-                    self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: 0)
-                } else if (owes > 0) {
-                    self.imbalanceView.oweLabel.textColor = .red
-                }
-                else {
-                    print("owes should never be negative!")
-                }
-                
-            }
-        }
-        
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -123,16 +89,10 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     
     @IBAction func hitAdd(_ sender: Any) {
         let transaction = ExpenseTransaction()
-        AccountManager.sharedInstance.getCurrentUser(completionHandler: { (user) in
-            if let user = user {
-                transaction.payer = user.getUid()
-                self.editingTransaction = transaction
-                self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
-            }
-            else {
-                // They shouldn't be here! They aren't logged in!
-            }
-        })
+        
+        transaction.payer = accountId
+        self.editingTransaction = transaction
+        self.performSegue(withIdentifier: editTransactionSegue, sender: transaction)
     }
     
 
@@ -198,6 +158,7 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
         else if let nc = segue.destination as? UINavigationController {
             if segue.identifier == viewBalancesSegue, let rootVc = nc.topViewController as? BalanceTableViewController {
                 rootVc.eventId = self.eventId
+                rootVc.accountId = self.accountId
             }
             else if let vc = nc.viewControllers.first as? ExpenseTransactionViewController {
                 vc.transaction = editingTransaction as! ExpenseTransaction

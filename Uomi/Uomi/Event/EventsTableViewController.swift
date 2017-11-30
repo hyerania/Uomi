@@ -12,6 +12,7 @@ fileprivate let newEventSegue = "newEvent"
 
 class EventsTableViewController: UITableViewController {
 
+    var accountId: String!
     private var eventsList = [Event]()
     private var selectedRow = 0
 
@@ -83,25 +84,15 @@ class EventsTableViewController: UITableViewController {
 
     // MARK: - Helper Functions
     private func reloadTableViewData(refreshControl: UIRefreshControl?) {
-        AccountManager.sharedInstance.getCurrentUser() { user in
-            guard let user = user else {
-                print("There is something wrong. User is supposed to be logged in.")
-                return
-            }
+        EventManager.sharedInstance.loadEvents(userId: accountId) { events in
             
-            let userId = user.getUid()
+            self.eventsList = events.sorted( by: {$0.getDate() > $1.getDate() })
+            //                images.sorted({ $0.fileID > $1.fileID })
+            //                self.eventsList = events.sorted( {$0.})
+            self.tableView.reloadData()
             
-            EventManager.sharedInstance.loadEvents(userId: userId) { events in
-                
-//                self.eventsList = events.reversed()
-                self.eventsList = events.sorted( by: {$0.getDate() > $1.getDate() })
-//                images.sorted({ $0.fileID > $1.fileID })
-//                self.eventsList = events.sorted( {$0.})
-                self.tableView.reloadData()
-                
-                if let refreshControl = refreshControl {
-                    refreshControl.endRefreshing()
-                }
+            if let refreshControl = refreshControl {
+                refreshControl.endRefreshing()
             }
         }
     }
@@ -114,6 +105,7 @@ class EventsTableViewController: UITableViewController {
         else if let vc = segue.destination as? TransactionsTableViewController {
             let eventId: String = self.eventsList[self.selectedRow].getUid()
             vc.eventId = eventId
+            vc.accountId = accountId
             EventManager.sharedInstance.setActiveEvent(eventId: eventId)
         }
     }

@@ -19,9 +19,11 @@ import UIKit
 class BalanceTableViewController: UITableViewController {
     @IBOutlet weak var imbalanceView: ImbalanceView!
     
+    var eventId : String!
+    var accountId: String!
+
     private var balanceList = [Balance]()
     private var selectedRow = 0
-    var eventId : String?
     
     
     // MARK: - View Controller Overrides
@@ -37,6 +39,15 @@ class BalanceTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Imbalance View
+    
+    func updateImbalanceView() {
+        BalanceManager.sharedInstance.getOwingBalances(user: accountId, event: eventId) { (iOwe, theyOwe) in
+            self.imbalanceView.iOweAmount = iOwe
+            self.imbalanceView.theyOweAmount = theyOwe
+        }
     }
     
     
@@ -89,7 +100,7 @@ class BalanceTableViewController: UITableViewController {
     // MARK: - Helper Functions
     @IBAction func goBack(_ sender: UIBarButtonItem) {
         print("Clicked Back Button")
-        self.navigationController?.dismiss(animated: false, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     private func reloadTableViewData(){
@@ -107,6 +118,7 @@ class BalanceTableViewController: UITableViewController {
             BalanceManager.sharedInstance.loadBalanceList(userId: userId, eventId: eventId){balances in
                 self.balanceList = balances
                 self.tableView.reloadData()
+                self.updateImbalanceView()
             }
         }
     }

@@ -60,18 +60,19 @@ class BalanceManager{
                     return
                 }
                 
-                EventManager.sharedInstance.fetchAmountOwed(by: otherId, to: currentUserId, event: eventId) { (amount) in
+                EventManager.sharedInstance.fetchAmountOwed(by: otherId, to: currentUserId, event: eventId) { (theyOwe) in
                     var balanceAmount: Float = 0.0
-                    if let amount = amount {
-                        balanceAmount = Float(amount)
+                    if let theyOwe = theyOwe {
+                        balanceAmount = Float(theyOwe)
                     }
-                    EventManager.sharedInstance.fetchAmountOwed(by: currentUserId, to: otherId, event: eventId) { (toAmount) in
+                    
+                    EventManager.sharedInstance.fetchAmountOwed(by: currentUserId, to: otherId, event: eventId) { (iOwe) in
                         var subtractAmount:Float = 0
-                        if let toAmount = toAmount {
-                            subtractAmount = Float(toAmount)
+                        if let iOwe = iOwe {
+                            subtractAmount = Float(iOwe)
                         }
                         
-                        let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: balanceAmount - subtractAmount)
+                        let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: (balanceAmount - subtractAmount) / 100)
                         completionHandler(balance)
                     }
                     
@@ -206,18 +207,20 @@ class BalanceManager{
     
     func getOwingBalances(user userId: String, event eventId: String, completion: @escaping ((Float, Float) -> ())) {
             loadBalanceList(userId: userId, eventId: eventId) { (balances) in
-                var owed: Float = 0.0
-                var isOwed: Float = 0.0
+                var iOwe: Float = 0.0
+                var theyOwe: Float = 0.0
                 
                 for balance in balances {
-                    if (balance.getBalance() > 0) {
-                        isOwed += balance.getBalance()
+                    let balanceAmount = balance.getBalance()
+                    
+                    if (balanceAmount >= 0) {
+                        theyOwe += balanceAmount
                     } else {
-                        owed += balance.getBalance()
+                        iOwe -= balanceAmount
                     }
                 }
                 
-                completion(Float(owed), Float(isOwed))
+                completion(iOwe, theyOwe)
         }
     }
 }

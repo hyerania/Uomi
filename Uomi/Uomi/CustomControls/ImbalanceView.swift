@@ -14,27 +14,29 @@ import UIKit
     @IBOutlet weak var oweLabel: UILabel!
     @IBOutlet weak var owedLabel: UILabel!
     
-    var iOweAmount: Int! {
+    var iOweAmount: Float! {
         didSet {
-            let amountString =  UomiFormatters.wholeDollarFormatter.string(for: theyOweAmount)!
+            let amountString =  UomiFormatters.wholeDollarFormatter.string(for: iOweAmount)!
             
-            if theyOweAmount > 0 {
-                oweLabel.text = "~ \(amountString)"
-            }
-            else {
-                oweLabel.text = amountString
+            oweLabel.text = amountString
+            if round(iOweAmount) == 0.0 {
+                oweLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
+            } else {
+//                oweLabel.text = "~ \(amountString)"
+                oweLabel.textColor = .red
             }
         }
     }
-    var theyOweAmount: Int! {
+    var theyOweAmount: Float! {
         didSet {
             let amountString =  UomiFormatters.wholeDollarFormatter.string(for: theyOweAmount)!
             
-            if theyOweAmount > 0 {
-                owedLabel.text = "~ \(amountString)"
-            }
-            else {
-                owedLabel.text = amountString
+            owedLabel.text = amountString
+            if round(theyOweAmount) == 0.0 {
+                owedLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
+            } else {
+//                owedLabel.text = "~ \(amountString)"
+                owedLabel.textColor = .orange
             }
         }
     }
@@ -80,6 +82,9 @@ import UIKit
         view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         // Adding custom subview on top of our view (over any custom drawing > see note below)
         addSubview(view)
+        
+        iOweAmount = 0.0
+        theyOweAmount = 0.0
     }
     
     func loadViewFromNib() -> UIView {

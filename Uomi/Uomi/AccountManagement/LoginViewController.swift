@@ -9,6 +9,8 @@
 import UIKit
 import FirebaseAuth
 
+let loginSegue = "doLogin"
+
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var loginButton: UIButton!
@@ -23,7 +25,7 @@ class LoginViewController: UIViewController {
         self.registerButton.layer.cornerRadius = 10
         AccountManager.sharedInstance.getCurrentUser() { user in
             if user != nil {
-                self.performSegue(withIdentifier: "doLogin", sender: self)
+                self.performSegue(withIdentifier: "doLogin", sender: user?.getUid())
             }
         }
 //        EventManager.sharedInstance.createEvent(owner: "Test Owner", name: "Test Name", description: "Test Description", participants: ["Test", "Test1"]) { events in
@@ -77,7 +79,7 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            self.performSegue(withIdentifier: "doLogin", sender: nil)
+            self.performSegue(withIdentifier: "doLogin", sender: user?.getUid())
 
         }
 
@@ -85,6 +87,13 @@ class LoginViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == loginSegue,
+            let userId = sender as? String, let nvc = segue.destination as? UINavigationController, let eventsVC = nvc.topViewController as? EventsTableViewController {
+            eventsVC.accountId = userId
+        }
     }
     
 }

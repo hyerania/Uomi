@@ -33,7 +33,7 @@ class ExpenseTransactionTableViewCell: UITableViewCell {
         
         let displayAmount = Float(transaction.total) / 100.0
         
-        totalView.text = displayAmount == round(displayAmount) ? UomiFormatters.wholeDollarFormatter.string(for: displayAmount) : UomiFormatters.dollarFormatter.string(for: displayAmount)
+        totalView.text =  UomiFormatters.wholeDollarFormatter.string(for: displayAmount)
         let personPaid = "You"
 //        AccountManager.sharedInstance.load(id: , completionHandler: <#T##(User?) -> ()#>)
 //
