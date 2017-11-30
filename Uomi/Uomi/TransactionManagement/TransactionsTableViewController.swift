@@ -83,36 +83,32 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
 
     func calculateImbalanceView() {
         
-        var owed = 0.00
-        var areOwed = 0.00
         AccountManager.sharedInstance.getCurrentUser() { (user) in
             guard let user = user else {
                 return
             }
-            BalanceManager.sharedInstance.loadBalanceList(userId: user.getUid(), eventId: self.eventId) { (balances) in
+            BalanceManager.sharedInstance.getOwingBalances(user: user.getUid(), event: self.eventId) { (owes, isOwed) in
+                self.imbalanceView.owedLabel.text = UomiFormatters.dollarFormatter.string(for: isOwed)
                 
-                for balance in balances {
-                    if (balance.getBalance() > 0.00) {
-                        areOwed += balance.getBalance()
-                    } else {
-                        owed += balance.getBalance()
-                    }
-                }
-                self.imbalanceView.owedLabel.text = UomiFormatters.dollarFormatter.string(for: areOwed)
-                
-                if (areOwed > -0.01 && areOwed < 0.01) {
+                if (isOwed == 0) {
                     self.imbalanceView.owedLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
                     self.imbalanceView.owedLabel.text = UomiFormatters.dollarFormatter.string(for: 0.00)
-                } else if (areOwed > 0.01) {
+                } else if (isOwed > 0) {
                     self.imbalanceView.owedLabel.textColor = .orange
                 }
+                else {
+                    print("isOwed should never be negative!")
+                }
                 
-                self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: -1*owed)
-                if (-1 * owed > -0.01 &&  -1 * owed < 0.01) {
+                self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: -1*owes)
+                if (owes == 0) {
                     self.imbalanceView.oweLabel.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha: 1)
                     self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: 0.00)
-                } else if (-1 * owed > 0.01) {
+                } else if (owes > 0) {
                     self.imbalanceView.oweLabel.textColor = .red
+                }
+                else {
+                    print("owes should never be negative!")
                 }
                 
             }
