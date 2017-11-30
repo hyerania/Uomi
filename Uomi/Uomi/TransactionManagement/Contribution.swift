@@ -61,7 +61,7 @@ class LineItemContribution : Contribution {
                         units = parsedUnits
                     }
                     
-                    return Int(round(units * cost))
+                    return Int(round(units * cost * 100))
                 }
             }
             catch {
