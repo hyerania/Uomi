@@ -219,22 +219,13 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You covered Kevin and Yerania" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="okq-38-ygp">
-                                            <rect key="frame" x="123" y="49" width="248" height="14.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                            <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="yIt-GQ-dUL" firstAttribute="top" secondItem="n38-nB-ekn" secondAttribute="top" constant="5" id="2Cg-9X-kjC"/>
-                                        <constraint firstAttribute="bottom" secondItem="okq-38-ygp" secondAttribute="bottom" constant="11" id="5GL-8P-4f0"/>
-                                        <constraint firstItem="okq-38-ygp" firstAttribute="leading" secondItem="JVx-Ix-rQR" secondAttribute="trailing" constant="32" id="CDO-Rp-X4n"/>
                                         <constraint firstItem="1D0-FX-8Pc" firstAttribute="leading" secondItem="yIt-GQ-dUL" secondAttribute="trailing" constant="8" id="FbB-CQ-ag2"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="JVx-Ix-rQR" secondAttribute="bottom" id="Gdi-Je-KJF"/>
                                         <constraint firstItem="yIt-GQ-dUL" firstAttribute="leading" secondItem="iCd-Oa-el4" secondAttribute="trailing" constant="31" id="YnG-ie-EJ3"/>
                                         <constraint firstItem="JVx-Ix-rQR" firstAttribute="leading" secondItem="n38-nB-ekn" secondAttribute="leadingMargin" id="abX-VE-2Bz"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="okq-38-ygp" secondAttribute="trailing" constant="-12" id="cff-1A-7gq"/>
                                         <constraint firstItem="1D0-FX-8Pc" firstAttribute="trailing" secondItem="n38-nB-ekn" secondAttribute="trailingMargin" constant="12" id="eMi-SB-Ydf"/>
                                         <constraint firstItem="iCd-Oa-el4" firstAttribute="leading" secondItem="n38-nB-ekn" secondAttribute="leadingMargin" id="iDC-Cn-I74"/>
                                         <constraint firstItem="yIt-GQ-dUL" firstAttribute="centerY" secondItem="iCd-Oa-el4" secondAttribute="centerY" id="tYq-rK-guF"/>
@@ -245,7 +236,6 @@
                                     <outlet property="dateLabel" destination="JVx-Ix-rQR" id="416-uF-NjW"/>
                                     <outlet property="descriptionLabel" destination="iCd-Oa-el4" id="rij-vN-gDQ"/>
                                     <outlet property="participantView" destination="yIt-GQ-dUL" id="y6n-76-9Lp"/>
-                                    <outlet property="summaryLabel" destination="okq-38-ygp" id="bhF-wD-oYZ"/>
                                     <outlet property="totalView" destination="1D0-FX-8Pc" id="3TE-bf-CvM"/>
                                 </connections>
                             </tableViewCell>
@@ -288,32 +278,22 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You covered Kevin and Yerania" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tmT-Ne-Ng1">
-                                            <rect key="frame" x="123" y="49" width="248" height="14.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                            <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="tmT-Ne-Ng1" secondAttribute="bottom" constant="11" id="2CM-aE-2tY"/>
                                         <constraint firstItem="4f6-0q-3J5" firstAttribute="top" secondItem="yQG-7Y-Grg" secondAttribute="top" constant="5" id="4Qa-mQ-5QR"/>
                                         <constraint firstItem="WvN-4d-KxE" firstAttribute="leading" secondItem="yQG-7Y-Grg" secondAttribute="leadingMargin" id="LaJ-go-GSA"/>
                                         <constraint firstItem="Wwq-qp-MaZ" firstAttribute="leading" secondItem="4f6-0q-3J5" secondAttribute="trailing" constant="8" id="Vmv-jz-19S"/>
                                         <constraint firstItem="Wwq-qp-MaZ" firstAttribute="centerY" secondItem="4f6-0q-3J5" secondAttribute="centerY" id="bHu-bY-XpE"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="WvN-4d-KxE" secondAttribute="bottom" id="lUT-lE-Q9Q"/>
                                         <constraint firstItem="4f6-0q-3J5" firstAttribute="leading" secondItem="GJZ-km-xK6" secondAttribute="trailing" constant="31" id="m2U-VY-7Ht"/>
-                                        <constraint firstItem="tmT-Ne-Ng1" firstAttribute="leading" secondItem="WvN-4d-KxE" secondAttribute="trailing" constant="32" id="qTV-Em-Xuv"/>
                                         <constraint firstItem="Wwq-qp-MaZ" firstAttribute="trailing" secondItem="yQG-7Y-Grg" secondAttribute="trailingMargin" constant="12" id="uh7-Y0-12t"/>
                                         <constraint firstItem="4f6-0q-3J5" firstAttribute="centerY" secondItem="GJZ-km-xK6" secondAttribute="centerY" id="v0W-Xv-3dY"/>
                                         <constraint firstItem="GJZ-km-xK6" firstAttribute="leading" secondItem="yQG-7Y-Grg" secondAttribute="leadingMargin" id="yd1-VW-BhQ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="tmT-Ne-Ng1" secondAttribute="trailing" constant="-12" id="yxx-eu-Ft4"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="dateLabel" destination="WvN-4d-KxE" id="e7F-uV-DqK"/>
                                     <outlet property="participantView" destination="4f6-0q-3J5" id="gUU-FO-xwa"/>
-                                    <outlet property="summaryLabel" destination="tmT-Ne-Ng1" id="84p-Ny-brd"/>
                                     <outlet property="totalView" destination="Wwq-qp-MaZ" id="ctW-Jk-3pb"/>
                                 </connections>
                             </tableViewCell>

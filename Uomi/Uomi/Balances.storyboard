@@ -40,12 +40,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="9uZ-pJ-nGW" kind="unwind" identifier="backBalancesSegue" unwindAction="unwindToEventsFromCancelWithSegue:" id="R52-x3-QoX"/>
                         <segue destination="Zw9-qh-Ob5" kind="show" identifier="toSettle" id="FXs-qT-yH4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pHk-Fb-7R1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="9uZ-pJ-nGW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="580" y="169.56521739130437"/>
         </scene>

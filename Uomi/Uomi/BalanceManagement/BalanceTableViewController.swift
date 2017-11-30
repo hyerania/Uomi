@@ -73,7 +73,7 @@ class BalanceTableViewController: UITableViewController {
     // MARK: - Helper Functions
     @IBAction func goBack(_ sender: UIBarButtonItem) {
         print("Clicked Back Button")
-        self.performSegue(withIdentifier: "backBalancesSegue", sender: self)
+        self.navigationController?.dismiss(animated: false, completion: nil)
     }
     
     private func reloadTableViewData(){
