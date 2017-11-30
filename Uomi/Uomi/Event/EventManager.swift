@@ -206,7 +206,7 @@ class EventManager {
     /**
      @param accountId the account to
     */
-    func fetchAmountOwed(by accountId: String, event eventId: String, completionHandler: @escaping((Double?) -> ())) {
+    func fetchAmountOwed(by accountId: String, event eventId: String, completionHandler: @escaping((Int?) -> ())) {
         
         AccountManager.sharedInstance.getCurrentUser() { (user) in
             let currentUserId = user?.getUid()
@@ -218,7 +218,7 @@ class EventManager {
                     return
                 }
                 
-                var total: Double = 0.00
+                var total = 0
                 
                 for transactionObj in owingTransactions {
                     
@@ -234,25 +234,25 @@ class EventManager {
                     if (payer == currentUserId) {
                         
                         for ower in owers {
-                            guard let owerId = ower.key as? String, let amount = ower.value as? Double else {
+                            guard let owerId = ower.key as? String, let amount = ower.value as? Int else {
                                 print("Invalid data for this transaction. Moving on to the next one.")
                                 continue
                             }
                             if (owerId == accountId) {
-                                total = total + amount
+                                total += amount
                             }
                         }
                         
                     }
                 }
-                completionHandler(total/100.00)
+                completionHandler(total)
                 
             })
         }
         
     }
     
-    func fetchAmountOwed(to accountId: String, event eventId: String, completionHandler: @escaping((Double?) -> ())) {
+    func fetchAmountOwed(to accountId: String, event eventId: String, completionHandler: @escaping((Int?) -> ())) {
         AccountManager.sharedInstance.getCurrentUser() { (user) in
             let currentUserId = user?.getUid()
             self.ref.child("/owings").child(eventId).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -261,7 +261,7 @@ class EventManager {
                     return
                 }
                 
-                var total: Double = 0.00
+                var total = 0
                 
                 for transactionObj in owingTransactiosn {
                     guard
@@ -276,7 +276,7 @@ class EventManager {
                     if (payer == accountId) {
                         
                         for ower in owers {
-                            guard let owerId = ower.key as? String, let amount = ower.value as? Double else {
+                            guard let owerId = ower.key as? String, let amount = ower.value as? Int else {
                                 print("Invalid data for this transaction. Moving on to the next one.")
                                 continue
                             }
@@ -287,7 +287,7 @@ class EventManager {
                         
                     }
                 }
-                completionHandler(total/100.00)
+                completionHandler(total)
             })
         }
     }

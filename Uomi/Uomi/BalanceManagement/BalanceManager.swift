@@ -54,15 +54,16 @@ class BalanceManager{
             let name = validUser.getName()
             let initials = self.findInitials(fullname: name)
             EventManager.sharedInstance.fetchAmountOwed(by: otherId, event: eventId) { (amount) in
-                var balanceAmount = 0.00
-                if (amount != nil) {
-                    balanceAmount = amount!
+                var balanceAmount = 0
+                if let amount = amount {
+                    balanceAmount = amount
                 }
                 EventManager.sharedInstance.fetchAmountOwed(to: otherId, event: eventId) { (toAmount) in
-                    var subtractAmount = 0.00
-                    if (toAmount != nil) {
-                        subtractAmount = toAmount!
+                    var subtractAmount = 0
+                    if let toAmount = toAmount {
+                        subtractAmount = toAmount
                     }
+                    
                     let balance = Balance(initials: initials, name: name, uid: otherId, eventuid: eventId, totalBalance: "$" + "0", balance: balanceAmount - subtractAmount)
                     completionHandler(balance)
                 }
@@ -95,13 +96,13 @@ class BalanceManager{
                         continue
                 }
                 
-                var balanceOweMe: Double = 0.00
-                var balanceOweTo: Double = 0.00
+                var balanceOweMe: Int = 0
+                var balanceOweTo: Int = 0
                 
                 if (payer == userId) {
                     
                     for ower in owers {
-                        guard let owerId = ower.key as? String, let amount = ower.value as? Double else {
+                        guard let owerId = ower.key as? String, let amount = ower.value as? Int else {
                             print("Invalid data for this transaction. Moving on to the next one.")
                             continue
                         }
@@ -113,7 +114,7 @@ class BalanceManager{
                 }
                 if (payer == otherUserId){
                     for ower in owers {
-                        guard let owerId = ower.key as? String, let amount = ower.value as? Double else {
+                        guard let owerId = ower.key as? String, let amount = ower.value as? Int else {
                             print("Invalid data for this transaction. Moving on to the next one.")
                             continue
                         }
@@ -203,7 +204,7 @@ class BalanceManager{
                 var isOwed = 0
                 
                 for balance in balances {
-                    if (balance.getBalance() > 0.00) {
+                    if (balance.getBalance() > 0) {
                         isOwed += balance.getBalance()
                     } else {
                         owed += balance.getBalance()

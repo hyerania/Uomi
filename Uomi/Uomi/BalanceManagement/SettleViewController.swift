@@ -21,7 +21,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
    
     
     @IBAction func btnPayLog(_ sender: UIButton) {
-        if(userCellData!.getBalance()>0.00){
+        if(userCellData!.getBalance() > 0){
             self.createLogAlert(title:"Log Payment", message: "Fill out amount of payment that will be logged.")
             return
         }
@@ -48,10 +48,10 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.Initials.layer.cornerRadius = 10.00
         self.Initials.setTitle(userCellData.getInitials(), for:.normal)
         
-        if(userCellData.getBalance() == 0.00){
+        if(userCellData.getBalance() == 0){
             self.btnPayment.isHidden = true
         }
-        else if (userCellData.getBalance() > 0.00){
+        else if (userCellData.getBalance() > 0){
             let delimiter = " "
             var token = userCellData.getName().components(separatedBy: delimiter)
             let firstName = String(token[0])
@@ -92,13 +92,13 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let transaction = self.settleList[indexPath.row]
         tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: transaction.getDate())
-        tableCell.mainTotalBalance.text = UomiFormatters.dollarFormatter.string(for: transaction.getTotal()/100)
-        if (self.settleList[indexPath.row].getBalanceOweTo() > 0.00){
-            tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweTo()/100))
+        tableCell.mainTotalBalance.text = UomiFormatters.dollarFormatter.string(for: transaction.getTotal())
+        if (self.settleList[indexPath.row].getBalanceOweTo() > 0){
+            tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweTo()))
             tableCell.mainTypeTrans.text = "Owe To"
         }
-        else if (self.settleList[indexPath.row].getBalanceOweMe() > 0.00){
-            tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweMe()/100))
+        else if (self.settleList[indexPath.row].getBalanceOweMe() > 0){
+            tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweMe()))
             tableCell.mainTypeTrans.text = "Owe Me"
         }
         if (transaction.getIsSettle()) {
@@ -128,7 +128,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - Helper functions
     private func reloadTableViewData(){
-        if(userCellData!.getBalance() == 0.00){
+        if(userCellData!.getBalance() == 0){
             self.btnPayment.isHidden = true
         }
         AccountManager.sharedInstance.getCurrentUser(){ user in
@@ -195,7 +195,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     newSettleTrans.recipient = self.userCellData!.getUid()
                     newSettleTrans.total = Int(round(amount.floatValue * 100))
                     TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
-                        self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.doubleValue)
+                        self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.intValue)
                         self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: self.userCellData?.getBalance())!
 
                         print(result)
@@ -231,7 +231,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     newSettleTrans.recipient = currentUser.getUid()
                     newSettleTrans.total = Int(round(amount.floatValue * 100))
                     TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
-                        self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.doubleValue)
+                        self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.intValue)
                         self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: self.userCellData?.getBalance())!
                         
                         print(result)
@@ -252,7 +252,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 return
             }
             
-            if (balance < 0.00) {
+            if (balance < 0) {
                 textField.text = UomiFormatters.dollarFormatter.string(for: balance * -1)
             } else {
                 textField.text = UomiFormatters.dollarFormatter.string(for: balance)

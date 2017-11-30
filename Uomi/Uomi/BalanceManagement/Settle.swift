@@ -10,15 +10,15 @@ import Foundation
 
 class Settle {
     private var transactionId: String
-    private var balanceOweTo: Double
-    private var balanceOweMe: Double
+    private var balanceOweTo: Int
+    private var balanceOweMe: Int
     private var date: Date
     private var total: Int
     private var isSettle: Bool
     private var description: String
     private var payerId: String
     
-    init(transactionId: String, balanceOweTo: Double, balanceOweMe: Double){
+    init(transactionId: String, balanceOweTo: Int, balanceOweMe: Int){
         self.transactionId = transactionId
         self.balanceOweTo = balanceOweTo
         self.balanceOweMe = balanceOweMe
@@ -32,10 +32,10 @@ class Settle {
     func getTransactionId() -> String{
         return self.transactionId
     }
-    func getBalanceOweTo() -> Double{
+    func getBalanceOweTo() -> Int {
         return self.balanceOweTo
     }
-    func getBalanceOweMe() -> Double {
+    func getBalanceOweMe() -> Int {
         return self.balanceOweMe
     }
     func getDate() -> Date {
