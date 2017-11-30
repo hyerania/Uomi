@@ -205,7 +205,6 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     newSettleTrans.recipient = currentUser.getUid()
                     newSettleTrans.total = Int(round(amount.floatValue * 100))
                     TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
-                        self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.doubleValue)
                         self.setLabelInformation()
 
                         print(result)
@@ -241,7 +240,6 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     newSettleTrans.recipient = self.userCellData!.getUid()
                     newSettleTrans.total = Int(round(amount.floatValue * 100))
                     TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
-                        self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.doubleValue)
                         self.setLabelInformation()
                         
                         print(result)

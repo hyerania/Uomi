@@ -239,13 +239,13 @@ class EventManager {
                                 continue
                             }
                             if (owerId == accountId) {
-                                total = total + amount
+                                total = total + amount / 100.00
                             }
                         }
                         
                     }
                 }
-                completionHandler(total/100.00)
+                completionHandler(total)
                 
             })
         }
@@ -281,7 +281,7 @@ class EventManager {
                                 continue
                             }
                             if (owerId == currentUserId) {
-                                total = total + amount
+                                total = total + amount / 100.00
                             }
                         }
                         
