@@ -17,6 +17,8 @@ import UIKit
 //}
 
 class BalanceTableViewController: UITableViewController {
+    @IBOutlet weak var imbalanceView: ImbalanceView!
+    
     private var balanceList = [Balance]()
     private var selectedRow = 0
     var eventId : String?
