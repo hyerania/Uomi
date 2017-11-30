@@ -125,7 +125,8 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
             let settleCell = tableView.dequeueReusableCell(withIdentifier: settlementCellReuseIdentifier, for: indexPath) as! SettlementTransactionTableViewCell
                 
             settleCell.transaction = transaction
-            
+            settleCell.selectionStyle = UITableViewCellSelectionStyle.none
+
             cell = settleCell
         }
         else {
@@ -138,7 +139,6 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     
     
     // MARK: Table View Delegate
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let transaction = transactions[indexPath.row] as? ExpenseTransaction else {
             return
