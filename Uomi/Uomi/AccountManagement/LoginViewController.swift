@@ -19,8 +19,8 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loginButton.layer.cornerRadius = 8
-        self.registerButton.layer.cornerRadius = 8
+        self.loginButton.layer.cornerRadius = 10
+        self.registerButton.layer.cornerRadius = 10
         AccountManager.sharedInstance.getCurrentUser() { user in
             if user != nil {
                 self.performSegue(withIdentifier: "doLogin", sender: self)
