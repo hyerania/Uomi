@@ -93,6 +93,7 @@ class LoginViewController: UIViewController {
             let userId = sender as? String, let nvc = segue.destination as? UINavigationController, let eventsVC = nvc.topViewController as? EventsTableViewController {
             eventsVC.accountId = userId
         }
+        passwordLabel.text = nil
     }
     
 }
