@@ -103,11 +103,11 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let transaction = self.settleList[indexPath.row]
         tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: transaction.getDate())
         tableCell.mainTotalBalance.text = UomiFormatters.dollarFormatter.string(for: transaction.getTotal()/100)
-        if (self.settleList[indexPath.row].getBalanceOweTo() > 0.00){
+        if (self.settleList[indexPath.row].getBalanceOweTo() > 0.01){
             tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweTo()/100))
             tableCell.mainTypeTrans.text = "IOU"
         }
-        else if (self.settleList[indexPath.row].getBalanceOweMe() > 0.00){
+        else if (self.settleList[indexPath.row].getBalanceOweMe() > 0.01){
             tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweMe()/100))
             tableCell.mainTypeTrans.text = "UOMi"
         }
