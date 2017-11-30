@@ -53,6 +53,7 @@ class BalanceTableViewController: UITableViewController {
         
         if (self.balanceList[indexPath.row].getBalance() > -0.01 && self.balanceList[indexPath.row].getBalance() < 0.01){
             cell.mainBalance.textColor = UIColor.init(red: 51/255, green: 136/255, blue: 67/255, alpha : 1)
+            cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: 0.00)
         }
         else if (self.balanceList[indexPath.row].getBalance() > 0.01){
             cell.mainBalance.textColor = .orange
