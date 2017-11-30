@@ -12,7 +12,7 @@ fileprivate let newEventSegue = "newEvent"
 
 class EventsTableViewController: UITableViewController {
 
-    var accountId: String!
+    var accountId: String?
     private var eventsList = [Event]()
     private var selectedRow = 0
 
@@ -87,6 +87,7 @@ class EventsTableViewController: UITableViewController {
         guard let accountId = accountId else {
             return
         }
+        
         EventManager.sharedInstance.loadEvents(userId: accountId) { events in
             guard events.count > 0 else {
                 return

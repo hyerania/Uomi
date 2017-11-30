@@ -10,6 +10,8 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
+let regEnterSegue = "goToEvents"
+
 class NewAccountViewController: UIViewController {
 
     @IBOutlet weak var fullNameLabel: UITextField!
@@ -109,7 +111,7 @@ class NewAccountViewController: UIViewController {
                         print("Create User Error: \(error)")
                     }
                 } else {
-                    self.performSegue(withIdentifier: "goToEvents", sender: self)
+                    self.performSegue(withIdentifier: "goToEvents", sender: user!.getUid())
                 }
             }
         }
@@ -130,4 +132,10 @@ class NewAccountViewController: UIViewController {
     }
     
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == regEnterSegue,
+            let userId = sender as? String, let nvc = segue.destination as? UINavigationController, let eventsVC = nvc.topViewController as? EventsTableViewController {
+            eventsVC.accountId = userId
+        }
+    }
 }
