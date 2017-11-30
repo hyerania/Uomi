@@ -96,9 +96,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tbp-wc-Oxy">
                                 <rect key="frame" x="207" y="227" width="91" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Pay Back"/>
+                                <state key="normal" title="Payment"/>
                                 <connections>
-                                    <action selector="btnPaySettle:" destination="Zw9-qh-Ob5" eventType="touchUpInside" id="vv2-rt-xc0"/>
+                                    <action selector="btnPayLog:" destination="Zw9-qh-Ob5" eventType="touchUpInside" id="Tdt-YD-gEf"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Payment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izO-NE-F4Q">
@@ -116,6 +116,7 @@
                         <outlet property="InitialsText" destination="cnb-jS-fWC" id="4BK-3b-Fds"/>
                         <outlet property="NameText" destination="uXD-Hw-06R" id="mxV-Jf-Yjq"/>
                         <outlet property="PaymentText" destination="izO-NE-F4Q" id="WgE-Df-GBF"/>
+                        <outlet property="btnPayment" destination="Tbp-wc-Oxy" id="Sr6-kK-nGq"/>
                         <outlet property="settleTableView" destination="mdu-QD-8Uc" id="QNt-Z9-2HG"/>
                     </connections>
                 </viewController>

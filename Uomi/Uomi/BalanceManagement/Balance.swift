@@ -43,5 +43,8 @@ class Balance {
     func getBalance() -> Double {
         return self.balance
     }
+    func setBalance(newBalance: Double) {
+        self.balance = newBalance
+    }
     
 }
