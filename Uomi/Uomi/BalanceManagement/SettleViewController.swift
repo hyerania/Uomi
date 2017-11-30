@@ -8,6 +8,7 @@
 
 import UIKit
 
+let settleCellReuseIdentifier = "settleTableViewCell"
 class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     @IBOutlet weak var NameText: UILabel!
     @IBOutlet weak var PaymentText: UILabel!
@@ -88,11 +89,13 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell = Bundle.main.loadNibNamed("SettleTableViewCell", owner: self, options: nil)?.first as! SettleTableViewCell
+        let tableCell = tableView.dequeueReusableCell(withIdentifier: settleCellReuseIdentifier) as! SettleTableViewCell
+        
         
         let transaction = self.settleList[indexPath.row]
         tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: transaction.getDate())
         tableCell.mainTotalBalance.text = UomiFormatters.dollarFormatter.string(for: transaction.getTotal())
+        
         if (self.settleList[indexPath.row].getBalanceOweTo() > 0){
             tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweTo()))
             tableCell.mainTypeTrans.text = "Owe To"

@@ -52,7 +52,6 @@
 		AA8585781FBBA10B005B2221 /* BalancesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA8585761FBBA10B005B2221 /* BalancesTableViewCell.xib */; };
 		AA85857A1FBBA389005B2221 /* BalanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8585791FBBA389005B2221 /* BalanceTableViewController.swift */; };
 		AA85857D1FBBA477005B2221 /* SettleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA85857B1FBBA477005B2221 /* SettleTableViewCell.swift */; };
-		AA85857E1FBBA477005B2221 /* SettleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA85857C1FBBA477005B2221 /* SettleTableViewCell.xib */; };
 		EA45F08C1FB4E8A900BDCD5C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */; };
 		EAD95BA71FCE239200140A70 /* SettlementTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD95BA61FCE239200140A70 /* SettlementTransactionTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -105,7 +104,6 @@
 		AA8585761FBBA10B005B2221 /* BalancesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BalancesTableViewCell.xib; sourceTree = "<group>"; };
 		AA8585791FBBA389005B2221 /* BalanceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTableViewController.swift; sourceTree = "<group>"; };
 		AA85857B1FBBA477005B2221 /* SettleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettleTableViewCell.swift; sourceTree = "<group>"; };
-		AA85857C1FBBA477005B2221 /* SettleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettleTableViewCell.xib; sourceTree = "<group>"; };
 		C735C56250DC6E22CE8C9F8D /* Pods-Uomi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Uomi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Uomi/Pods-Uomi.debug.xcconfig"; sourceTree = "<group>"; };
 		EA45F08B1FB4E8A900BDCD5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAD95BA61FCE239200140A70 /* SettlementTransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettlementTransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 				AA83D3F01FBDDC700081815E /* Balance.swift */,
 				AA83D3EC1FBCD15F0081815E /* SettleViewController.swift */,
 				AA85857B1FBBA477005B2221 /* SettleTableViewCell.swift */,
-				AA85857C1FBBA477005B2221 /* SettleTableViewCell.xib */,
 				AA5132241FCF4496008EB952 /* Settle.swift */,
 			);
 			path = BalanceManagement;
@@ -321,7 +318,6 @@
 				07AB53BB1F993F3200BC23F3 /* LaunchScreen.storyboard in Resources */,
 				EA45F08C1FB4E8A900BDCD5C /* GoogleService-Info.plist in Resources */,
 				07AB53C61F99430900BC23F3 /* tessdata in Resources */,
-				AA85857E1FBBA477005B2221 /* SettleTableViewCell.xib in Resources */,
 				0704B1311FCE1A42007635E9 /* ImbalanceView.xib in Resources */,
 				07AB53B81F993F3200BC23F3 /* Assets.xcassets in Resources */,
 				07AB53B61F993F3200BC23F3 /* Login.storyboard in Resources */,
