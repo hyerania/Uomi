@@ -11,6 +11,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Avenir.ttc">
+            <string>Avenir-Book</string>
+        </array>
         <array key="HelveticaNeue.ttc">
             <string>HelveticaNeue</string>
             <string>HelveticaNeue-Bold</string>
@@ -26,13 +29,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hR-4W-ONF">
-                                <rect key="frame" x="16" y="198.5" width="91.5" height="37"/>
+                                <rect key="frame" x="16" y="200.5" width="91.5" height="37"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="31"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Username" textAlignment="natural" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="KnK-bE-h6s">
-                                <rect key="frame" x="16" y="245.5" width="343" height="51"/>
+                                <rect key="frame" x="16" y="247.5" width="343" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="ukg-ke-mfi"/>
                                 </constraints>
@@ -41,13 +44,13 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5d-kP-YQt">
-                                <rect key="frame" x="16" y="304.5" width="339" height="37"/>
+                                <rect key="frame" x="16" y="306.5" width="339" height="37"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="31"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="natural" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="4Rv-bk-V8d">
-                                <rect key="frame" x="16" y="351.5" width="343" height="51"/>
+                                <rect key="frame" x="16" y="353.5" width="343" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="r1c-Da-8uV"/>
                                 </constraints>
@@ -56,7 +59,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNH-0W-Zeh">
-                                <rect key="frame" x="16" y="432.5" width="343" height="50"/>
+                                <rect key="frame" x="16" y="434.5" width="343" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.4755483865737915" blue="0.99112838506698608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="nqr-eH-V8W"/>
@@ -70,7 +73,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZD3-Gj-n9K">
-                                <rect key="frame" x="16" y="490.5" width="343" height="50"/>
+                                <rect key="frame" x="16" y="492.5" width="343" height="50"/>
                                 <color key="backgroundColor" red="0.20068752765655518" green="0.53363233804702759" blue="0.26286861300468445" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="nhk-mO-ElY"/>
@@ -84,7 +87,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-28" translatesAutoresizingMaskIntoConstraints="NO" id="dYO-2T-nAs">
-                                <rect key="frame" x="123" y="64" width="128" height="114.5"/>
+                                <rect key="frame" x="123" y="64" width="128" height="116.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UomiIcon" translatesAutoresizingMaskIntoConstraints="NO" id="GrS-01-qGT">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -94,8 +97,8 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uomi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f09-s0-hxp">
-                                        <rect key="frame" x="0.0" y="100" width="128" height="14.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <rect key="frame" x="0.0" y="100" width="128" height="16.5"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
