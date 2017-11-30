@@ -17,7 +17,7 @@ class SettlementTransactionTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var participantView: ParticipantView!
     @IBOutlet weak var totalView: UILabel!
-    @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var recipientView: ParticipantView!
     
     var transaction: SettlementTransaction! {
         didSet {
@@ -27,15 +27,14 @@ class SettlementTransactionTableViewCell: UITableViewCell {
     
     func updateUI() {
         participantView.memberId = transaction.payer
+        recipientView.memberId = transaction.recipient
         
 //        descriptionLabel.text = transaction.transDescription
         dateLabel.text = UomiFormatters.dateFormatter.string(for: transaction.date)
         
         let displayAmount = Float(transaction.total) / 100.0
         
-        totalView.text = displayAmount == round(displayAmount) ? UomiFormatters.wholeDollarFormatter.string(for: displayAmount) : UomiFormatters.dollarFormatter.string(for: displayAmount)
-        
-        // TODO add summary text
+        totalView.text = UomiFormatters.wholeDollarFormatter.string(for: displayAmount)
     }
     
     override func awakeFromNib() {
