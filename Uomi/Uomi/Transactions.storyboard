@@ -164,7 +164,7 @@
                                         <segue destination="RBd-Sc-f4e" kind="show" identifier="viewBalances" id="Xli-00-PSY"/>
                                     </connections>
                                 </button>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dXh-o0-vNc" customClass="ImbalanceView" customModule="Uomi" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dXh-o0-vNc" customClass="ImbalanceView" customModule="Uomi" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60.5"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
