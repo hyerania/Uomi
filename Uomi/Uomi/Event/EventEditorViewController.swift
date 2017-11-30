@@ -58,6 +58,7 @@ class EventEditorViewController: UIViewController, UITextFieldDelegate, UIGestur
         
         self.plusButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         self.plusButton.isEnabled = false;
+        self.participantsTextField.text = nil
     }
     
     @IBAction func hitDoneButton(_ sender: UIBarButtonItem) {
