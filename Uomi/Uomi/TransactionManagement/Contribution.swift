@@ -36,7 +36,7 @@ class PercentContribution : Contribution {
     }
     
     func getContributionAmount() -> Int {
-        return transaction.total * percent
+        return transaction.total * percent / 100
     }
     
     
