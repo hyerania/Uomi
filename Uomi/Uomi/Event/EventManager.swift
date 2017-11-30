@@ -231,15 +231,15 @@ class EventManager {
                 if (payer == purchaserId) {
                     
                     for ower in owers {
-                        guard let owerId = ower.key as? String, let amount = ower.value as? Int else {
+                        guard let transOwerId = ower.key as? String, let amount = ower.value as? Int else {
                             print("Invalid data for this transaction. Moving on to the next one.")
                             continue
                         }
-                        if (owerId == owerId) {
-                            total += amount
+                        
+                        if (transOwerId == owerId) {
+                            total = total + amount
                         }
                     }
-                    
                 }
             }
             completionHandler(total)
