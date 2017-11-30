@@ -84,6 +84,9 @@ class EventsTableViewController: UITableViewController {
 
     // MARK: - Helper Functions
     private func reloadTableViewData(refreshControl: UIRefreshControl?) {
+        guard let accountId = accountId else {
+            return
+        }
         EventManager.sharedInstance.loadEvents(userId: accountId) { events in
             guard events.count > 0 else {
                 return

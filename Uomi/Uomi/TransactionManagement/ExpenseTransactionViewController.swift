@@ -435,9 +435,12 @@ UINavigationControllerDelegate {
     
     @IBAction func hitSave(_ sender: Any) {
         dismissKeyboard()
-        
+        self.saveButton.isEnabled = false
+        self.present(activitiyViewController, animated: true, completion: nil)
+
         DispatchQueue.global(qos: .background).async {
             self.delegate?.shouldSave(expenseController: self, transaction: self.transaction)
+            self.activitiyViewController.dismiss(animated: true)
         }
     }
     
