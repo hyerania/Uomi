@@ -9,15 +9,16 @@
 import UIKit
 
 class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-    @IBOutlet weak var InitialsText: UILabel!
     @IBOutlet weak var NameText: UILabel!
     @IBOutlet weak var PaymentText: UILabel!
     @IBOutlet weak var settleTableView: UITableView!
+    @IBOutlet weak var Initials: UIButton!
+    @IBOutlet weak var btnPayment: UIButton!
     //    var userCellData : cellData?
     var userCellData : Balance?
     private var settleList = [Settle]()
     private var transactionList = [Transaction]() //Transaction lists for this one event
-    @IBOutlet weak var btnPayment: UIButton!
+   
     
     @IBAction func btnPayLog(_ sender: UIButton) {
         if(userCellData!.getBalance()>0.00){
@@ -41,10 +42,12 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         self.NameText.text = userCellData.getName()
-        self.InitialsText.text = userCellData.getInitials()
         self.title = "Settle"
         
         self.btnPayment.layer.cornerRadius = 10.00
+        self.Initials.layer.cornerRadius = 10.00
+        self.Initials.setTitle(userCellData.getInitials(), for:.normal)
+        
         if(userCellData.getBalance() == 0.00){
             self.btnPayment.isHidden = true
         }
@@ -90,21 +93,21 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let transaction = self.settleList[indexPath.row]
         tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: transaction.getDate())
         tableCell.mainTotalBalance.text = UomiFormatters.dollarFormatter.string(for: transaction.getTotal()/100)
-        if (transaction.getIsSettle()) {
-            tableCell.mainTransactionName.text = "Payment"
-
-        } else {
-            tableCell.mainTransactionName.text = transaction.getDescription()
-
-        }
-        
-        if(self.settleList[indexPath.row].getBalanceOweTo() > 0.00){
+        if (self.settleList[indexPath.row].getBalanceOweTo() > 0.00){
             tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweTo()/100))
             tableCell.mainTypeTrans.text = "Owe To"
         }
-        else{
+        else if (self.settleList[indexPath.row].getBalanceOweMe() > 0.00){
             tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweMe()/100))
             tableCell.mainTypeTrans.text = "Owe Me"
+        }
+        if (transaction.getIsSettle()) {
+            tableCell.mainTransactionName.text = "Payment"
+            tableCell.mainTypeTrans.text = "Paid"
+            
+        } else {
+            tableCell.mainTransactionName.text = transaction.getDescription()
+            
         }
         
         tableCell.payerId = transaction.getPayerId()
