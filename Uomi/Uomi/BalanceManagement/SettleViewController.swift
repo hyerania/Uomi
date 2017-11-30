@@ -17,10 +17,17 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var userCellData : Balance?
     private var settleList = [Settle]()
     private var transactionList = [Transaction]() //Transaction lists for this one event
+    @IBOutlet weak var btnPayment: UIButton!
     
-    @IBAction func btnPaySettle(_ sender: Any) {
-        self.createAlert(title: "Pay back time!.", message: "Please click an option.")
-        return
+    @IBAction func btnPayLog(_ sender: UIButton) {
+        if(userCellData!.getBalance()>0.00){
+            self.createLogAlert(title:"Log Payment", message: "Fill out amount of payment that will be logged.")
+            return
+        }
+        else {
+            self.createPayAlert(title:"Payment", message: "Please choose an option for payment.")
+        }
+        
     }
     
    
@@ -35,8 +42,24 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.NameText.text = userCellData.getName()
         self.InitialsText.text = userCellData.getInitials()
-        self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: userCellData.getBalance())!
         self.title = "Settle"
+        
+        if(userCellData.getBalance() == 0.00){
+            self.btnPayment.isHidden = true
+        }
+        else if (userCellData.getBalance() > 0.00){
+            let delimiter = " "
+            var token = userCellData.getName().components(separatedBy: delimiter)
+            let firstName = String(token[0])
+            
+            self.PaymentText.text = firstName + " owes " + UomiFormatters.dollarFormatter.string(for: userCellData.getBalance())!
+            self.btnPayment.setTitle("Log Payment", for: .normal)
+        }
+        else{
+            self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: (userCellData.getBalance() * -1))!
+            self.btnPayment.setTitle("Pay Back", for: .normal)
+        }
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -122,7 +145,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
-    private func createAlert(title: String, message: String) {
+    private func createLogAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField(configurationHandler: textFieldHandler)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -146,22 +169,50 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     newSettleTrans.recipient = self.userCellData!.getUid()
                     newSettleTrans.total = Int(round(amount.floatValue * 100))
                     TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
+                        self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.doubleValue)
+                        self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: self.userCellData?.getBalance())!
+
+                        print(result)
+                    }
+                }
+            }
+            self.reloadTableViewData()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func createPayAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addTextField(configurationHandler: textFieldHandler)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log", style: .default, handler: { [weak alert] (_) in
+            
+            guard let textField = alert?.textFields?[0] else {
+                return
+            }
+            
+            var value = textField.text!
+            
+            let amount = UomiFormatters.dollarFormatter.number(from: value)
+            
+            if let amount = amount {
+                let newSettleTrans = SettlementTransaction()
+                AccountManager.sharedInstance.getCurrentUser() { (currentUser) in
+                    guard let currentUser = currentUser else {
+                        return
+                    }
+                    newSettleTrans.payer = self.userCellData!.getUid()
+                    newSettleTrans.recipient = currentUser.getUid()
+                    newSettleTrans.total = Int(round(amount.floatValue * 100))
+                    TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getEventuid(), transaction: newSettleTrans) { (result) in
+                        self.userCellData?.setBalance(newBalance: self.userCellData!.getBalance() - amount.doubleValue)
+                        self.PaymentText.text = "You owe " + UomiFormatters.dollarFormatter.string(for: self.userCellData?.getBalance())!
                         
                         print(result)
                     }
                 }
-//                newSettleTrans.payer = self.userCellData.
-//                newSettleTrans.recipient
-//                newSettleTrans.total = Int(round(amount.floatValue * 100))
-//
-//                TransactionManager.sharedInstance.saveTransaction(event: self.userCellData!.getUid(), transaction: newSettleTrans) { (result) in
-//
-//                    print(result)
-//                }
-//                print(newSettleTrans.total)
             }
-            
-            
+            self.reloadTableViewData()
         }))
         self.present(alert, animated: true, completion: nil)
     }
