@@ -47,9 +47,8 @@ class BalanceTableViewController: UITableViewController {
         let cell = Bundle.main.loadNibNamed("BalancesTableViewCell", owner: self, options: nil)?.first as! BalancesTableViewCell
         
         cell.mainName.text = self.balanceList[indexPath.row].getName()
-        cell.mainInitials.text = self.balanceList[indexPath.row].getInitials()
         cell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: self.balanceList[indexPath.row].getBalance())
-        
+        cell.payerId = self.balanceList[indexPath.row].getUid()
         return cell
     }
    

@@ -44,6 +44,7 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.InitialsText.text = userCellData.getInitials()
         self.title = "Settle"
         
+        self.btnPayment.layer.cornerRadius = 10.00
         if(userCellData.getBalance() == 0.00){
             self.btnPayment.isHidden = true
         }
@@ -87,30 +88,26 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let tableCell = Bundle.main.loadNibNamed("SettleTableViewCell", owner: self, options: nil)?.first as! SettleTableViewCell
         
         let transaction = self.settleList[indexPath.row]
-        TransactionManager.sharedInstance.loadTransaction(id: (userCellData?.getEventuid())!, id: transaction.getTransactionId()){ (singleTrans, error) in
-            guard let singleTrans = singleTrans else {
-                print("Error getting single transaction for Settle View.")
-                return
-            }
-            
-            tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: singleTrans.date)
-            tableCell.mainTotalBalance.text = UomiFormatters.dollarFormatter.string(for:(singleTrans.total/100))
-            if let expenseTrans = singleTrans as? ExpenseTransaction{
-                tableCell.mainTransactionName.text = expenseTrans.transDescription
-            }else{
-                tableCell.mainTransactionName.text = "Payment"
-            }
+        tableCell.mainTransactionDate.text = UomiFormatters.dateFormatter.string(for: transaction.getDate())
+        tableCell.mainTotalBalance.text = UomiFormatters.dollarFormatter.string(for: transaction.getTotal()/100)
+        if (transaction.getIsSettle()) {
+            tableCell.mainTransactionName.text = "Payment"
+
+        } else {
+            tableCell.mainTransactionName.text = transaction.getDescription()
 
         }
         
         if(self.settleList[indexPath.row].getBalanceOweTo() > 0.00){
             tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweTo()/100))
-            tableCell.mainTypeTrans.text = "TO"
+            tableCell.mainTypeTrans.text = "Owe To"
         }
         else{
             tableCell.mainBalance.text = UomiFormatters.dollarFormatter.string(for: (self.settleList[indexPath.row].getBalanceOweMe()/100))
-            tableCell.mainTypeTrans.text = "ME"
+            tableCell.mainTypeTrans.text = "Owe Me"
         }
+        
+        tableCell.payerId = transaction.getPayerId()
         
         return tableCell
     }
@@ -140,8 +137,31 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             
             BalanceManager.sharedInstance.loadSettleList(userId: userId, eventId: userCellData.getEventuid(), otherUserId: userCellData.getUid()){settles in
-                self.settleList = settles
-                self.settleTableView.reloadData()
+                var joinedSettlesTransaction = [Settle]()
+                var count = 0
+                for settlement in settles {
+                    TransactionManager.sharedInstance.loadTransaction(id: (self.userCellData?.getEventuid())!, id: settlement.getTransactionId()) { (transaction, error) in
+                        guard let transaction = transaction else {
+                            return
+                        }
+                        settlement.setPayerId(payerId: transaction.payer)
+                        settlement.setDate(date: transaction.date)
+                        settlement.setTotal(total: transaction.total)
+                        if let expenseTrans = transaction as? ExpenseTransaction{
+                            settlement.setIsSettle(isSettle: false)
+                            settlement.setDescription(description: expenseTrans.transDescription!)
+                        }else{
+                            settlement.setIsSettle(isSettle: true)
+                        }
+                        count += 1
+                        joinedSettlesTransaction.append(settlement)
+                        if (count == settles.count) {
+                            self.settleList = joinedSettlesTransaction.sorted(by: {$0.getDate() > $1.getDate()})
+                            self.settleTableView.reloadData()
+                        }
+                    }
+                }
+                
             }
         }
     }
@@ -235,3 +255,14 @@ class SettleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
 }
+
+//extension SettleViewController: ParticipantViewDelegate {
+//
+//    func participantSelected(participantView: ParticipantView, participant: User) {
+//        transaction.payer = participant.getUid()
+//
+//        updateSaveState()
+//    }
+//
+//}
+

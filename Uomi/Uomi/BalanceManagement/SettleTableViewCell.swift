@@ -16,7 +16,11 @@ class SettleTableViewCell: UITableViewCell {
     @IBOutlet weak var mainBalance: UILabel!
     @IBOutlet weak var mainTypeTrans: UILabel!
     
-    
+    var payerId: String! {
+        didSet {
+            mainUserInitials.memberId = payerId
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

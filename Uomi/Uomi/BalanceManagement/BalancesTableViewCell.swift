@@ -9,10 +9,15 @@
 import UIKit
 
 class BalancesTableViewCell: UITableViewCell {
-    @IBOutlet weak var mainInitials: UILabel!
     @IBOutlet weak var mainName: UILabel!
     @IBOutlet weak var mainBalance: UILabel!
     @IBOutlet weak var userInitials: ParticipantView!
+    
+    var payerId: String! {
+        didSet {
+            userInitials.memberId = payerId
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
