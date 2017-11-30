@@ -21,6 +21,7 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
     var editingTransaction: Transaction!
     
     private var transactions: [Transaction] = []
+    @IBOutlet weak var imbalanceView: ImbalanceView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,9 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
         refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl?.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl!) // not required when using UITableViewController
+        imbalanceView.oweLabel.text = UomiFormatters.wholeDollarFormatter.string(for: 0.00)
+        imbalanceView.owedLabel.text = UomiFormatters.wholeDollarFormatter.string(for: 0.00)
+        self.calculateImbalanceView()
 //        self.title = event.getName()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -77,6 +81,29 @@ class TransactionsTableViewController: UITableViewController, ExpenseTransaction
         })
     }
 
+    func calculateImbalanceView() {
+        
+        var owed = 0.00
+        var areOwed = 0.00
+        AccountManager.sharedInstance.getCurrentUser() { (user) in
+            guard let user = user else {
+                return
+            }
+            BalanceManager.sharedInstance.loadBalanceList(userId: user.getUid(), eventId: self.eventId) { (balances) in
+                
+                for balance in balances {
+                    if (balance.getBalance() > 0.00) {
+                        areOwed += balance.getBalance()
+                    } else {
+                        owed += balance.getBalance()
+                    }
+                }
+                self.imbalanceView.owedLabel.text = UomiFormatters.dollarFormatter.string(for: areOwed)
+                self.imbalanceView.oweLabel.text = UomiFormatters.dollarFormatter.string(for: -1*owed)
+            }
+        }
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

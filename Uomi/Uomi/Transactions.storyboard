@@ -324,6 +324,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="imbalanceView" destination="dXh-o0-vNc" id="4Vg-eT-zRl"/>
                         <segue destination="QE7-Xs-bJx" kind="presentation" identifier="editTransaction" id="xOE-TU-5NL"/>
                     </connections>
                 </tableViewController>
