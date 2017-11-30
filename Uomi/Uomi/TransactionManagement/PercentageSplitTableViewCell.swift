@@ -15,7 +15,7 @@ class PercentageSplitTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var totalLabel: UILabel!
     
     fileprivate func updateSubtotal() {
-        let subtotal = Float(contribution.transaction.total * contribution.percent) / 10000
+        let subtotal = Float(contribution.transaction.total * contribution.getPercent()) / 10000
         
         totalLabel.text = UomiFormatters.dollarFormatter.string(for: subtotal)
     }
@@ -24,8 +24,9 @@ class PercentageSplitTableViewCell: UITableViewCell, UITextFieldDelegate {
         didSet {
             participantView.memberId = contribution.member
             
-            percentField.text = "\(contribution.percent)"
-            percentStepper.value = Double(contribution.percent)
+            let percent = contribution.getPercent()
+            percentField.text = "\(percent)"
+            percentStepper.value = Double(percent)
             updateSubtotal()
         }
     }
@@ -40,8 +41,8 @@ class PercentageSplitTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         percentField.rightView = label
         percentField.rightViewMode = .always
+        percentField.delegate = self
         
-//        percentField.delegate = self
         percentField.addTarget(self, action: #selector(updatePercentage), for: .editingChanged)
     }
 
@@ -55,7 +56,7 @@ class PercentageSplitTableViewCell: UITableViewCell, UITextFieldDelegate {
         contentView.endEditing(false)
         
         let stepperValue = Int(sender.value)
-        contribution.percent = stepperValue
+        PercentContributionHelper.updatePercent(contribution: contribution, amount: stepperValue, lock: true)
         percentField.text = String(stepperValue)
         updateSubtotal()
     }
@@ -69,9 +70,16 @@ class PercentageSplitTableViewCell: UITableViewCell, UITextFieldDelegate {
             percent = 0
         }
         
-        contribution.percent = percent
+        PercentContributionHelper.updatePercent(contribution: contribution, amount: percent, lock: true)
         percentStepper.value = Double(percent)
         updateSubtotal()
+    }
+    
+    
+    // MARK: - Text Delegate
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.selectAll(nil)
     }
     
 }

@@ -231,7 +231,7 @@ class TransactionManager {
         
         contribPayload["contributor"] = contribution.member!
         if let contrib = contribution as? PercentContribution {
-            contribPayload["percent"] = contrib.percent
+            contribPayload["percent"] = contrib.getPercent()
         }
         else if let contrib = contribution as? LineItemContribution {
             contribPayload["description"] = contrib.description
@@ -281,7 +281,7 @@ class TransactionManager {
             for contribData in data {
                 let contribution = PercentContribution(transaction: transaction)
                 contribution.member = contribData[ContributionKeys.contributor.rawValue] as? String
-                contribution.percent = contribData[ContributionKeys.percent.rawValue] as! Int
+                PercentContributionHelper.updatePercent(contribution: contribution, amount: contribData[ContributionKeys.percent.rawValue] as! Int, redistribute: false)
                 
                 transaction.percentContributions.append(contribution)
             }

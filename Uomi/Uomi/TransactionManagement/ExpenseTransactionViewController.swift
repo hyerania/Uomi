@@ -11,6 +11,7 @@ import UIKit
 let percentResueIdentifier = "percentageCell"
 let lineItemReuseIdentifier = "lineItemCell"
 let lineItemTotalReuseIdentifier = "lineItemTotalCell"
+let percentPath = "percent"
 
 let calendarIcon = "calendar"
 
@@ -55,6 +56,7 @@ UINavigationControllerDelegate {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    var kvoTokens: [NSUUID: NSKeyValueObservation] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +95,10 @@ UINavigationControllerDelegate {
         let pictureTap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         receiptView.addGestureRecognizer(pictureTap)
         receiptView.isUserInteractionEnabled = true
+    }
+    
+    
+    func percentRefresh(object: PercentContribution, change: NSKeyValueObservedChange<Any>) -> Void {
         
     }
     
@@ -104,7 +110,7 @@ UINavigationControllerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     fileprivate func updateUI() {
         // TODO Update all the UI elements
         guard let dateField = dateField, transaction != nil else { return }
@@ -251,7 +257,18 @@ UINavigationControllerDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if transaction.splitMode == .percent {
             let cell = tableView.dequeueReusableCell(withIdentifier: percentResueIdentifier, for: indexPath) as! PercentageSplitTableViewCell
-            cell.contribution = transaction.percentContributions[indexPath.row]
+            let contribution = transaction.percentContributions[indexPath.row]
+            cell.contribution = contribution
+            
+            if kvoTokens[contribution.uid] != nil {
+                kvoTokens.removeValue(forKey: contribution.uid)
+            }
+            
+            let token = contribution.observe(\.autoChanged, changeHandler: { (_, _) in
+                self.tableview.reloadRows(at: [indexPath], with: .automatic)
+            })
+            
+            kvoTokens[contribution.uid] = token
             
             return cell
         }
@@ -392,7 +409,7 @@ UINavigationControllerDelegate {
             for userId in userIds {
                 let contrib = PercentContribution(transaction: self.transaction)
                 contrib.member = userId
-                contrib.percent = percentage
+                PercentContributionHelper.updatePercent(contribution: contrib, amount: percentage, redistribute: false)
                 self.transaction.percentContributions.append(contrib)
             }
             self.tableview.reloadData()
@@ -402,7 +419,7 @@ UINavigationControllerDelegate {
     @IBAction func setSplitMode(_ sender: Any) {
         transaction.splitMode = splitSeg.selectedSegmentIndex == 0 ? .percent : .lineItem
         
-            assertInitialContributions()
+        assertInitialContributions()
         
         tableview.reloadData()
         updateSaveState()
@@ -478,5 +495,5 @@ extension ExpenseTransactionViewController: LineItemSplitDelegate {
         updateSaveState()
     }
     
-    
 }
+

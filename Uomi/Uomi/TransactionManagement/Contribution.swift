@@ -22,14 +22,20 @@ protocol Contribution {
     func getContributionAmount() -> Int
 }
 
-class PercentContribution : Contribution {
-    static func ==(lhs: PercentContribution, rhs: PercentContribution) -> Bool {
-        return lhs.member == rhs.member
-    }
+class PercentContribution : NSObject, Contribution {
+    
+    fileprivate let uuid: NSUUID = NSUUID()
+    var uid: NSUUID { get { return uuid } }
     
     var member: String?
-    var percent: Int = 0
+    fileprivate var percent: Int = 0
     var transaction: ExpenseTransaction
+    fileprivate var isLocked: Bool = false
+    
+    /**
+     * Necessary for KVO. DO NOT USE.
+     */
+    @objc dynamic var autoChanged = Date()
     
     init(transaction: ExpenseTransaction) {
         self.transaction = transaction
@@ -39,7 +45,9 @@ class PercentContribution : Contribution {
         return transaction.total * percent / 100
     }
     
-    
+    func getPercent() -> Int {
+        return percent
+    }
 }
 
 class LineItemContribution : Contribution {
@@ -73,4 +81,47 @@ class LineItemContribution : Contribution {
         
     }
     
+}
+
+class PercentContributionHelper {
+    static func updatePercent(contribution: PercentContribution, amount: Int, redistribute: Bool = true, lock: Bool = false) {
+        contribution.percent = amount
+        contribution.isLocked = lock
+        
+        guard redistribute else {
+            return
+        }
+        
+        // Get the non-locked cotnributions
+        var lockedContributions = contribution.transaction.percentContributions.filter { (contribution) -> Bool in
+            contribution.isLocked
+        }
+        var lockedSum = lockedContributions.map({ (contribution) -> Int in
+            contribution.percent
+        }).reduce(0) { (current, new) -> Int in
+            current + new
+        }
+        
+        if lockedSum >= 100 {
+            // Can't have over 100%. All other transactions should be unlocked for redistribution
+            for lockedContribution in lockedContributions {
+                if lockedContribution != contribution {
+                    lockedContribution.isLocked = false
+                }
+            }
+            
+            lockedContributions.removeAll()
+            lockedContributions.append(contribution)
+            lockedSum = contribution.percent
+        }
+        
+        let unlockedContributions: [PercentContribution] = Array(Set(contribution.transaction.percentContributions).subtracting(lockedContributions))
+        
+        let remainingAmount = 100 - lockedSum
+        let distributedPercent = remainingAmount / unlockedContributions.count
+        for contrib in unlockedContributions {
+            contrib.percent = distributedPercent
+            contrib.autoChanged = Date()
+        }
+    }
 }
