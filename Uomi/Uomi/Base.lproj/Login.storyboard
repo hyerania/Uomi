@@ -56,7 +56,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNH-0W-Zeh">
                                 <rect key="frame" x="16" y="407" width="343" height="50"/>
-                                <color key="backgroundColor" red="0.27999728918075562" green="0.62300187349319458" blue="0.97262352705001831" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.4755483865737915" blue="0.99112838506698608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="nqr-eH-V8W"/>
                                 </constraints>
@@ -70,7 +70,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZD3-Gj-n9K">
                                 <rect key="frame" x="16" y="465" width="343" height="50"/>
-                                <color key="backgroundColor" red="0.47705334424972534" green="0.79104328155517578" blue="0.30568784475326538" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.20068752765655518" green="0.53363233804702759" blue="0.26286861300468445" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="nhk-mO-ElY"/>
                                 </constraints>
@@ -229,7 +229,7 @@
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xeb-EC-DIO">
                                                 <rect key="frame" x="0.0" y="432" width="335" height="50"/>
-                                                <color key="backgroundColor" red="0.47705334420000001" green="0.79104328160000004" blue="0.3056878448" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="0.20068752765655518" green="0.53363233804702759" blue="0.26286861300468445" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="QUA-hG-ruX"/>
                                                 </constraints>
