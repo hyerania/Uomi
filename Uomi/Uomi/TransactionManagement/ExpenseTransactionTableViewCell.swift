@@ -34,8 +34,11 @@ class ExpenseTransactionTableViewCell: UITableViewCell {
         let displayAmount = Float(transaction.total) / 100.0
         
         totalView.text = displayAmount == round(displayAmount) ? UomiFormatters.wholeDollarFormatter.string(for: displayAmount) : UomiFormatters.dollarFormatter.string(for: displayAmount)
-        
-        // TODO add summary text
+        let personPaid = "You"
+//        AccountManager.sharedInstance.load(id: , completionHandler: <#T##(User?) -> ()#>)
+//
+//        }
+//        // TODO add summary text
     }
     
     override func awakeFromNib() {

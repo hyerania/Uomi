@@ -305,7 +305,7 @@ class TransactionManager {
             owingsPayload[OwingsKeys.owers.rawValue] = transaction.contributions.filter({ (contribution) -> Bool in
                 return contribution.member != transaction.payer
             }).map({ (contribution) -> [String:Int] in
-                return [contribution.member! : contribution.getContributionAmount()]
+                return [contribution.member! : contribution.getContributionAmount()/100]
             }).reduce([:], { (current, pair) -> [String:Int] in
                 current.merging(pair, uniquingKeysWith: { (current, _) -> Int in
                     current
