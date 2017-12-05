@@ -265,7 +265,9 @@ UINavigationControllerDelegate {
             }
             
             let token = contribution.observe(\.autoChanged, changeHandler: { (_, _) in
-                self.tableview.reloadRows(at: [indexPath], with: .automatic)
+                if let indexPath = self.transaction.percentContributions.index(of: contribution) {
+                    self.tableview.reloadRows(at: [IndexPath(row:indexPath, section: 0)], with: .automatic)
+                }
             })
             
             kvoTokens[contribution.uid] = token
@@ -313,6 +315,7 @@ UINavigationControllerDelegate {
                 // Remove percent item
                 transaction.percentContributions.remove(at: row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
+                PercentContributionHelper.recalculateDistribution(transaction: transaction)
             }
             else {
                 // Remove line item

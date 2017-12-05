@@ -84,16 +84,9 @@ class LineItemContribution : Contribution {
 }
 
 class PercentContributionHelper {
-    static func updatePercent(contribution: PercentContribution, amount: Int, redistribute: Bool = true, lock: Bool = false) {
-        contribution.percent = amount
-        contribution.isLocked = lock
-        
-        guard redistribute else {
-            return
-        }
-        
+    static func recalculateDistribution(transaction: ExpenseTransaction, lastLockedContribution contribution: PercentContribution? = nil) {
         // Get the non-locked cotnributions
-        var lockedContributions = contribution.transaction.percentContributions.filter { (contribution) -> Bool in
+        var lockedContributions = transaction.percentContributions.filter { (contribution) -> Bool in
             contribution.isLocked
         }
         var lockedSum = lockedContributions.map({ (contribution) -> Int in
@@ -105,17 +98,23 @@ class PercentContributionHelper {
         if lockedSum >= 100 {
             // Can't have over 100%. All other transactions should be unlocked for redistribution
             for lockedContribution in lockedContributions {
-                if lockedContribution != contribution {
+                if contribution == nil || lockedContribution != contribution {
                     lockedContribution.isLocked = false
                 }
             }
             
             lockedContributions.removeAll()
-            lockedContributions.append(contribution)
-            lockedSum = contribution.percent
+            if let contribution = contribution {
+                lockedContributions.append(contribution)
+                lockedSum = contribution.percent
+            }
         }
         
-        let unlockedContributions: [PercentContribution] = Array(Set(contribution.transaction.percentContributions).subtracting(lockedContributions))
+        let unlockedContributions: [PercentContribution] = Array(Set(transaction.percentContributions).subtracting(lockedContributions))
+        
+        guard unlockedContributions.count > 0 else {
+            return
+        }
         
         let remainingAmount = 100 - lockedSum
         let distributedPercent = remainingAmount / unlockedContributions.count
@@ -123,5 +122,16 @@ class PercentContributionHelper {
             contrib.percent = distributedPercent
             contrib.autoChanged = Date()
         }
+    }
+    
+    static func updatePercent(contribution: PercentContribution, amount: Int, redistribute: Bool = true, lock: Bool = false) {
+        contribution.percent = amount
+        contribution.isLocked = lock
+        
+        guard redistribute else {
+            return
+        }
+        
+        recalculateDistribution(transaction: contribution.transaction, lastLockedContribution: contribution)
     }
 }
