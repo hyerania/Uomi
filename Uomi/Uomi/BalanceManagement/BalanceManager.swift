@@ -60,13 +60,13 @@ class BalanceManager{
                     return
                 }
                 
-                EventManager.sharedInstance.fetchAmountOwed(by: otherId, to: currentUserId, event: eventId) { (theyOwe) in
+                self.fetchAmountOwed(by: otherId, to: currentUserId, event: eventId) { (theyOwe) in
                     var balanceAmount: Float = 0.0
                     if let theyOwe = theyOwe {
                         balanceAmount = Float(theyOwe)
                     }
                     
-                    EventManager.sharedInstance.fetchAmountOwed(by: currentUserId, to: otherId, event: eventId) { (iOwe) in
+                    self.fetchAmountOwed(by: currentUserId, to: otherId, event: eventId) { (iOwe) in
                         var subtractAmount:Float = 0
                         if let iOwe = iOwe {
                             subtractAmount = Float(iOwe)
@@ -226,4 +226,128 @@ class BalanceManager{
                 completion(iOwe, theyOwe)
         }
     }
+    
+    // MARK: Totals
+    
+    /**
+     @param eventId The event to query within
+     @param user The user for who to calculate total spent during the event
+     */
+    func fetchTotalPaid(event eventId: String, user userId: String, completionHandler: @escaping(Double?) -> ()) {
+        
+        ref.child("/transactions").child(eventId).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            // Unable to find any transactions for the event.
+            guard let eventTransactions = snapshot.value as? NSDictionary else {
+                completionHandler(nil)
+                return
+            }
+            
+            var total = 0.00
+            // Iterate through every transaction of the event and search for the payer to be the user id.
+            for transactionObj in eventTransactions {
+                
+                guard
+                    let transaction = transactionObj.value as? NSDictionary,
+                    let transactionPayer = transaction["payer"] as? String,
+                    let transactionTotal = transaction["total"] as? Double
+                    else {
+                        continue
+                }
+                
+                // Found a match for a transaction.
+                if (transactionPayer == userId) {
+                    // The database stores the numbers without the decimal point. Adding the decimals back by dividing by 100.
+                    let decimalForm = transactionTotal / 100.00;
+                    // Calculate the running total.
+                    total = total + decimalForm
+                }
+            }
+            
+            completionHandler(total)
+            
+        })
+    }
+    
+    /**
+     @param eventId The event to query in
+     */
+    func fetchTotalPaidByAll(event eventId: String, completionHandler: @escaping(Double?) -> ()) {
+        ref.child("/transactions").child(eventId).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            // Unable to find any transactions for the event.
+            guard let eventTransactions = snapshot.value as? NSDictionary else {
+                completionHandler(nil)
+                return
+            }
+            
+            var total = 0.00
+            // Iterate through every transaction of the event and search for the payer to be the user id.
+            for transactionObj in eventTransactions {
+                
+                guard
+                    let transaction = transactionObj.value as? NSDictionary,
+                    let transactionTotal = transaction["total"] as? Double
+                    else {
+                        continue
+                }
+                
+                // The database stores the numbers without the decimal point. Adding the decimals back by dividing by 100.
+                let decimalForm = transactionTotal / 100.00;
+                // Calculate the running total.
+                total = total + decimalForm
+            }
+            
+            completionHandler(total)
+            
+        })
+    }
+    
+    
+    // MARK: Owings
+    
+    /**
+     @param accountId the account to
+     */
+    func fetchAmountOwed(by owerId: String, to purchaserId: String, event eventId: String, completionHandler: @escaping((Int?) -> ())) {
+        
+        self.ref.child("/owings").child(eventId).observeSingleEvent(of: .value) { (snapshot) in
+            
+            guard let owingTransactions = snapshot.value as? NSDictionary else {
+                completionHandler(nil)
+                return
+            }
+            
+            var total = 0
+            
+            for transactionObj in owingTransactions {
+                
+                guard
+                    let transaction = transactionObj.value as? NSDictionary,
+                    let payer = transaction["payer"] as? String,
+                    let owers = transaction["owers"] as? NSDictionary
+                    else {
+                        print("Invalid data for this transaction. Moving on to the next one.")
+                        continue
+                }
+                
+                if (payer == purchaserId) {
+                    
+                    for ower in owers {
+                        guard let transOwerId = ower.key as? String, let amount = ower.value as? Int else {
+                            print("Invalid data for this transaction. Moving on to the next one.")
+                            continue
+                        }
+                        
+                        if (transOwerId == owerId) {
+                            total = total + amount
+                        }
+                    }
+                }
+            }
+            completionHandler(total)
+        }
+    }
+    
+    
 }
