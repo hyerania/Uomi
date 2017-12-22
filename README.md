@@ -4,7 +4,9 @@
 Users can log bills and split the costs between others, 
 and keep track of who owes whom. The application also 
 helps users to settle up using common payment 
-applications such as PayPal and Apple Pay.
+applications such as PayPal and Apple Pay. Further information
+on the system design and final prototype can be found under our
+[Uomi Final Report](Documentation/FinalReport.pdf).
 
 ## User Stories
 --------------------
